@@ -1,0 +1,155 @@
+---
+title: 신청 관리 — 올바른농지
+desc: 올바른농지 무료진단 신청 목록 관리 화면 (관리자 전용)
+keywords:
+cur: admin
+bare: true
+noindex: true
+---
+<style>
+  body { background: var(--bg-2); }
+  .adm { max-width: 1100px; margin: 0 auto; padding: 28px 20px 80px; }
+  .adm-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+  .adm-head h1 { font-size: 22px; font-weight: 900; margin: 0; }
+  .adm-head .brand { margin-right: auto; }
+  .adm-tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  .adm-tools input[type="search"], .adm-tools input[type="password"] { padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; font-size: 14px; min-width: 200px; }
+  .adm-tools select { padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; font-size: 14px; background: #fff; }
+  .adm-tools .btn { padding: 10px 16px; font-size: 14px; }
+  .stats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .stat { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; font-size: 13.5px; color: var(--ink-2); }
+  .stat b { font-size: 20px; color: var(--ink); margin-left: 6px; font-variant-numeric: tabular-nums; }
+  .stat.new b { color: var(--red); }
+  .setup { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 22px; max-width: 640px; }
+  .setup h2 { font-size: 18px; }
+  .setup p { font-size: 14.5px; color: var(--ink-2); }
+  .setup code { background: var(--bg-2); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+  .lead-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 14px; }
+  .lead-table th, .lead-table td { padding: 10px 12px; border-top: 1px solid var(--line); text-align: left; vertical-align: middle; }
+  .lead-table th { background: var(--g-50); font-size: 12.5px; color: var(--ink-2); border-top: 0; white-space: nowrap; }
+  .lead-table td.n { font-variant-numeric: tabular-nums; color: var(--ink-3); white-space: nowrap; }
+  .lead-table td.phone a { font-weight: 700; color: var(--g-800); white-space: nowrap; }
+  .lead-table select, .lead-table input { padding: 7px 9px; border: 1.5px solid var(--line); border-radius: 6px; font: inherit; font-size: 13.5px; background: #fff; }
+  .lead-table input.memo { width: 100%; min-width: 160px; }
+  .lead-table .btn { padding: 7px 12px; font-size: 13px; }
+  .lead-table tr.st-신규 td:first-child { border-left: 4px solid var(--red); }
+  .lead-table tr.st-완료 { opacity: .6; }
+  .pill { display: inline-block; font-size: 11.5px; font-weight: 800; border-radius: 999px; padding: 2px 8px; background: var(--g-100); color: var(--g-800); }
+  .pill.신규 { background: var(--red-100); color: var(--red); }
+  .msg { font-size: 13.5px; color: var(--ink-2); margin: 10px 0; min-height: 1.4em; }
+  .msg.err { color: var(--red); }
+  .tscroll { overflow-x: auto; }
+  @media (max-width: 720px) { .lead-table th:nth-child(5), .lead-table td:nth-child(5) { display: none; } }
+</style>
+<div class="adm">
+  <div class="adm-head">
+    <a class="brand" href="index.html"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:36px;height:36px"><path d="M8 40c2-14 10-24 26-28-2 14-10 24-26 28z" fill="#22954f"/><path d="M8 40c6-10 12-16 22-22" stroke="#e4f3ea" stroke-width="2.4" stroke-linecap="round"/><path d="M34 12c8-2 10 6 6 10-2-4-4-6-6-10z" fill="#155a34"/></svg><span><span class="name">올바른농지</span><br><span class="tag">신청 관리</span></span></a>
+    <h1>무료진단 신청 목록</h1>
+    <button class="btn btn-white" id="reload" type="button">새로고침</button>
+    <button class="btn btn-white" id="logout" type="button" hidden>키 지우기</button>
+  </div>
+
+  <div id="setup" class="setup" hidden>
+    <h2>연결이 필요합니다</h2>
+    <p><code>assets/site.js</code>의 <code>FORM_ENDPOINT</code>에 Google Apps Script 웹앱 주소가 비어 있습니다. <code>tools/apps-script/README.md</code>의 순서대로 시트를 만들고 주소를 넣으면 이 화면에서 신청 목록을 볼 수 있습니다.</p>
+  </div>
+
+  <div id="login" class="setup" hidden>
+    <h2>관리자 키</h2>
+    <p>Apps Script의 <code>ADMIN_KEY</code>에 설정한 값을 입력하세요. 이 브라우저에만 저장됩니다.</p>
+    <div class="adm-tools"><input type="password" id="keyInput" placeholder="관리자 키" autocomplete="off"><button class="btn btn-green" id="keyBtn" type="button">목록 열기</button></div>
+    <p class="msg err" id="loginMsg"></p>
+  </div>
+
+  <div id="app" hidden>
+    <div class="stats">
+      <div class="stat">전체<b id="cntAll">0</b></div>
+      <div class="stat new">신규<b id="cntNew">0</b></div>
+      <div class="stat">연락중<b id="cntIng">0</b></div>
+      <div class="stat">완료<b id="cntDone">0</b></div>
+    </div>
+    <div class="adm-tools">
+      <input type="search" id="q" placeholder="이름·연락처 검색">
+      <select id="filter"><option value="">상태: 전체</option><option>신규</option><option>연락중</option><option>완료</option><option>보류</option></select>
+      <a class="btn btn-white" id="sheetLink" href="#" target="_blank" rel="noopener" hidden>구글 시트 열기</a>
+    </div>
+    <p class="msg" id="msg"></p>
+    <div class="tscroll">
+      <table class="lead-table">
+        <thead><tr><th>접수일시</th><th>이름</th><th>연락처</th><th>상태</th><th>페이지</th><th>메모</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var KEY = 'ob_admin_key', rows = [], endpoint = '';
+  function status(t, err) { var m = $('#msg'); m.textContent = t || ''; m.className = 'msg' + (err ? ' err' : ''); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function show(id) { ['setup', 'login', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#logout').hidden = id !== 'app'; }
+
+  function load() {
+    var key = localStorage.getItem(KEY); if (!key) { show('login'); return; }
+    status('불러오는 중…');
+    fetch(endpoint + '?action=list&key=' + encodeURIComponent(key))
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.ok) { if (j.error === 'unauthorized') { localStorage.removeItem(KEY); show('login'); $('#loginMsg').textContent = '키가 맞지 않습니다.'; return; } throw new Error(j.error); }
+        rows = j.rows || []; show('app'); render(); status(rows.length ? '' : '아직 접수된 신청이 없습니다.');
+      })
+      .catch(function (e) { show('app'); status('목록을 불러오지 못했습니다. 배포 주소와 액세스 권한(모든 사용자)을 확인하세요. (' + e.message + ')', true); });
+  }
+
+  function render() {
+    var q = ($('#q').value || '').trim(), f = $('#filter').value;
+    var counts = { 신규: 0, 연락중: 0, 완료: 0 };
+    rows.forEach(function (r) { if (counts[r['상태']] !== undefined) counts[r['상태']]++; });
+    $('#cntAll').textContent = rows.length; $('#cntNew').textContent = counts['신규']; $('#cntIng').textContent = counts['연락중']; $('#cntDone').textContent = counts['완료'];
+    var html = rows.filter(function (r) {
+      if (f && r['상태'] !== f) return false;
+      if (q && (r['이름'] || '').indexOf(q) === -1 && (r['연락처'] || '').indexOf(q) === -1) return false;
+      return true;
+    }).map(function (r) {
+      var st = r['상태'] || '신규', tel = (r['연락처'] || '').replace(/[^0-9]/g, '');
+      return '<tr class="st-' + esc(st) + '" data-row="' + r.row + '">' +
+        '<td class="n">' + esc(r['접수일시']) + '</td>' +
+        '<td><b>' + esc(r['이름']) + '</b></td>' +
+        '<td class="phone"><a href="tel:' + tel + '">' + esc(r['연락처']) + '</a></td>' +
+        '<td><select class="st">' + ['신규', '연락중', '완료', '보류'].map(function (o) { return '<option' + (o === st ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></td>' +
+        '<td style="font-size:12.5px;color:var(--ink-3)">' + esc((r['페이지'] || '').split(' (')[0]) + '</td>' +
+        '<td><input class="memo" value="' + esc(r['메모']) + '" placeholder="메모"></td>' +
+        '<td><button class="btn btn-green save" type="button">저장</button></td></tr>';
+    }).join('');
+    $('#rows').innerHTML = html || '<tr><td colspan="7" style="color:var(--ink-3);text-align:center;padding:24px">표시할 신청이 없습니다.</td></tr>';
+  }
+
+  $('#rows').addEventListener('click', function (e) {
+    var btn = e.target.closest('.save'); if (!btn) return;
+    var tr = btn.closest('tr'), row = Number(tr.getAttribute('data-row'));
+    var body = { action: 'update', key: localStorage.getItem(KEY), row: row, '상태': tr.querySelector('.st').value, '메모': tr.querySelector('.memo').value };
+    btn.disabled = true; btn.textContent = '저장 중';
+    fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (!j.ok) throw new Error(j.error); var r = rows.find(function (x) { return x.row === row; }); if (r) { r['상태'] = body['상태']; r['메모'] = body['메모']; } render(); status('저장했습니다.'); })
+      .catch(function (err) { status('저장하지 못했습니다. (' + err.message + ')', true); })
+      .finally(function () { btn.disabled = false; btn.textContent = '저장'; });
+  });
+
+  $('#q').addEventListener('input', render); $('#filter').addEventListener('change', render);
+  $('#reload').addEventListener('click', load);
+  $('#logout').addEventListener('click', function () { localStorage.removeItem(KEY); show('login'); });
+  $('#keyBtn').addEventListener('click', function () { var k = $('#keyInput').value.trim(); if (!k) return; localStorage.setItem(KEY, k); $('#loginMsg').textContent = ''; load(); });
+  $('#keyInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#keyBtn').click(); });
+
+  // site.js가 로드된 뒤 설정을 읽는다
+  window.addEventListener('load', function () {
+    var cfg = window.OB_CONFIG || {}; endpoint = cfg.FORM_ENDPOINT || '';
+    if (!endpoint || !/script\.google\.com/.test(endpoint)) { show('setup'); return; }
+    if (cfg.SHEET_URL) { $('#sheetLink').href = cfg.SHEET_URL; $('#sheetLink').hidden = false; }
+    load();
+  });
+})();
+</script>

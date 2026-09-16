@@ -1,0 +1,9 @@
+# 로컬 전용 / 대용량 / 사이트에서 참조하지 않는 원본 자료
+_archive/
+_design/
+_build/dist-artifact/
+images/
+KakaoTalk_*.jpg
+*.docx
+.DS_Store
+Thumbs.db
