@@ -8,13 +8,17 @@
   var CONFIG = {
     PHONE: "",            // 예) "1800-1234"  비워두면 [상담전화] 표시
     HOURS: "",            // 예) "평일 09:00 ~ 18:00"  비워두면 [상담 가능 시간] 표시
-    FORM_ENDPOINT: "",    // 예) "https://formspree.io/f/xxxxxxx"  (POST JSON). 비워두면 mailto로 전송
+    FIREBASE: {           // 신청 저장소 (Firestore). tools/firebase/README.md 참고. projectId가 있으면 FORM_ENDPOINT보다 우선
+      apiKey: "AIzaSyC5uoEt30sdC5dwyHSY9kPxmzg1loEsjoE",   // 웹 API 키 — 공개용 식별자이며 접근 권한은 firestore.rules가 통제
+      projectId: "olbareun-nongji"
+    },
+    FORM_ENDPOINT: "",    // (대안) "https://formspree.io/f/xxxxxxx" (POST JSON) 또는 Apps Script 웹앱 주소. FIREBASE도 이것도 없으면 mailto로 전송
     CONTACT_EMAIL: "",    // FORM_ENDPOINT가 없을 때 mailto 수신 주소
     KAKAO_URL: "",        // 예) "https://pf.kakao.com/_xxxxx"  비워두면 카카오톡 링크 숨김
     BLOG_URL: "",         // 예) "https://blog.naver.com/xxxxx"  비워두면 블로그 링크 숨김
     APP_IOS_URL: "",      // App Store 링크. 비워두면 버튼 숨김
     APP_ANDROID_URL: "",  // Google Play 링크. 비워두면 버튼 숨김
-    SHEET_URL: ""         // 신청목록 구글 시트 주소 (admin.html의 "구글 시트 열기" 버튼). 선택
+    SHEET_URL: ""         // (Apps Script 방식일 때) 신청목록 구글 시트 주소. Firebase 방식에서는 미사용
   };
 
   window.OB_CONFIG = CONFIG;   // admin.html 등 다른 스크립트에서 참조
@@ -152,6 +156,26 @@
       });
       data['신청일시'] = new Date().toLocaleString('ko-KR');
       data['페이지'] = document.title + ' (' + location.href + ')';
+
+      var fb = CONFIG.FIREBASE || {};
+      if (fb.projectId) {
+        // Firestore REST로 leads/{id} 생성. SDK 없이 fetch만 사용. 접수시각은 서버시간(REQUEST_TIME)으로 채워 규칙(createdAt == request.time)을 통과한다
+        submitBtn.disabled = true; submitBtn.textContent = '신청 중…';
+        var extra = {};
+        Object.keys(data).forEach(function (k) { if (['이름', '연락처', '신청일시', '페이지'].indexOf(k) === -1) extra[k] = { stringValue: data[k] }; });
+        var fields = { name: { stringValue: data['이름'] || '' }, phone: { stringValue: data['연락처'] || '' }, page: { stringValue: data['페이지'].slice(0, 300) }, status: { stringValue: '신규' }, memo: { stringValue: '' } };
+        if (Object.keys(extra).length) fields.extra = { mapValue: { fields: extra } };
+        var docId = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+        var docPath = 'projects/' + fb.projectId + '/databases/(default)/documents';
+        fetch('https://firestore.googleapis.com/v1/' + docPath + ':commit?key=' + encodeURIComponent(fb.apiKey), {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ writes: [{ update: { name: docPath + '/leads/' + docId, fields: fields }, updateTransforms: [{ fieldPath: 'createdAt', setToServerValue: 'REQUEST_TIME' }], currentDocument: { exists: false } }] })
+        })
+          .then(function (res) { if (!res.ok) throw new Error(res.status); showMsg('접수되었습니다. ' + (CONFIG.HOURS ? CONFIG.HOURS + ' 중에 ' : '확인 후 ') + '연락드리겠습니다.', true); form.reset(); })
+          .catch(function () { showMsg('전송 중 문제가 발생했습니다. 잠시 후 다시 시도하시거나 전화로 문의해 주세요.', false); })
+          .finally(function () { submitBtn.disabled = false; submitBtn.innerHTML = btnHtml; });
+        return;
+      }
 
       if (!CONFIG.FORM_ENDPOINT) {
         var body = Object.keys(data).map(function (k) { return k + ': ' + data[k]; }).join('\n');

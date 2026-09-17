@@ -7,3 +7,5 @@ KakaoTalk_*.jpg
 *.docx
 .DS_Store
 Thumbs.db
+
+firebase-debug.log

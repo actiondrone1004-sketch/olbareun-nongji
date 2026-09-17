@@ -1,0 +1,37 @@
+rules_version = '2';
+// 올바른농지 — Firestore 보안 규칙
+// leads/{id} : 무료진단 신청 1건. 누구나 '생성'만 가능(폼), 읽기·수정·삭제는 관리자만.
+// 관리자 = 아래 ADMINS 에 적힌 이메일로 로그인한 사용자(이메일/비밀번호 방식). 추가하려면 이메일을 넣고
+//   firebase deploy --only firestore:rules --config tools/firebase/firebase.json --project olbareun-nongji
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['actiondrone1004@gmail.com'];
+    }
+
+    // 폼에서 들어오는 데이터 검증: 허용된 키만, 이름·연락처 형식, 상태는 '신규', 시각은 서버시간
+    function isLead(d) {
+      return d.keys().hasOnly(['name', 'phone', 'page', 'extra', 'status', 'memo', 'createdAt'])
+        && d.name is string && d.name.size() >= 1 && d.name.size() <= 40
+        && d.phone is string && d.phone.matches('^0[0-9]{1,2}-?[0-9]{3,4}-?[0-9]{4}$')
+        && d.page is string && d.page.size() <= 300
+        && (!('extra' in d) || (d.extra is map && d.extra.size() <= 10))
+        && d.status == '신규' && d.memo == ''
+        && d.createdAt == request.time;
+    }
+
+    match /leads/{id} {
+      allow create: if isLead(request.resource.data);
+      allow read, delete: if isAdmin();
+      // 관리자는 상태·메모만 수정
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'memo'])
+        && request.resource.data.status in ['신규', '연락중', '완료', '보류']
+        && request.resource.data.memo is string && request.resource.data.memo.size() <= 500;
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}

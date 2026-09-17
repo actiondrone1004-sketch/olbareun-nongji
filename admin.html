@@ -25,7 +25,7 @@
   .adm-head h1 { font-size: 22px; font-weight: 900; margin: 0; }
   .adm-head .brand { margin-right: auto; }
   .adm-tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
-  .adm-tools input[type="search"], .adm-tools input[type="password"] { padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; font-size: 14px; min-width: 200px; }
+  .adm-tools input[type="search"], .adm-tools input[type="password"], .adm-tools input[type="email"] { padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; font-size: 14px; min-width: 200px; }
   .adm-tools select { padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; font-size: 14px; background: #fff; }
   .adm-tools .btn { padding: 10px 16px; font-size: 14px; }
   .stats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
@@ -40,10 +40,13 @@
   .lead-table th, .lead-table td { padding: 10px 12px; border-top: 1px solid var(--line); text-align: left; vertical-align: middle; }
   .lead-table th { background: var(--g-50); font-size: 12.5px; color: var(--ink-2); border-top: 0; white-space: nowrap; }
   .lead-table td.n { font-variant-numeric: tabular-nums; color: var(--ink-3); white-space: nowrap; }
-  .lead-table td.phone a { font-weight: 700; color: var(--g-800); white-space: nowrap; }
+  .lead-table td.tel a { font-weight: 700; color: var(--g-800); white-space: nowrap; }
   .lead-table select, .lead-table input { padding: 7px 9px; border: 1.5px solid var(--line); border-radius: 6px; font: inherit; font-size: 13.5px; background: #fff; }
   .lead-table input.memo { width: 100%; min-width: 160px; }
   .lead-table .btn { padding: 7px 12px; font-size: 13px; }
+  .lead-table .del { background: none; border: 0; color: var(--ink-3); font-size: 12.5px; cursor: pointer; padding: 6px 4px; }
+  .lead-table .del:hover { color: var(--red); }
+  .setup .link { font-size: 13.5px; color: var(--ink-3); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
   .lead-table tr.st-신규 td:first-child { border-left: 4px solid var(--red); }
   .lead-table tr.st-완료 { opacity: .6; }
   .pill { display: inline-block; font-size: 11.5px; font-weight: 800; border-radius: 999px; padding: 2px 8px; background: var(--g-100); color: var(--g-800); }
@@ -58,19 +61,20 @@
     <a class="brand" href="index.html"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:36px;height:36px"><path d="M8 40c2-14 10-24 26-28-2 14-10 24-26 28z" fill="#22954f"/><path d="M8 40c6-10 12-16 22-22" stroke="#e4f3ea" stroke-width="2.4" stroke-linecap="round"/><path d="M34 12c8-2 10 6 6 10-2-4-4-6-6-10z" fill="#155a34"/></svg><span><span class="name">올바른농지</span><br><span class="tag">신청 관리</span></span></a>
     <h1>무료진단 신청 목록</h1>
     <button class="btn btn-white" id="reload" type="button">새로고침</button>
-    <button class="btn btn-white" id="logout" type="button" hidden>키 지우기</button>
+    <button class="btn btn-white" id="logout" type="button" hidden>로그아웃</button>
   </div>
 
   <div id="setup" class="setup" hidden>
     <h2>연결이 필요합니다</h2>
-    <p><code>assets/site.js</code>의 <code>FORM_ENDPOINT</code>에 Google Apps Script 웹앱 주소가 비어 있습니다. <code>tools/apps-script/README.md</code>의 순서대로 시트를 만들고 주소를 넣으면 이 화면에서 신청 목록을 볼 수 있습니다.</p>
+    <p><code>assets/site.js</code>의 <code>CONFIG.FIREBASE</code>(apiKey·projectId)가 비어 있습니다. <code>tools/firebase/README.md</code>의 순서대로 설정하면 이 화면에서 신청 목록을 볼 수 있습니다.</p>
   </div>
 
   <div id="login" class="setup" hidden>
-    <h2>관리자 키</h2>
-    <p>Apps Script의 <code>ADMIN_KEY</code>에 설정한 값을 입력하세요. 이 브라우저에만 저장됩니다.</p>
-    <div class="adm-tools"><input type="password" id="keyInput" placeholder="관리자 키" autocomplete="off"><button class="btn btn-green" id="keyBtn" type="button">목록 열기</button></div>
+    <h2>관리자 로그인</h2>
+    <p>Firebase 인증에 등록된 관리자 이메일과 비밀번호를 입력하세요.</p>
+    <div class="adm-tools"><input type="email" id="emailInput" placeholder="이메일" autocomplete="username"><input type="password" id="pwInput" placeholder="비밀번호" autocomplete="current-password"><button class="btn btn-green" id="loginBtn" type="button">로그인</button></div>
     <p class="msg err" id="loginMsg"></p>
+    <button class="link" id="resetBtn" type="button">비밀번호를 잊었거나 처음 설정하려면 → 재설정 메일 보내기</button>
   </div>
 
   <div id="app" hidden>
@@ -83,7 +87,8 @@
     <div class="adm-tools">
       <input type="search" id="q" placeholder="이름·연락처 검색">
       <select id="filter"><option value="">상태: 전체</option><option>신규</option><option>연락중</option><option>완료</option><option>보류</option></select>
-      <a class="btn btn-white" id="sheetLink" href="#" target="_blank" rel="noopener" hidden>구글 시트 열기</a>
+      <a class="btn btn-white" id="consoleLink" href="#" target="_blank" rel="noopener">Firebase 콘솔 열기</a>
+      <span style="font-size:12.5px;color:var(--ink-3)" id="who"></span>
     </div>
     <p class="msg" id="msg"></p>
     <div class="tscroll">
@@ -96,72 +101,142 @@
 </div>
 <script>
 (function () {
+  // Firebase SDK 없이 REST만 사용: 로그인(Identity Toolkit) → ID 토큰으로 Firestore leads 조회·수정·삭제. 권한은 tools/firebase/firestore.rules
   var $ = function (s) { return document.querySelector(s); };
-  var KEY = 'ob_admin_key', rows = [], endpoint = '';
+  var RT_KEY = 'ob_fb_refresh', cfg = {}, rows = [], idToken = '', tokenExp = 0, userEmail = '';
+  var API = 'https://identitytoolkit.googleapis.com/v1/', DOCS = '';
+  var STATUSES = ['신규', '연락중', '완료', '보류'];
+
   function status(t, err) { var m = $('#msg'); m.textContent = t || ''; m.className = 'msg' + (err ? ' err' : ''); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-
   function show(id) { ['setup', 'login', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#logout').hidden = id !== 'app'; }
+  function authErr(code) {
+    if (/INVALID_LOGIN_CREDENTIALS|EMAIL_NOT_FOUND|INVALID_PASSWORD|INVALID_EMAIL/.test(code)) return '이메일 또는 비밀번호가 맞지 않습니다.';
+    if (/TOO_MANY_ATTEMPTS/.test(code)) return '시도가 너무 많습니다. 잠시 후 다시 해 주세요.';
+    if (/USER_DISABLED/.test(code)) return '비활성화된 계정입니다.';
+    return '로그인하지 못했습니다. (' + code + ')';
+  }
+  function emailFromToken(t) { try { return JSON.parse(atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).email || ''; } catch (e) { return ''; } }
+
+  // ----- 인증 (이메일/비밀번호). 새로고침 토큰은 이 브라우저에만 저장 -----
+  function saveSession(j) {
+    idToken = j.idToken || j.id_token; tokenExp = Date.now() + (Number(j.expiresIn || j.expires_in) - 60) * 1000; userEmail = j.email || emailFromToken(idToken);
+    try { localStorage.setItem(RT_KEY, j.refreshToken || j.refresh_token); } catch (e) {}
+  }
+  function refresh() {
+    var rt = null; try { rt = localStorage.getItem(RT_KEY); } catch (e) {}
+    if (!rt) return Promise.reject(new Error('no-session'));
+    return fetch('https://securetoken.googleapis.com/v1/token?key=' + encodeURIComponent(cfg.apiKey), { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(rt) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (!j.id_token) throw new Error('expired'); saveSession(j); });
+  }
+  function token() { return (idToken && Date.now() < tokenExp) ? Promise.resolve(idToken) : refresh().then(function () { return idToken; }); }
+  function login(email, pw) {
+    return fetch(API + 'accounts:signInWithPassword?key=' + encodeURIComponent(cfg.apiKey), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, password: pw, returnSecureToken: true }) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (j.error) throw new Error(j.error.message); saveSession(j); });
+  }
+  function logout() { idToken = ''; tokenExp = 0; userEmail = ''; try { localStorage.removeItem(RT_KEY); } catch (e) {} rows = []; show('login'); }
+
+  // ----- Firestore REST -----
+  function fsFetch(path, opt) {
+    return token().then(function (t) {
+      opt = opt || {}; opt.headers = Object.assign({ 'Authorization': 'Bearer ' + t, 'Content-Type': 'application/json' }, opt.headers || {});
+      return fetch('https://firestore.googleapis.com/v1/' + path, opt);
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error((j.error && j.error.message) || r.status); return j; }); });
+  }
+  function val(f) {
+    if (!f) return '';
+    if ('stringValue' in f) return f.stringValue;
+    if ('timestampValue' in f) return f.timestampValue;
+    if ('integerValue' in f) return f.integerValue;
+    if ('mapValue' in f) { var o = {}; Object.keys(f.mapValue.fields || {}).forEach(function (k) { o[k] = val(f.mapValue.fields[k]); }); return o; }
+    return '';
+  }
+  function fmtDate(iso) { if (!iso) return ''; var d = new Date(iso); return isNaN(d) ? iso : d.toLocaleString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }); }
 
   function load() {
-    var key = localStorage.getItem(KEY); if (!key) { show('login'); return; }
     status('불러오는 중…');
-    fetch(endpoint + '?action=list&key=' + encodeURIComponent(key))
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (!j.ok) { if (j.error === 'unauthorized') { localStorage.removeItem(KEY); show('login'); $('#loginMsg').textContent = '키가 맞지 않습니다.'; return; } throw new Error(j.error); }
-        rows = j.rows || []; show('app'); render(); status(rows.length ? '' : '아직 접수된 신청이 없습니다.');
+    fsFetch(DOCS + ':runQuery', { method: 'POST', body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'leads' }], orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }], limit: 1000 } }) })
+      .then(function (arr) {
+        rows = (arr || []).filter(function (x) { return x.document; }).map(function (x) {
+          var d = x.document, f = d.fields || {};
+          return { id: d.name.split('/').pop(), name: val(f.name), phone: val(f.phone), page: val(f.page), status: val(f.status) || '신규', memo: val(f.memo), createdAt: val(f.createdAt) || d.createTime, extra: val(f.extra) };
+        });
+        show('app'); $('#who').textContent = userEmail; render(); status(rows.length ? '' : '아직 접수된 신청이 없습니다.');
       })
-      .catch(function (e) { show('app'); status('목록을 불러오지 못했습니다. 배포 주소와 액세스 권한(모든 사용자)을 확인하세요. (' + e.message + ')', true); });
+      .catch(function (e) {
+        if (/no-session|expired/.test(e.message)) { show('login'); return; }
+        if (/PERMISSION_DENIED|insufficient permissions/.test(e.message)) { var em = userEmail; logout(); $('#loginMsg').textContent = '이 계정(' + em + ')은 관리자 목록에 없습니다. tools/firebase/firestore.rules의 isAdmin()에 이메일을 추가하고 배포하세요.'; return; }
+        show('app'); status('목록을 불러오지 못했습니다. (' + e.message + ')', true);
+      });
   }
 
   function render() {
     var q = ($('#q').value || '').trim(), f = $('#filter').value;
     var counts = { 신규: 0, 연락중: 0, 완료: 0 };
-    rows.forEach(function (r) { if (counts[r['상태']] !== undefined) counts[r['상태']]++; });
+    rows.forEach(function (r) { if (counts[r.status] !== undefined) counts[r.status]++; });
     $('#cntAll').textContent = rows.length; $('#cntNew').textContent = counts['신규']; $('#cntIng').textContent = counts['연락중']; $('#cntDone').textContent = counts['완료'];
     var html = rows.filter(function (r) {
-      if (f && r['상태'] !== f) return false;
-      if (q && (r['이름'] || '').indexOf(q) === -1 && (r['연락처'] || '').indexOf(q) === -1) return false;
+      if (f && r.status !== f) return false;
+      if (q && r.name.indexOf(q) === -1 && r.phone.indexOf(q) === -1) return false;
       return true;
     }).map(function (r) {
-      var st = r['상태'] || '신규', tel = (r['연락처'] || '').replace(/[^0-9]/g, '');
-      return '<tr class="st-' + esc(st) + '" data-row="' + r.row + '">' +
-        '<td class="n">' + esc(r['접수일시']) + '</td>' +
-        '<td><b>' + esc(r['이름']) + '</b></td>' +
-        '<td class="phone"><a href="tel:' + tel + '">' + esc(r['연락처']) + '</a></td>' +
-        '<td><select class="st">' + ['신규', '연락중', '완료', '보류'].map(function (o) { return '<option' + (o === st ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></td>' +
-        '<td style="font-size:12.5px;color:var(--ink-3)">' + esc((r['페이지'] || '').split(' (')[0]) + '</td>' +
-        '<td><input class="memo" value="' + esc(r['메모']) + '" placeholder="메모"></td>' +
-        '<td><button class="btn btn-green save" type="button">저장</button></td></tr>';
+      var tel = r.phone.replace(/[^0-9]/g, '');
+      var extra = r.extra && typeof r.extra === 'object' ? Object.keys(r.extra).map(function (k) { return esc(k) + ': ' + esc(r.extra[k]); }).join(' · ') : '';
+      return '<tr class="st-' + esc(r.status) + '" data-id="' + esc(r.id) + '">' +
+        '<td class="n">' + esc(fmtDate(r.createdAt)) + '</td>' +
+        '<td><b>' + esc(r.name) + '</b>' + (extra ? '<div style="font-size:12px;color:var(--ink-3)">' + extra + '</div>' : '') + '</td>' +
+        '<td class="tel"><a href="tel:' + tel + '">' + esc(r.phone) + '</a></td>' +
+        '<td><select class="st">' + STATUSES.map(function (o) { return '<option' + (o === r.status ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></td>' +
+        '<td style="font-size:12.5px;color:var(--ink-3)">' + esc(r.page.split(' (')[0]) + '</td>' +
+        '<td><input class="memo" value="' + esc(r.memo) + '" placeholder="메모" maxlength="500"></td>' +
+        '<td style="white-space:nowrap"><button class="btn btn-green save" type="button">저장</button> <button class="del" type="button" title="삭제">삭제</button></td></tr>';
     }).join('');
     $('#rows').innerHTML = html || '<tr><td colspan="7" style="color:var(--ink-3);text-align:center;padding:24px">표시할 신청이 없습니다.</td></tr>';
   }
 
   $('#rows').addEventListener('click', function (e) {
-    var btn = e.target.closest('.save'); if (!btn) return;
-    var tr = btn.closest('tr'), row = Number(tr.getAttribute('data-row'));
-    var body = { action: 'update', key: localStorage.getItem(KEY), row: row, '상태': tr.querySelector('.st').value, '메모': tr.querySelector('.memo').value };
-    btn.disabled = true; btn.textContent = '저장 중';
-    fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
-      .then(function (r) { return r.json(); })
-      .then(function (j) { if (!j.ok) throw new Error(j.error); var r = rows.find(function (x) { return x.row === row; }); if (r) { r['상태'] = body['상태']; r['메모'] = body['메모']; } render(); status('저장했습니다.'); })
-      .catch(function (err) { status('저장하지 못했습니다. (' + err.message + ')', true); })
-      .finally(function () { btn.disabled = false; btn.textContent = '저장'; });
+    var tr = e.target.closest('tr'); if (!tr) return;
+    var id = tr.getAttribute('data-id'), r = rows.find(function (x) { return x.id === id; }); if (!r) return;
+    if (e.target.closest('.save')) {
+      var btn = e.target.closest('.save'), st = tr.querySelector('.st').value, memo = tr.querySelector('.memo').value;
+      btn.disabled = true; btn.textContent = '저장 중';
+      fsFetch(DOCS + '/leads/' + encodeURIComponent(id) + '?updateMask.fieldPaths=status&updateMask.fieldPaths=memo', { method: 'PATCH', body: JSON.stringify({ fields: { status: { stringValue: st }, memo: { stringValue: memo } } }) })
+        .then(function () { r.status = st; r.memo = memo; render(); status('저장했습니다.'); })
+        .catch(function (err) { status('저장하지 못했습니다. (' + err.message + ')', true); })
+        .finally(function () { btn.disabled = false; btn.textContent = '저장'; });
+    } else if (e.target.closest('.del')) {
+      if (!confirm(r.name + ' (' + r.phone + ') 신청을 삭제할까요? 되돌릴 수 없습니다.')) return;
+      fsFetch(DOCS + '/leads/' + encodeURIComponent(id), { method: 'DELETE' })
+        .then(function () { rows = rows.filter(function (x) { return x.id !== id; }); render(); status('삭제했습니다.'); })
+        .catch(function (err) { status('삭제하지 못했습니다. (' + err.message + ')', true); });
+    }
   });
 
   $('#q').addEventListener('input', render); $('#filter').addEventListener('change', render);
   $('#reload').addEventListener('click', load);
-  $('#logout').addEventListener('click', function () { localStorage.removeItem(KEY); show('login'); });
-  $('#keyBtn').addEventListener('click', function () { var k = $('#keyInput').value.trim(); if (!k) return; localStorage.setItem(KEY, k); $('#loginMsg').textContent = ''; load(); });
-  $('#keyInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#keyBtn').click(); });
+  $('#logout').addEventListener('click', logout);
+  $('#loginBtn').addEventListener('click', function () {
+    var em = $('#emailInput').value.trim(), pw = $('#pwInput').value; if (!em || !pw) return;
+    $('#loginMsg').textContent = ''; $('#loginBtn').disabled = true;
+    login(em, pw).then(load).catch(function (e) { $('#loginMsg').textContent = authErr(e.message); }).finally(function () { $('#loginBtn').disabled = false; });
+  });
+  $('#pwInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#loginBtn').click(); });
+  $('#resetBtn').addEventListener('click', function () {
+    var em = $('#emailInput').value.trim(); if (!em) { $('#loginMsg').textContent = '이메일을 먼저 입력하세요.'; return; }
+    fetch(API + 'accounts:sendOobCode?key=' + encodeURIComponent(cfg.apiKey), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ requestType: 'PASSWORD_RESET', email: em }) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { $('#loginMsg').textContent = j.error ? '메일을 보내지 못했습니다. (' + j.error.message + ')' : em + ' 로 재설정 메일을 보냈습니다. 메일의 링크에서 비밀번호를 정한 뒤 로그인하세요.'; });
+  });
 
   // site.js가 로드된 뒤 설정을 읽는다
   window.addEventListener('load', function () {
-    var cfg = window.OB_CONFIG || {}; endpoint = cfg.FORM_ENDPOINT || '';
-    if (!endpoint || !/script\.google\.com/.test(endpoint)) { show('setup'); return; }
-    if (cfg.SHEET_URL) { $('#sheetLink').href = cfg.SHEET_URL; $('#sheetLink').hidden = false; }
-    load();
+    cfg = (window.OB_CONFIG && window.OB_CONFIG.FIREBASE) || {};
+    if (!cfg.projectId || !cfg.apiKey) { show('setup'); return; }
+    DOCS = 'projects/' + cfg.projectId + '/databases/(default)/documents';
+    $('#consoleLink').href = 'https://console.firebase.google.com/project/' + cfg.projectId + '/firestore/data/~2Fleads';
+    refresh().then(load).catch(function () { show('login'); });
   });
 })();
 </script>
