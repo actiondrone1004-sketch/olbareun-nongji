@@ -50,6 +50,7 @@
 
 <!-- 1 HERO · 문장 + 관리기록 예시 패널 -->
 <section class="hero" id="home">
+  <div class="hero-bg" aria-hidden="true"><img src="assets/img/hero.jpg" alt="" fetchpriority="high"></div>
   <div class="container">
     <div class="hero-layout">
       <div>
@@ -57,8 +58,8 @@
         <h1>내 농지의 다음을,<br><em>함께 계획합니다.</em></h1>
         <p class="lead">농지는 있는데, 농사를 어떻게 시작해야 할지 막막하신가요?<br>현재 농지의 상태부터 확인하고,<br>소유자의 실제 영농을 함께 설계합니다.</p>
         <div class="btn-row">
-          <a class="btn btn-green" href="#apply">내 농지 무료진단 <span aria-hidden="true">↗</span></a>
-          <a class="btn" href="services.html">서비스 살펴보기</a>
+          <a class="btn btn-green" href="#apply">내 농지 무료진단 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-outline-w" href="services.html">서비스 살펴보기</a>
         </div>
       </div>
       <aside class="record-panel">
@@ -90,24 +91,23 @@
 <!-- 2 제공 서비스 -->
 <section id="services">
   <div class="container">
-    <div class="section-head">
-      <div><span class="sec-tag">올바른농지의 서비스</span><h2>내 농지에 필요한 일부터,<br>차근차근 함께합니다.</h2></div>
-      <p>농지 이용상태를 확인하는 일부터 실제 영농과 기록까지.<br>현재 상황에 맞는 서비스를 안내합니다.</p>
+    <div class="sec-head">
+      <div><span class="sec-tag">올바른농지의 서비스</span><h2 class="sec-title">내 농지에 필요한 일부터, 차근차근 함께합니다</h2><p class="sec-sub">농지 이용상태를 확인하는 일부터 실제 영농과 기록까지. 현재 상황에 맞는 서비스를 안내합니다.</p></div>
     </div>
     <div class="service-list">
-      <a class="service-row" href="services.html#diagnosis"><span class="no">01</span><h3>농지진단</h3><p>농지의 이용상태와 현재 행정단계를 확인하고, 지금 살펴봐야 할 내용을 정리합니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
-      <a class="service-row" href="services.html#planning"><span class="no">02</span><h3>영농설계</h3><p>소유자의 실제 영농을 전제로 재배 품목과 일정, 필요한 작업을 함께 계획합니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
-      <a class="service-row" href="services.html#farming"><span class="no">03</span><h3>경작 동반</h3><p>소유자의 농업경영을 보조하는 범위에서 작업을 지원하고, 작업 일자·내용·사진을 기록합니다.</p><span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="service-row" href="services.html#diagnosis"><span class="no">01</span><h3>농지진단</h3><p>농지의 이용상태와 현재 행정단계를 확인하고, 지금 살펴봐야 할 내용을 정리합니다.</p><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="service-row" href="services.html#planning"><span class="no">02</span><h3>영농설계</h3><p>소유자의 실제 영농을 전제로 재배 품목과 일정, 필요한 작업을 함께 계획합니다.</p><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="service-row" href="services.html#farming"><span class="no">03</span><h3>경작 동반</h3><p>소유자의 농업경영을 보조하는 범위에서 작업을 지원하고, 작업 일자·내용·사진을 기록합니다.</p><span class="arrow" aria-hidden="true">→</span></a>
     </div>
-    <p class="service-note">처분명령 대응 중 자격이 필요한 업무는 행정사·변호사 등 협력 전문가와 분리·연계합니다.</p>
+    <p class="fine-print service-note">처분명령 대응 중 자격이 필요한 업무는 행정사·변호사 등 협력 전문가와 분리·연계합니다.</p>
   </div>
 </section>
 
 <!-- 3 일하는 방식 -->
 <section id="why" class="bg-g">
   <div class="container">
-    <div class="sec-head">
-      <span class="sec-tag">일하는 방식</span><h2>농사와 기록을 함께 살핍니다</h2><p class="sec-sub">농지를 맡기는 서비스가 아니라, 농사를 함께하는 서비스입니다.</p>
+    <div class="sec-head center">
+      <div><span class="sec-tag">일하는 방식</span><h2 class="sec-title">농사와 기록을 함께 살핍니다</h2><p class="sec-sub">농지를 맡기는 서비스가 아니라, 농사를 함께하는 서비스입니다.</p></div>
     </div>
     <div class="why-wrap">
       <div class="record" aria-label="영농 관리기록 예시 화면">
@@ -127,10 +127,22 @@
         <div class="foot">작업 일자·내용·사진이 기록으로 남습니다. 위 내용은 예시이며 실제 기록은 농지별로 작성합니다.</div>
       </div>
       <div class="why-list">
-        <div class="why-item"><h3>소유자의 실제 영농이 전제</h3><p>대리경작·허위경작·형식적 식재는 하지 않습니다. 소유자가 농업경영의 주체가 되도록 계획하고, 필요한 작업을 함께합니다.</p></div>
-        <div class="why-item"><h3>법정 절차를 기준으로 안내</h3><p>"바로 25%"식 공포 대신 농지법 제10·11·12·63조의 단계와 기한을 기준으로 지금 어디에 있는지 설명합니다.</p></div>
-        <div class="why-item"><h3>작업사진·관리기록 제공</h3><p>작업 일자·내용·사진을 기록으로 남깁니다. 영농이 실제로 진행되고 있는지 소유자가 직접 확인할 수 있습니다.</p></div>
-        <div class="why-item"><h3>전문자격사와 분리·연계</h3><p>처분명령 취소, 이행강제금 이의제기, 행정심판 등 자격이 필요한 사안은 행정사·변호사와 연계하고, 컨설팅과 구분합니다.</p></div>
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <h3>소유자의 실제 영농이 전제</h3><p>대리경작·허위경작·형식적 식재는 하지 않습니다. 소유자가 농업경영의 주체가 되도록 계획하고, 필요한 작업을 함께합니다.</p>
+        </div>
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
+          <h3>법정 절차를 기준으로 안내</h3><p>"바로 25%"식 공포 대신 농지법 제10·11·12·63조의 단계와 기한을 기준으로 지금 어디에 있는지 설명합니다.</p>
+        </div>
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg></div>
+          <h3>작업사진·관리기록 제공</h3><p>작업 일자·내용·사진을 기록으로 남깁니다. 영농이 실제로 진행되고 있는지 소유자가 직접 확인할 수 있습니다.</p>
+        </div>
+        <div class="why-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>전문자격사와 분리·연계</h3><p>처분명령 취소, 이행강제금 이의제기, 행정심판 등 자격이 필요한 사안은 행정사·변호사와 연계하고, 컨설팅과 구분합니다.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -213,11 +225,10 @@
 </div>
 
 <!-- 6 관련 뉴스·보도 (3건 + 더보기 12건) -->
-<section id="news">
+<section id="news" class="bg-2">
   <div class="container">
-    <div class="section-head">
-      <div><span class="sec-tag">농지 소식</span><h2>관련 뉴스 · 보도</h2></div>
-      <p>농지 전수조사와 농지법 개정에 관한<br>원문 기사로 연결합니다.</p>
+    <div class="sec-head center">
+      <div><span class="sec-tag">농지 소식</span><h2 class="sec-title lg">관련 뉴스 · 보도</h2><p class="sec-sub">2026 농지 전수조사와 농지법 개정에 관한 언론 보도입니다. 제목을 누르면 해당 기사로 이동합니다.</p></div>
     </div>
     <div class="news-grid" id="newsList">
       <a class="news-card" href="https://www.newsedu.co.kr/news/articleView.html?idxno=101662" target="_blank" rel="noopener">

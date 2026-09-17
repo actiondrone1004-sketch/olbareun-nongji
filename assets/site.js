@@ -197,7 +197,7 @@
 
   // ----- 서브 목차(.subnav)가 있는 페이지는 앵커 이동 시 헤더+목차 높이만큼 여유를 둔다 -----
   var subnav = $('.subnav');
-  if (subnav && header) { document.documentElement.style.scrollPaddingTop = (header.offsetHeight + subnav.offsetHeight + 16) + 'px'; }
+  if (subnav) { document.documentElement.style.scrollPaddingTop = (subnav.offsetHeight + 8) + 'px'; }   // 헤더 몫은 CSS [id]{scroll-margin-top}가 담당
 
   // ----- 접힌 <details> 안의 앵커로 이동하면 자동으로 펼친다 (예: services.html#process) -----
   var reveal = function () {

@@ -12,8 +12,8 @@ terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] �
 admin.html                 신청 관리 화면 (메뉴에 없음, noindex, 헤더·푸터 없는 bare 페이지). Firebase 이메일/비밀번호 로그인 → Firestore leads 목록·상태·메모·삭제 (SDK 없이 REST)
 tools/firebase/            ★ 신청 저장소(현재 사용). firestore.rules(권한: 누구나 생성, 관리자 이메일만 읽기·수정) · firebase.json · README.md(설정·관리자 추가·규칙 배포 명령)
 tools/apps-script/         (대안, 미사용) Code.gs 구글 시트 저장 + 목록 API + 메일 알림 · README.md
-assets/site.css            공통 CSS — 2026-09-17 재구성안 기준으로 새로 씀 (토큰 → 기본 → 헤더/버튼/폼/푸터 → 메인 → 서브 → 회사소개 → 문서 → 반응형 950/700/480). 배경 #f7f6f0 · 주조 #294c39 · 1160px · 면·선 중심, 그림자·둥근모서리 없음, 제목 weight 500
-olbareun-redesign/         ★ 재구성안 원본(다른 도구 산출물, gitignore). README.md에 진단·새 순서·디자인 기준. 사이트는 이걸 _build 체계에 옮겨 적용한 것
+assets/site.css            공통 CSS (토큰 --g-700 등 → 공통 컴포넌트 → 메인 → 서브 → 반응형 → 회사소개 v2 → 맨 아래 '재구성 v2' 블록: 히어로 관리기록 패널·서비스 3행·펼쳐보기·subnav·전화 표시 조건). 초록 카드형 기존 디자인 유지 — 2026-09-17 재구성안의 평면 디자인은 사용자가 반려(구성만 채택)
+olbareun-redesign/         ★ 재구성안 원본(다른 도구 산출물, gitignore). README.md에 진단·새 순서·디자인 기준. 섹션 순서만 채택했고 디자인(#f7f6f0 평면)은 적용하지 않음
 assets/site.js             공통 JS — 맨 위 CONFIG 블록(PHONE/HOURS/FIREBASE{apiKey,projectId}/FORM_ENDPOINT/CONTACT_EMAIL/KAKAO_URL/BLOG_URL — APP_*·SHEET_URL은 현재 미사용)
 assets/img/                hero.jpg field.jpg · news/news-NN.jpg (기사 썸네일 480x300)
   about/                   회사소개용: prof-juwang.png(원본 그대로, 검정 배경 — 카드 배경도 #000) · lecture-1/2.webp · book-*.webp(저서 표지 2) · tv-sbsbiz-moneyshow-1/2.webp · logos/*.webp(출강 로고 15, 흰배경 평탄화·트림)
@@ -30,7 +30,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 ## 편집 규칙
 - **루트 html을 직접 고치지 말 것.** `_build/pages/*.html`(페이지 내용) 또는 `_build/partials/*.html`(GNB·푸터·폼)을 고치고 `python _build/build.py` 실행.
 - index·services·about에는 `id="apply"` 폼(이름·연락처만)이 있어 `href="#apply"`가 공통 CTA. 폼이 없는 페이지(terms·privacy·admin)는 빌드가 `index.html#apply`로 바꿈.
-- 디자인 규칙(v2): 영어 소제목(Process/Why 등) 금지 → 한국어 sec-tag. 섹션은 border-bottom 1px로 구분. 카드 대신 번호·제목·설명 한 행(.service-row) 또는 border-top 목록. 위험 안내(절차·이행강제금)는 <details class=accordion-section> 안에 보존. 관리기록(.record)은 '예시' 표기 유지. 헤더 전화·모바일 전화 버튼은 CONFIG.PHONE이 있을 때만(body.has-phone)
+- 구성 규칙(v2): 영어 소제목(Process/Why 등) 대신 한국어 sec-tag. 서비스는 번호·제목·설명 한 행 카드(.service-row). 위험 안내(숫자·절차·이행강제금)는 <details class=accordion-section> 안에 접어서 보존(앵커로 들어오면 site.js가 자동으로 펼침). 관리기록(.record)은 '예시' 표기 유지. 헤더·모바일 전화 버튼은 CONFIG.PHONE이 있을 때만(body.has-phone). **디자인은 기존 초록 카드형 그대로** — 사용자가 평면 디자인을 반려함
 - 카피 규칙: "바로 25%" "100% 해결" "안 걸리게" 금지. 절차(조사→처분의무→처분명령→미이행→이행강제금)와 유예(§12)를 함께 쓴다. 결과 보장 문구 금지.
 - 후기/실적은 실제 자료가 생기기 전까지 넣지 않는다.
 - 대표: 이주왕 교수 (올바른농지 대표이사 · 이주왕kok경매학원 대표 · 서울사이버대학교 부동산학과 겸임교수 — 직함은 SBS Biz 방송 자막 기준). 회사소개의 인용문·설립 동기 문단은 초안이라 대표 확인 필요. 출강 로고는 '제휴'가 아닌 '출강 이력'으로만 표기하고 연도·내용은 미확인.
