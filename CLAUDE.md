@@ -22,7 +22,7 @@ _build/                    ★ 소스. 루트 *.html은 여기서 생성된 산�
   partials/  head · header(GNB) · footer · apply(서브페이지 하단 CTA+폼)
   _unused/   제거된 것들(계산기 · 서비스4카드 · 전수조사 페이지 · 서비스 상세 4페이지(service-pages/) · 메인 비용안내/이용방법/사례/중요안내 섹션) — 복구용
   pages/     페이지별 front matter(title/desc/keywords/cur/noapply/bare/noindex) + <main> 본문. {{APPLY}} 자리에 apply 파셜 삽입
-  build.py   python _build/build.py → 루트 html 생성 + dist-artifact/ 생성 + 태그/중복id 검사
+  build.py   python _build/build.py → 루트 html 생성 + dist-artifact/ 생성 + 태그/중복id 검사 + site.css/site.js 링크에 내용 해시 ?v= 부여(캐시 무효화 — GitHub Pages 10분 캐시 때문에 배포 직후 옛 CSS+새 HTML로 깨져 보이던 문제 방지)
   dist-artifact/  Artifact 배포용 (index.html은 fragment, 나머지는 완전한 문서)
 _archive/                  이전 단일 페이지 버전 (base64 이미지 인라인, 대용량 — 읽지 말 것)
 ```

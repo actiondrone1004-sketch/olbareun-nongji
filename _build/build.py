@@ -63,6 +63,14 @@ def parse_page(src):
     meta = dict(re.findall(r"^(\w+):\s*(.*)$", m.group(1), re.M))
     return meta, m.group(2)
 
+# 캐시 무효화: site.css / site.js 내용 해시를 ?v= 로 붙인다 (GitHub Pages는 10분 캐시 → 배포 직후 옛 CSS+새 HTML 조합으로 깨져 보이는 것 방지)
+import hashlib
+def asset_ver(name):
+    with open(os.path.join(OUT, "assets", name), "rb") as f: return hashlib.md5(f.read()).hexdigest()[:8]
+CSS_V, JS_V = asset_ver("site.css"), asset_ver("site.js")
+def bust(html):
+    return html.replace('href="assets/site.css"', 'href="assets/site.css?v=%s"' % CSS_V).replace('src="assets/site.js"', 'src="assets/site.js?v=%s"' % JS_V)
+
 def build_page(fname):
     meta, body = parse_page(read(os.path.join(HERE, "pages", fname)))
     cur = meta.get("cur", "")
@@ -80,9 +88,9 @@ def build_page(fname):
     if meta.get("noindex") == "true":
         head = head.replace('<meta name="description"', '<meta name="robots" content="noindex, nofollow">\n<meta name="description"')
     if meta.get("bare") == "true":   # 헤더·푸터 없는 독립 페이지 (admin.html)
-        return head + body + '\n<script src="assets/site.js"></script>\n</body>\n</html>\n'
+        return bust(head + body + '\n<script src="assets/site.js"></script>\n</body>\n</html>\n')
     full = head + header + "\n" + body + "\n" + footer + "</body>\n</html>\n"
-    return full
+    return bust(full)
 
 ok = True
 os.makedirs(ART, exist_ok=True)
