@@ -12,7 +12,7 @@ terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] �
 admin.html                 신청 관리 화면 (메뉴에 없음, noindex, 헤더·푸터 없는 bare 페이지). Firebase 이메일/비밀번호 로그인 → Firestore leads 목록·상태·메모·삭제 (SDK 없이 REST)
 tools/firebase/            ★ 신청 저장소(현재 사용). firestore.rules(권한: 누구나 생성, 관리자 이메일만 읽기·수정) · firebase.json · README.md(설정·관리자 추가·규칙 배포 명령)
 tools/apps-script/         (대안, 미사용) Code.gs 구글 시트 저장 + 목록 API + 메일 알림 · README.md
-assets/site.css            공통 CSS — 미색 디자인(배경 #f7f6f0 · 주조 #294c39 · 1160px · 면·선 중심, 제목 weight 500). 앞부분은 812bc3e의 평면 CSS, 맨 아래 'v3' 블록이 상황 선택·역할표·기록·상담 과정·비용·FAQ·폼 select. 반응형 950/700/480
+assets/site.css            공통 CSS — 미색 디자인(배경 #f7f6f0 · 주조 #294c39 · 1160px · 면·선 중심, 제목 weight 500). 앞부분은 812bc3e의 평면 CSS, 'v3' 블록(상황 선택·역할표·기록·상담 과정·비용·FAQ·폼 select) → 맨 아래 '가독성 보정' 블록(본문 17px·잉크 진하게·제목 700·작은 글씨 13px 이상 — 사용자 요청, 글씨체 바꿀 때 이 블록 유지). 반응형 950/700/480
 olbareun-redesign/         1차 재구성안(다른 도구 산출물, gitignore). 이력: 09-17 적용→반려→되돌림, 09-18 사용자가 2차 기획(상황 중심)을 주며 미색 디자인 선택 → 현재 v3. 초록 카드형 디자인은 git 764dafd 에 남아 있음
 assets/site.js             공통 JS — 맨 위 CONFIG 블록(PHONE/HOURS/FIREBASE{apiKey,projectId}/FORM_ENDPOINT/CONTACT_EMAIL/KAKAO_URL/BLOG_URL — APP_*·SHEET_URL은 현재 미사용)
 assets/img/                hero.jpg field.jpg · news/news-NN.jpg (기사 썸네일 480x300)

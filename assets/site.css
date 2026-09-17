@@ -675,3 +675,89 @@ footer .gov { display: inline-block; margin-top: 4px; }
   .apply-steps b { grid-column: 2; }
   .apply-steps span { grid-column: 2; }
 }
+
+/* =========================================================
+   가독성 보정 (2026-09-18) — 본문 대비 강화, 제목 굵게, 작은 글씨 최소 13px, 자간 완화
+   ========================================================= */
+:root { --ink: #1f2d26; --ink-2: #3e4d45; --ink-3: #5a695f; }
+body { font-size: 17px; line-height: 1.85; }
+h1 { font-weight: 700; letter-spacing: -.03em; line-height: 1.3; }
+h2 { font-weight: 700; letter-spacing: -.02em; line-height: 1.4; }
+h3 { font-weight: 700; letter-spacing: -.01em; }
+h4 { font-weight: 700; }
+p { color: var(--ink-2); }
+.lead { font-size: 18px; line-height: 1.9; }
+.sec-sub { font-size: 16.5px; }
+.section-head p { font-size: 16px; }
+nav.gnb a { font-size: 16px; font-weight: 500; }
+.btn { font-size: 16px; font-weight: 600; }
+.brand .tag { font-size: 11px; }
+.fine-print, .fine, .src, .notes, .panel-note, .service-note { font-size: 14px; }
+.eyebrow, .sec-tag { font-size: 13px; }
+.crumbs { font-size: 13.5px; }
+.subnav a { font-size: 15px; font-weight: 500; }
+.scope li { font-size: 16px; }
+.hero-photo figcaption { font-size: 14px; }
+.hero-photo figcaption small { font-size: 13px; }
+.sit-btn { font-size: 19px; }
+.sit-panel dt { font-size: 14px; }
+.sit-panel dd { font-size: 16px; }
+.roles { font-size: 16px; }
+.roles thead th { font-size: 14px; }
+.roles tbody th small { font-size: 13.5px; }
+.notes li { padding-left: 20px; }
+.more-link { font-size: 16px; }
+.record-lg > header { font-size: 14px; }
+.record-fields > div { font-size: 16px; }
+.record-fields dt { font-size: 14px; }
+.record-fields dd b { font-size: 18px; }
+.record-photo span { font-size: 13px; }
+.record-list { font-size: 15px; }
+.record-list caption, .record-list th { font-size: 13.5px; }
+.steps p { font-size: 15.5px; }
+.cost dt, .cost dd { font-size: 16px; }
+.todo { font-size: 13.5px; }
+.trust-person p { font-size: 16px; }
+.trust-info li { font-size: 15px; }
+.faq-item summary { font-size: 17.5px; font-weight: 600; }
+.faq-item p { font-size: 16px; }
+.apply-steps li { font-size: 15px; }
+.apply-wide .lead { font-size: 17.5px; }
+.contact-list small { font-size: 13.5px; }
+.quick .s, .f label { font-size: 15px; }
+.f input, .f select, .f textarea { font-size: 16px; }
+.consent { font-size: 14px; }
+.news-card .src { font-size: 13.5px; }
+.news-card b { font-size: 16.5px; font-weight: 600; }
+.alert .t { font-size: 19px; }
+.alert p, .hc { font-size: 15px; }
+.alert .v { font-size: 28px; font-weight: 700; }
+.targets li { font-size: 16px; }
+.process p, .law { font-size: 14.5px; }
+.callout, .callout p { font-size: 15px; }
+.reason p { font-size: 15px; }
+.pen-ex .k, .pen-ex .c, .pen-ex-wrap .sub { font-size: 14px; }
+.why-item p { font-size: 16px; }
+.record li { font-size: 13.5px; }
+.record .w small, .record .st, .record .foot { font-size: 12.5px; }
+.doc p, .doc li { font-size: 16px; }
+.doc table { font-size: 15px; }
+.doc .todo { font-size: 14px; }
+footer { font-size: 14px; }
+footer ul, footer .desc { font-size: 14px; }
+footer .bottom { font-size: 12.5px; }
+.trust-bar li { font-size: 14.5px; }
+.cred-list li, .disclose ul, .verdict li { font-size: 15.5px; }
+.deliv p, .partner p, .partner-rules { font-size: 15px; }
+.dodont ul { font-size: 16px; }
+.info-list li { font-size: 16px; }
+.book b { font-size: 16px; }
+.book span, .book small { font-size: 13.5px; }
+.ceo-body > p { font-size: 16.5px; }
+.logo-head p { font-size: 15px; }
+@media (max-width: 700px) {
+  body { font-size: 16.5px; }
+  .lead { font-size: 17px; }
+  .sit-btn { font-size: 17.5px; }
+  .roles, .sit-panel dd, .record-fields > div, .cost dt, .cost dd, .faq-item p { font-size: 15.5px; }
+}
