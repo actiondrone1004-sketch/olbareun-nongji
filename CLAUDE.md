@@ -5,15 +5,15 @@
 
 ## 구조
 ```
-index.html                 홈 (hero+무료진단 폼(이름·연락처만) → 숫자 강조 4(#facts) → 관련 뉴스 3x3+더보기(#news) → CTA(#contact))
-services.html              서비스소개 (확인 필요 농지 → 절차+이행강제금 예상 비용 → 관리해야 하는 이유 3 → 왜 올바른농지 → 폼)
-about.html                 회사소개 (v2 2026-09-16: HERO+신뢰바 → 대표 소개(#ceo: 프로필·출강 로고 15·강의사진·저서2) → 기준과 원칙(#principles: 기준3·하는일/하지않는일·이해관계 공개·진단 3단계) → 방송·언론(#press) → 함께하는 곳(#partners) → 회사개요·오시는길(#map) → 폼). 하단에 JSON-LD Person/Organization
+index.html                 홈 v3 (2026-09-18, 상황 중심 구성): 1 hero(범위 3+현장 사진, 폼·숫자 없음) → 2·3 내 상황 선택(#situations: 버튼 4 → 패널 '먼저 확인/도울 수 있는 부분/준비 정보/이 상황으로 상담 신청') → 4 서비스·역할 비교표(#services) → 5 읽을 수 있는 관리기록 예시(#records) → 6 상담 과정 4단계+비용 경계(#process) → 7 담당자·회사 정보+FAQ 5(#faq) → 8 상담 폼(#apply, 파셜) → 보조: 뉴스 3+12(#news)
+services.html              보조 페이지 '농지 조사·처분 절차 안내' (page-hero → 목차 → 숫자 4(#facts, 카운팅 없음) → 확인 필요 농지+사진(#check) → 처분 절차·유예·예상 비용(#process) → 관리 이유(#manage) → 폼). GNB에는 없고 모바일 메뉴·푸터·홈 링크로 진입
+about.html                 회사소개 (HERO+신뢰바 → 대표 소개(#ceo) → 기준과 원칙(#principles) → 방송·언론(#press) → 함께하는 곳(#partners) → 회사개요·오시는길(#map) → 폼). 소제목 라벨 없음. 하단에 JSON-LD
 terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] 채워야 함)
 admin.html                 신청 관리 화면 (메뉴에 없음, noindex, 헤더·푸터 없는 bare 페이지). Firebase 이메일/비밀번호 로그인 → Firestore leads 목록·상태·메모·삭제 (SDK 없이 REST)
 tools/firebase/            ★ 신청 저장소(현재 사용). firestore.rules(권한: 누구나 생성, 관리자 이메일만 읽기·수정) · firebase.json · README.md(설정·관리자 추가·규칙 배포 명령)
 tools/apps-script/         (대안, 미사용) Code.gs 구글 시트 저장 + 목록 API + 메일 알림 · README.md
-assets/site.css            공통 CSS (토큰 --g-700 등 → 공통 컴포넌트 → 메인 → 서브 → 반응형 → 회사소개 v2)
-olbareun-redesign/         재구성안(다른 도구 산출물, gitignore). 2026-09-17 구성·디자인을 적용해 봤으나 사용자가 둘 다 반려 → 완전히 되돌림. 다시 적용하지 말 것 (git 812bc3e·1de62c3 에 적용본 남아 있음)
+assets/site.css            공통 CSS — 미색 디자인(배경 #f7f6f0 · 주조 #294c39 · 1160px · 면·선 중심, 제목 weight 500). 앞부분은 812bc3e의 평면 CSS, 맨 아래 'v3' 블록이 상황 선택·역할표·기록·상담 과정·비용·FAQ·폼 select. 반응형 950/700/480
+olbareun-redesign/         1차 재구성안(다른 도구 산출물, gitignore). 이력: 09-17 적용→반려→되돌림, 09-18 사용자가 2차 기획(상황 중심)을 주며 미색 디자인 선택 → 현재 v3. 초록 카드형 디자인은 git 764dafd 에 남아 있음
 assets/site.js             공통 JS — 맨 위 CONFIG 블록(PHONE/HOURS/FIREBASE{apiKey,projectId}/FORM_ENDPOINT/CONTACT_EMAIL/KAKAO_URL/BLOG_URL — APP_*·SHEET_URL은 현재 미사용)
 assets/img/                hero.jpg field.jpg · news/news-NN.jpg (기사 썸네일 480x300)
   about/                   회사소개용: prof-juwang.png(원본 그대로, 검정 배경 — 카드 배경도 #000) · lecture-1/2.webp · book-*.webp(저서 표지 2) · tv-sbsbiz-moneyshow-1/2.webp · logos/*.webp(출강 로고 15, 흰배경 평탄화·트림)
@@ -31,6 +31,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - **루트 html을 직접 고치지 말 것.** `_build/pages/*.html`(페이지 내용) 또는 `_build/partials/*.html`(GNB·푸터·폼)을 고치고 `python _build/build.py` 실행.
 - index·services·about에는 `id="apply"` 폼(이름·연락처만)이 있어 `href="#apply"`가 공통 CTA. 폼이 없는 페이지(terms·privacy·admin)는 빌드가 `index.html#apply`로 바꿈.
 - 섹션 위 소제목 라벨(.sec-tag / .eyebrow — Trust·Press·서비스소개 같은 작은 글씨)은 사용자 요청으로 전부 제거함(2026-09-17). 새 섹션에도 넣지 말 것
+- v3 원칙(사용자 2차 기획, 2026-09-18): 고객이 '내 상황 찾기 → 받을 도움 이해 → 상담 결정' 순으로 읽게 한다. 상황 선택은 안내용 분류일 뿐 진단·결과 단정 금지. 제공하지 않는 결과물·응답 시간 약속 금지(결과 전달 방식·계획서 형식·가격 예시는 운영 기준 확정 후 — index의 `[가격 기준 확정 후 대표 예시 표기]`·`[서비스 지역]` 참고). 관리기록은 '예시' 표기 유지, 실제 수행 자료(담당자·현장·익명화 기록)는 확보 후 별도 사례 영역에. 숫자 카운팅·과한 효과 없음. 폼의 '상담 상황' select 값은 Firestore extra['상담 상황']로 저장되어 admin 이름 아래 표시
 - 카피 규칙: "바로 25%" "100% 해결" "안 걸리게" 금지. 절차(조사→처분의무→처분명령→미이행→이행강제금)와 유예(§12)를 함께 쓴다. 결과 보장 문구 금지.
 - 후기/실적은 실제 자료가 생기기 전까지 넣지 않는다.
 - 대표: 이주왕 교수 (올바른농지 대표이사 · 이주왕kok경매학원 대표 · 서울사이버대학교 부동산학과 겸임교수 — 직함은 SBS Biz 방송 자막 기준). 회사소개의 인용문·설립 동기 문단은 초안이라 대표 확인 필요. 출강 로고는 '제휴'가 아닌 '출강 이력'으로만 표기하고 연도·내용은 미확인.

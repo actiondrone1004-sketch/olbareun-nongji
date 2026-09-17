@@ -27,6 +27,7 @@
 
   // ----- 설정값 채우기 -----
   if (CONFIG.PHONE) {
+    document.body.classList.add('has-phone');   // 헤더·고정 CTA의 전화 버튼은 번호가 있을 때만 표시
     $$('[data-phone]').forEach(function (el) { el.textContent = CONFIG.PHONE; });
     $$('[data-phone-link]').forEach(function (el) { el.href = 'tel:' + CONFIG.PHONE.replace(/[^0-9]/g, ''); });
   }
@@ -71,26 +72,6 @@
       menuBtn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
     });
     mnav.addEventListener('click', function (e) { if (e.target.closest('a')) { mnav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); } });
-  }
-
-  // ----- 숫자 카운터 (.fact .v[data-count]) -----
-  var counters = $$('[data-count]');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (counters.length && 'IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        io.unobserve(en.target);
-        var el = en.target, target = parseFloat(el.getAttribute('data-count')), dec = (String(el.getAttribute('data-count')).split('.')[1] || '').length;
-        var numEl = $('.n', el) || el, start = performance.now(), dur = 1300;
-        (function tick(now) {
-          var p = Math.min((now - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3), cur = target * eased;
-          numEl.textContent = cur.toLocaleString('ko-KR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
-          if (p < 1) requestAnimationFrame(tick);
-        })(start);
-      });
-    }, { threshold: 0.4 });
-    counters.forEach(function (el) { io.observe(el); });
   }
 
   // ----- 이행강제금 계산기 -----
@@ -171,7 +152,7 @@
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ writes: [{ update: { name: docPath + '/leads/' + docId, fields: fields }, updateTransforms: [{ fieldPath: 'createdAt', setToServerValue: 'REQUEST_TIME' }], currentDocument: { exists: false } }] })
         })
-          .then(function (res) { if (!res.ok) throw new Error(res.status); showMsg('접수되었습니다. ' + (CONFIG.HOURS ? CONFIG.HOURS + ' 중에 ' : '확인 후 ') + '연락드리겠습니다.', true); form.reset(); })
+          .then(function (res) { if (!res.ok) throw new Error(res.status); showMsg('접수되었습니다. 남겨주신 번호로 전화드려 농지 상황을 확인한 뒤, 도울 수 있는 범위와 비용을 안내합니다. 동의하신 뒤에만 진행합니다.' + (CONFIG.HOURS ? ' (전화 상담 ' + CONFIG.HOURS + ')' : ''), true); form.reset(); })
           .catch(function () { showMsg('전송 중 문제가 발생했습니다. 잠시 후 다시 시도하시거나 전화로 문의해 주세요.', false); })
           .finally(function () { submitBtn.disabled = false; submitBtn.innerHTML = btnHtml; });
         return;
@@ -188,11 +169,44 @@
       var isGas = /script\.google\.com/.test(CONFIG.FORM_ENDPOINT);
       fetch(CONFIG.FORM_ENDPOINT, { method: 'POST', headers: isGas ? { 'Content-Type': 'text/plain;charset=utf-8' } : { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
         .then(function (res) { if (!res.ok) throw new Error(res.status); return isGas ? res.json().catch(function () { return { ok: true }; }) : { ok: true }; })
-        .then(function (j) { if (j && j.ok === false) throw new Error(j.error || 'rejected'); showMsg('접수되었습니다. ' + (CONFIG.HOURS ? CONFIG.HOURS + ' 중에 ' : '확인 후 ') + '연락드리겠습니다.', true); form.reset(); })
+        .then(function (j) { if (j && j.ok === false) throw new Error(j.error || 'rejected'); showMsg('접수되었습니다. 남겨주신 번호로 전화드려 농지 상황을 확인한 뒤, 도울 수 있는 범위와 비용을 안내합니다. 동의하신 뒤에만 진행합니다.' + (CONFIG.HOURS ? ' (전화 상담 ' + CONFIG.HOURS + ')' : ''), true); form.reset(); })
         .catch(function () { showMsg('전송 중 문제가 발생했습니다. 잠시 후 다시 시도하시거나 전화로 문의해 주세요.', false); })
         .finally(function () { submitBtn.disabled = false; submitBtn.innerHTML = btnHtml; });
     });
   });
+
+  // ----- 서브 목차(.subnav)가 있는 페이지는 앵커 이동 시 헤더+목차 높이만큼 여유를 둔다 -----
+  var subnav = $('.subnav');
+  if (subnav && header) { document.documentElement.style.scrollPaddingTop = (header.offsetHeight + subnav.offsetHeight + 16) + 'px'; }
+
+  // ----- 상황 선택(#situations): 버튼 → 해당 패널만 표시. '이 상황으로 상담 신청'은 폼의 상담 상황 select에 이어진다 -----
+  var sitList = $('#sitList');
+  if (sitList) {
+    var sitBtns = $$('.sit-btn', sitList), sitPanels = $$('.sit-panel', sitList);
+    var pick = function (btn) {
+      sitBtns.forEach(function (b) { var on = b === btn; b.classList.toggle('active', on); b.setAttribute('aria-expanded', on ? 'true' : 'false'); });
+      sitPanels.forEach(function (p) { p.hidden = p.id !== btn.getAttribute('aria-controls'); });
+    };
+    sitBtns.forEach(function (b) { b.addEventListener('click', function () {
+      pick(b);
+      // 모바일(한 열)에서는 패널이 버튼 바로 아래 펼쳐지므로 그 위치로 살짝 이동
+      if (window.matchMedia('(max-width: 700px)').matches) requestAnimationFrame(function () { b.scrollIntoView({ block: 'start' }); });
+    }); });
+    pick(sitBtns[0]);
+    if (location.hash === '#situations') { /* 앵커 진입 시 첫 패널 유지 */ }
+  }
+  var setSituation = function (v) { $$('select[name="situation"]').forEach(function (sel) { sel.value = v; if (sel.value !== v) sel.value = ''; }); };
+  $$('[data-situation].sit-apply').forEach(function (a) { a.addEventListener('click', function () { setSituation(a.getAttribute('data-situation')); }); });
+
+  // ----- 접힌 <details> 안의 앵커로 이동하면 자동으로 펼친다 (예: services.html#process) -----
+  var reveal = function () {
+    if (!location.hash) return;
+    var node = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (!node) return;
+    var opened = false, p = node.parentElement;
+    while (p) { if (p.tagName === 'DETAILS' && !p.open) { p.open = true; opened = true; } p = p.parentElement; }
+    if (opened) requestAnimationFrame(function () { node.scrollIntoView(); });
+  };
+  window.addEventListener('hashchange', reveal); reveal();
 
   // ----- 더보기 토글: [data-more="#목록"] 버튼이 목록의 .hidden-item 을 펼친다 -----
   $$('[data-more]').forEach(function (btn) {
