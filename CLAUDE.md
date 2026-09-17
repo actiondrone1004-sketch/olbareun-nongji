@@ -6,7 +6,7 @@
 ## 구조
 ```
 index.html                 홈 v3 (2026-09-18, 상황 중심 구성): 1 hero(범위 3+현장 사진, 폼·숫자 없음) → 2·3 내 상황 선택(#situations: 버튼 4 → 패널 '먼저 확인/도울 수 있는 부분/준비 정보/이 상황으로 상담 신청') → 4 서비스·역할 비교표(#services) → 5 읽을 수 있는 관리기록 예시(#records) → 6 상담 과정 4단계+비용 경계(#process) → 7 담당자·회사 정보+FAQ 5(#faq) → 8 상담 폼(#apply, 파셜) → 보조: 뉴스 3+12(#news)
-services.html              보조 페이지 '농지 조사·처분 절차 안내' (page-hero → 목차 → 숫자 4(#facts, 카운팅 없음) → 확인 필요 농지+사진(#check) → 처분 절차·유예·예상 비용(#process) → 관리 이유(#manage) → 폼). GNB에는 없고 모바일 메뉴·푸터·홈 링크로 진입
+services.html              '농지전수조사' 탭 (GNB 2번째, 2026-09-18 사용자 요청) — 조사·처분 절차·이행강제금 안내 (page-hero → 목차 → 숫자 4(#facts, 카운팅 없음) → 확인 필요 농지+사진(#check) → 처분 절차·유예·예상 비용(#process) → 관리 이유(#manage) → 폼). 홈 링크·푸터에서도 진입
 about.html                 회사소개 (HERO+신뢰바 → 대표 소개(#ceo) → 기준과 원칙(#principles) → 방송·언론(#press) → 함께하는 곳(#partners) → 회사개요·오시는길(#map) → 폼). 소제목 라벨 없음. 하단에 JSON-LD
 terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] 채워야 함)
 admin.html                 신청 관리 화면 (메뉴에 없음, noindex, 헤더·푸터 없는 bare 페이지). Firebase 이메일/비밀번호 로그인 → Firestore leads 목록·상태·메모·삭제 (SDK 없이 REST)
