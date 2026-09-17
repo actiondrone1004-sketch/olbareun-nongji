@@ -27,6 +27,7 @@
 
   // ----- 설정값 채우기 -----
   if (CONFIG.PHONE) {
+    document.body.classList.add('has-phone');   // 헤더·고정 CTA의 전화 버튼은 번호가 있을 때만 표시
     $$('[data-phone]').forEach(function (el) { el.textContent = CONFIG.PHONE; });
     $$('[data-phone-link]').forEach(function (el) { el.href = 'tel:' + CONFIG.PHONE.replace(/[^0-9]/g, ''); });
   }
@@ -193,6 +194,20 @@
         .finally(function () { submitBtn.disabled = false; submitBtn.innerHTML = btnHtml; });
     });
   });
+
+  // ----- 서브 목차(.subnav)가 있는 페이지는 앵커 이동 시 헤더+목차 높이만큼 여유를 둔다 -----
+  var subnav = $('.subnav');
+  if (subnav && header) { document.documentElement.style.scrollPaddingTop = (header.offsetHeight + subnav.offsetHeight + 16) + 'px'; }
+
+  // ----- 접힌 <details> 안의 앵커로 이동하면 자동으로 펼친다 (예: services.html#process) -----
+  var reveal = function () {
+    if (!location.hash) return;
+    var node = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (!node) return;
+    var opened = false, p = node.parentElement;
+    while (p) { if (p.tagName === 'DETAILS' && !p.open) { p.open = true; opened = true; } p = p.parentElement; }
+    if (opened) requestAnimationFrame(function () { node.scrollIntoView(); });
+  };
+  window.addEventListener('hashchange', reveal); reveal();
 
   // ----- 더보기 토글: [data-more="#목록"] 버튼이 목록의 .hidden-item 을 펼친다 -----
   $$('[data-more]').forEach(function (btn) {
