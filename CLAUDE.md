@@ -40,11 +40,11 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 이미지 후처리는 Pillow(설치됨)로. 헤드리스 스크린샷: Edge `--headless=new --window-size=W,H --screenshot=...` (W는 500 이상이어야 함 — 그 아래는 최소창 크기 때문에 잘려 보임)
 
 ## 배포 (GitHub Pages — 실서비스)
-- 공개 주소: https://actiondrone1004-sketch.github.io/olbareun-nongji/
+- 공개 주소: https://www.allfarm.kr (2026-09-28 연결 · 루트 CNAME 파일 · allfarm.kr→www 자동 이동 · HTTPS 강제 · 옛 github.io 주소는 새 주소로 301)
+  DNS: www CNAME actiondrone1004-sketch.github.io / @ A 185.199.108~111.153. head.html canonical·og:url·og:image, sitemap·robots, about JSON-LD가 이 주소를 쓴다
 - 저장소: https://github.com/actiondrone1004-sketch/olbareun-nongji (public, main 브랜치 루트에서 Pages 빌드)
 - 배포 순서: `python _build/build.py` → `git add -A && git commit -m "..." && git push` → 1~2분 뒤 반영 (Pages 상태: `gh api repos/actiondrone1004-sketch/olbareun-nongji/pages --jq .status`)
 - .gitignore로 제외: `_archive/` `_design/` `_build/dist-artifact/` `images/`(사이트 미참조 원본) `KakaoTalk_*.jpg` `*.docx` — 개인 사진·원본 자료는 공개 저장소에 올리지 말 것
-- 커스텀 도메인 연결 시: 저장소 Settings → Pages → Custom domain(+CNAME 파일), DNS에 A/CNAME, HTTPS 강제. www·non-www 둘 다. robots.txt·sitemap.xml·head.html의 canonical 주소를 새 도메인으로 교체
 - robots.txt는 admin.html을 크롤링 제외
 
 ## 배포 (Artifact — 미리보기용)
