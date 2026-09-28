@@ -296,4 +296,23 @@
       if (k) bump([k]);
     }, true);
   })();
+
+  // ----- 홈 v5: 스크롤하면 나타남([data-reveal] → .in) · 숫자 올라가기([data-count]) -----
+  (function () {
+    var els = $$('[data-reveal]');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var countUp = function (root) {
+      $$('[data-count]', root).forEach(function (el) {
+        var end = +el.getAttribute('data-count'); if (reduce || !end) return;
+        var t0 = null, dur = 1400;
+        var step = function (t) { if (!t0) t0 = t; var k = Math.min(1, (t - t0) / dur); k = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(end * k).toLocaleString('ko-KR'); if (k < 1) requestAnimationFrame(step); };
+        el.textContent = '0'; requestAnimationFrame(step);
+      });
+    };
+    if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); countUp(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
 })();
