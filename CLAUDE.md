@@ -7,13 +7,13 @@
 ```
 index.html                 홈 v5 (2026-09-28, 인포그래픽·모션): hx 위성 스캔 지도 hero(SVG 필지 격자·스캔선·현장 확인 표시 — mk 스크립트로 생성한 정적 SVG) → #why 숫자 카드 4(카운트업·막대·4곳 중 1곳·매년 누적) → #flow 절차 5단계 선 그리기+유예 분기 → #stories 아이콘 인용 3 → #how 세 걸음 원형 아이콘 → #promise → #ceo → #apply → 숏폼·방송 뉴스. 모션은 [data-reveal]→.in(site.js IntersectionObserver), html.js일 때만 숨김, prefers-reduced-motion이면 정지
 services.html              '농지전수조사' 탭 v5 인포그래픽(2026-09-28): 뉴스 hero → #schedule 조사 일정 타임라인(개월 비례·'지금' 표시) → #facts 면적 비교(10,490,000 대 550,000)·100칸 중 27칸·12개월 → #check 아이콘 6칸 → #process 5단계 선+조문·유예/기한 상자 → #penalty 25% 막대·매년 누적 → 마무리 CTA → 폼. 생성 스크립트 없이 _build/pages/services.html 직접 편집(100칸·12칸은 반복 태그). CSS는 site.css 'sv-' 블록과 '농지전수조사 v5' 블록
-about.html                 회사 소개 v4: page-hero(설립 동기 한 문장 — 대표 확인 필요) → 대표(#ceo: 사진·이력 3줄·지키는 3가지) → 하는 일/하지 않는 일(#scope) → 강의·저서·방송(#career) → 회사 개요(#map) → 폼. JSON-LD 유지. 함께하는 곳·판단 기준은 v4에서 삭제
+about.html                 회사 소개 v5 인포그래픽(2026-09-28): ab-hero(사진+숫자 15곳·10편·2권 카운트업) → #ceo 걸어온 길 타임라인(2004 법인·2013·2018·2020~23·2024·2026 — 출처 확인된 것만) → #scope 경계선(하는/하지 않는 일 아이콘)+약속 3 → #career 로고·강의 사진·저서 → #media 대표 방송·강의 영상·기사·링크 → #map 회사 개요 아이콘 카드(네이버 지도 링크) → 폼. JSON-LD 유지
 press.html                 '보도' 탭(2026-09-28): 채널 버튼 → 방송 뉴스(유튜브, 제자리 재생) → 기사 → 올바른농지 숏폼·블로그. 각 목록 앨범/목록 전환. 내용은 전부 _build/data/media.json에서 생성(아래 '보도·SNS 데이터')
 terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] 채워야 함)
 admin.html                 관리자 화면 (푸터 맨 아래 '관리자' 링크, noindex, bare 페이지). 비밀번호만 입력(계정은 ADMIN_EMAIL 고정) → [통계] 일·월·연별 방문자·조회수·페이지별·문의·카카오/전화/유튜브/인스타 클릭 + [문의 목록] leads 상태·메모·삭제 (SDK 없이 REST)
 tools/firebase/            ★ 신청 저장소(현재 사용). firestore.rules(권한: 누구나 생성, 관리자 이메일만 읽기·수정) · firebase.json · README.md(설정·관리자 추가·규칙 배포 명령)
 tools/apps-script/         (대안, 미사용) Code.gs 구글 시트 저장 + 목록 API + 메일 알림 · README.md
-assets/site.css            공통 CSS — 미색 디자인(배경 #f7f6f0 · 주조 #294c39 · 1160px · 면·선 중심, 제목 weight 500). 앞부분은 812bc3e의 평면 CSS, 'v3' 블록(상황 선택·역할표·기록·상담 과정·비용·FAQ·폼 select) → 맨 아래 '가독성 보정' 블록(본문 17px·잉크 진하게·제목 700·작은 글씨 13px 이상 — 사용자 요청, 글씨체 바꿀 때 이 블록 유지). 반응형 950/700/480
+assets/site.css            공통 CSS — 색 조합 C(2026-09-28): 흰 배경 · 올리브 #4b5d3a(짙은 면 #2e3a24) · 벼이삭 금색 #c8a24a · 먹색 글자 #1c1c1a · 경고 주황 #c0643f 하나만. 라임 형광·원형 그라데이션 금지, 짙은 면은 페이지당 최소로. 맨 아래 '색 조합 C' 블록이 :root 토큰을 최종 결정 · 1160px. 앞부분은 812bc3e의 평면 CSS, 'v3' 블록(상황 선택·역할표·기록·상담 과정·비용·FAQ·폼 select) → 맨 아래 '가독성 보정' 블록(본문 17px·잉크 진하게·제목 700·작은 글씨 13px 이상 — 사용자 요청, 글씨체 바꿀 때 이 블록 유지). 반응형 950/700/480
 olbareun-redesign/         1차 재구성안(다른 도구 산출물, gitignore). 이력: 09-17 적용→반려→되돌림, 09-18 사용자가 2차 기획(상황 중심)을 주며 미색 디자인 선택 → 현재 v3. 초록 카드형 디자인은 git 764dafd 에 남아 있음
 assets/site.js             공통 JS — 맨 위 CONFIG 블록(PHONE/HOURS/FIREBASE{apiKey,projectId}/FORM_ENDPOINT/CONTACT_EMAIL/KAKAO_URL/BLOG_URL — APP_*·SHEET_URL은 현재 미사용)
 assets/img/                hero.jpg field.jpg · news/news-NN.jpg (기사 썸네일 480x300)

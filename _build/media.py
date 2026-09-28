@@ -139,7 +139,7 @@ def render():
                                 '<div class="fd-list album">%s</div><p class="more-link"><a href="press.html#sns">전체 보기 →</a></p></div></section>'
                                 % "".join(feed_card(i) for i in feed[:4])) if feed else "",
         "{{MEDIA_VIDEOS}}": '<div class="vd-list album" id="videoList">%s</div>' % "".join(video_card(v) for v in videos),
-        "{{MEDIA_VIDEOS_HOME}}": '<div class="vd-list album">%s</div>' % "".join(video_card(v) for v in videos[:3]),
+        "{{MEDIA_VIDEOS_HOME}}": '<div class="vd-list album">%s</div>' % "".join(video_card(v) for v in videos[:4]),
         "{{MEDIA_NEWS}}": '<div class="nw-list album" id="newsList">%s</div>' % "".join(news_card(n) for n in news),
         "{{MEDIA_NEWS_COUNT}}": str(len(news)),
         "{{MEDIA_VIDEOS_COUNT}}": str(len(videos)),
