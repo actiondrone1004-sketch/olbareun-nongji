@@ -5,9 +5,10 @@
 
 ## 구조
 ```
-index.html                 홈 v3 (2026-09-18, 상황 중심 구성): 1 hero(범위 3+현장 사진, 폼·숫자 없음) → 2·3 내 상황 선택(#situations: 버튼 4 → 패널 '먼저 확인/도울 수 있는 부분/준비 정보/이 상황으로 상담 신청') → 4 서비스·역할 비교표(#services) → 5 읽을 수 있는 관리기록 예시(#records) → 6 상담 과정 4단계+비용 경계(#process) → 7 담당자·회사 정보+FAQ 5(#faq) → 8 상담 폼(#apply, 파셜) → 보조: 뉴스 3+12(#news)
-services.html              '농지전수조사' 탭 (GNB 2번째, 2026-09-18 사용자 요청) — 조사·처분 절차·이행강제금 안내 (page-hero → 목차 → 숫자 4(#facts, 카운팅 없음) → 확인 필요 농지+사진(#check) → 처분 절차·유예·예상 비용(#process) → 관리 이유(#manage) → 폼). 홈 링크·푸터에서도 진입
-about.html                 회사 소개 v3 (2026-09-18): page-hero '누가·어디서·어떤 범위'(신뢰바: 상담 담당/소재지/대응 지역/상담 방식/사업자) → 목차 → 상담 담당 대표(#ceo: 사진·이력·상담에서 지키는 3가지, 인용문 삭제) → 하는 일/하지 않는 일+이해관계(#scope) → 판단 기준+진단 결론 3(#principles) → 강의·저서·방송(#career: 로고 15·강의 사진·저서 2·방송 캡처 2) → 함께하는 곳(#partners) → 회사개요·오시는길(#map) → 폼. JSON-LD 유지
+index.html                 홈 v4 (2026-09-28, 스토리·카피 중심으로 단순화): 질문 hero → #why 달라진 것 3 → #stories 공감 인용 3 → #how 세 걸음(농지진단·영농설계·경작 동반) → #promise 약속 3(초록 띠) → #ceo 대표 한 줄 → #apply(채널 안내+전화 요청 폼) → #news 3건. v3(상황 선택·역할표·기록 예시·비용·FAQ)는 git b68ccac에 있음
+services.html              '농지전수조사' 탭 강조형(2026-09-28): 짙은 초록 hero(정부 조사 뉴스 4건) → 큰 숫자 5(#facts: 10,490,000·550,000 필지·27%·1년·25% — 숫자는 줄임 없이 전체 자릿수로) → 확인할 땅(#check) → 절차 5단계·유예·기한(#process) → 25% 계산(#penalty, 원 단위 전체) → 마무리 CTA(#manage) → 폼. CSS는 site.css 맨 아래 'sv-' 블록
+about.html                 회사 소개 v4: page-hero(설립 동기 한 문장 — 대표 확인 필요) → 대표(#ceo: 사진·이력 3줄·지키는 3가지) → 하는 일/하지 않는 일(#scope) → 강의·저서·방송(#career) → 회사 개요(#map) → 폼. JSON-LD 유지. 함께하는 곳·판단 기준은 v4에서 삭제
+press.html                 '보도' 탭(2026-09-28): 채널 버튼 → 방송 뉴스(유튜브, 제자리 재생) → 기사 → 올바른농지 숏폼·블로그. 각 목록 앨범/목록 전환. 내용은 전부 _build/data/media.json에서 생성(아래 '보도·SNS 데이터')
 terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] 채워야 함)
 admin.html                 신청 관리 화면 (메뉴에 없음, noindex, 헤더·푸터 없는 bare 페이지). Firebase 이메일/비밀번호 로그인 → Firestore leads 목록·상태·메모·삭제 (SDK 없이 REST)
 tools/firebase/            ★ 신청 저장소(현재 사용). firestore.rules(권한: 누구나 생성, 관리자 이메일만 읽기·수정) · firebase.json · README.md(설정·관리자 추가·규칙 배포 명령)
@@ -31,6 +32,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - **루트 html을 직접 고치지 말 것.** `_build/pages/*.html`(페이지 내용) 또는 `_build/partials/*.html`(GNB·푸터·폼)을 고치고 `python _build/build.py` 실행.
 - index·services·about에는 `id="apply"` 폼(이름·연락처만)이 있어 `href="#apply"`가 공통 CTA. 폼이 없는 페이지(terms·privacy·admin)는 빌드가 `index.html#apply`로 바꿈.
 - 섹션 위 소제목 라벨(.sec-tag / .eyebrow — Trust·Press·서비스소개 같은 작은 글씨)은 사용자 요청으로 전부 제거함(2026-09-17). 새 섹션에도 넣지 말 것
+- v4 원칙(2026-09-28 사용자 요청): 홈페이지는 짧은 카피와 이야기 흐름으로 단순하게, 자세한 문의는 카카오톡 채널(CONFIG.KAKAO_URL)에서 진행. 설명을 늘리지 말 것. 아래 v3 원칙 중 금지 사항은 그대로 유효
 - v3 원칙(사용자 2차 기획, 2026-09-18): 고객이 '내 상황 찾기 → 받을 도움 이해 → 상담 결정' 순으로 읽게 한다. 상황 선택은 안내용 분류일 뿐 진단·결과 단정 금지. 제공하지 않는 결과물·응답 시간 약속 금지(결과 전달 방식·계획서 형식·가격 예시는 운영 기준 확정 후 — index의 `[가격 기준 확정 후 대표 예시 표기]`·`[서비스 지역]` 참고). 관리기록은 '예시' 표기 유지, 실제 수행 자료(담당자·현장·익명화 기록)는 확보 후 별도 사례 영역에. 숫자 카운팅·과한 효과 없음. 폼의 '상담 상황' select 값은 Firestore extra['상담 상황']로 저장되어 admin 이름 아래 표시
 - 카피 규칙: "바로 25%" "100% 해결" "안 걸리게" 금지. 절차(조사→처분의무→처분명령→미이행→이행강제금)와 유예(§12)를 함께 쓴다. 결과 보장 문구 금지.
 - 후기/실적은 실제 자료가 생기기 전까지 넣지 않는다.
@@ -54,6 +56,13 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 실서비스 도메인 배포 시: www / non-www 둘 다 HTTPS, head.html의 canonical·og:image 절대 URL·네이버 서치어드바이저 메타 채우기, sitemap.xml·robots.txt 추가.
 - 참고: 같은 이름의 디자인 캔버스 아티팩트가 따로 있다(af8ec918-88e2-4176-be59-8809a09eac70). 홈페이지 코드가 아니므로 혼동 금지.
 
+## 보도·SNS 데이터 (2026-09-28~)
+- `_build/data/media.json` → `_build/media.py`가 `{{MEDIA_*}}` 자리(press.html·index 하단·푸터 채널 버튼)에 HTML 생성. 수정 후 `python _build/build.py`
+- videos: 방송사 보도 영상(유튜브 ID). 정치 논평 채널은 넣지 않는다. news: 기사(썸네일은 assets/img/news/)
+- feed: 올바른농지 숏폼·블로그. 인스타그램은 공개 API가 없어 릴스 URL을 직접 추가(type instagram, thumb 선택). 유튜브 채널(UCVs19gtXW8jh4VA0HZUoigQ)은 빌드 때 RSS로 자동 수집, 블로그는 channels.blog_rss에 RSS 주소를 넣으면 자동 수집. 수집 결과는 data/feed-cache.json(네트워크 실패 시 사용). 채널에 영상이 없으면 RSS가 404 → '수집 실패, 캐시 0건'은 정상
+- 채널 주소는 site.js CONFIG(KAKAO_URL·YOUTUBE_URL·INSTAGRAM_URL·BLOG_URL) — data-link="youtube|instagram|kakao|blog"
+- 빌드 print에 '—' 같은 문자 쓰지 말 것(Windows 콘솔 cp949에서 빌드가 죽음)
+
 ## 신청 접수 흐름 (Firebase, 2026-09-17~)
 폼(site.js form.apply-form) → Firestore REST `documents:commit`으로 `leads/{id}` 생성 (CONFIG.FIREBASE, createdAt은 서버시간). 관리자는 admin.html에서 이메일/비밀번호 로그인(Identity Toolkit REST) 후 runQuery로 목록 조회, PATCH로 상태·메모, DELETE로 삭제.
 - 프로젝트 `olbareun-nongji`(actiondrone1004@gmail.com 소유) · Firestore 서울 · 관리자 이메일은 `tools/firebase/firestore.rules` isAdmin() 목록 → 바꾸면 `firebase deploy --only firestore:rules --config tools/firebase/firebase.json --project olbareun-nongji`
@@ -62,5 +71,5 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 
 ## 미기입 플레이스홀더
 `[상담전화]` `[상담 가능 시간]` `[주소]` `[사업자번호]` `[가격]` `[서비스 지역]` `[이메일]`,
-about.html 함께하는 곳의 `[협력 행정사 사무소 · 법무법인]` `[협력 세무사]` `[농작업 · 묘목 협력업체]` (동의 받은 곳만 실명·로고 표기), terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]`,
+terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]`, 블로그 주소(CONFIG.BLOG_URL + media.json channels.blog_rss),
 `tel:00000000000` (CONFIG.PHONE 채우면 JS가 교체), 블로그 글 링크(CONFIG.BLOG_URL).

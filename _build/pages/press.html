@@ -1,0 +1,58 @@
+---
+title: 보도 · 영상 — 농지 전수조사 뉴스 모음 | 올바른농지
+desc: 농지 전수조사 관련 방송 뉴스 영상과 기사, 올바른농지의 숏폼·블로그를 한곳에 모았습니다. 앨범형·목록형으로 골라 보세요.
+keywords: 농지 전수조사 뉴스, 농지 전수조사 영상, 농지법 개정 뉴스, 처분명령, 이행강제금, 올바른농지 유튜브, 올바른농지 인스타그램
+cur: press
+---
+<main id="main">
+
+<section class="page-hero pr-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="현재 위치"><a href="index.html">홈</a><span>보도</span></nav>
+    <h1>농지 전수조사,<br>뉴스와 영상으로 모아봤습니다.</h1>
+    <p class="lead">방송 뉴스 {{MEDIA_VIDEOS_COUNT}}편과 기사 {{MEDIA_NEWS_COUNT}}건, 그리고 올바른농지가 직접 전하는 이야기.</p>
+    <div class="sns-row">{{MEDIA_SNS}}</div>
+  </div>
+</section>
+
+<nav class="subnav" aria-label="페이지 목차">
+  <div class="container">
+    <a href="#videos">방송 뉴스</a><a href="#news">기사</a><a href="#sns">올바른농지 숏폼 · 블로그</a>
+  </div>
+</nav>
+
+<section id="videos">
+  <div class="container">
+    <div class="pr-head">
+      <h2>방송 뉴스</h2>
+      <div class="view-toggle" role="group" aria-label="보기 방식"><button type="button" class="on" data-view="album" data-target="#videoList">앨범</button><button type="button" data-view="list" data-target="#videoList">목록</button></div>
+    </div>
+    {{MEDIA_VIDEOS}}
+    <p class="fine-print pr-note">썸네일을 누르면 이 자리에서 재생됩니다. 영상의 저작권은 각 방송사에 있습니다.</p>
+  </div>
+</section>
+
+<section id="news" class="bg-g">
+  <div class="container">
+    <div class="pr-head">
+      <h2>기사</h2>
+      <div class="view-toggle" role="group" aria-label="보기 방식"><button type="button" data-view="album" data-target="#newsList">앨범</button><button type="button" class="on" data-view="list" data-target="#newsList">목록</button></div>
+    </div>
+    {{MEDIA_NEWS}}
+    <p class="fine-print pr-note">기사 제목·이미지의 저작권은 각 언론사에 있으며, 원문 링크 안내 목적으로만 표시합니다.</p>
+  </div>
+</section>
+
+<section id="sns">
+  <div class="container">
+    <div class="pr-head">
+      <h2>올바른농지 숏폼 · 블로그</h2>
+      {{MEDIA_FEED_TABS}}
+    </div>
+    {{MEDIA_FEED}}
+  </div>
+</section>
+
+{{APPLY}}
+
+</main>

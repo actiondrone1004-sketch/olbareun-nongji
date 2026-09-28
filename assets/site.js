@@ -14,7 +14,9 @@
     },
     FORM_ENDPOINT: "",    // (대안) "https://formspree.io/f/xxxxxxx" (POST JSON) 또는 Apps Script 웹앱 주소. FIREBASE도 이것도 없으면 mailto로 전송
     CONTACT_EMAIL: "",    // FORM_ENDPOINT가 없을 때 mailto 수신 주소
-    KAKAO_URL: "",        // 예) "https://pf.kakao.com/_xxxxx"  비워두면 카카오톡 링크 숨김
+    KAKAO_URL: "https://pf.kakao.com/_YzQrX",   // 카카오톡 채널. 비워두면 카카오톡 링크 숨김
+    YOUTUBE_URL: "https://www.youtube.com/channel/UCVs19gtXW8jh4VA0HZUoigQ",
+    INSTAGRAM_URL: "https://www.instagram.com/right_farming2004/",
     BLOG_URL: "",         // 예) "https://blog.naver.com/xxxxx"  비워두면 블로그 링크 숨김
     APP_IOS_URL: "",      // App Store 링크. 비워두면 버튼 숨김
     APP_ANDROID_URL: "",  // Google Play 링크. 비워두면 버튼 숨김
@@ -32,7 +34,7 @@
     $$('[data-phone-link]').forEach(function (el) { el.href = 'tel:' + CONFIG.PHONE.replace(/[^0-9]/g, ''); });
   }
   if (CONFIG.HOURS) { $$('[data-hours]').forEach(function (el) { el.textContent = CONFIG.HOURS; }); }
-  [['kakao', CONFIG.KAKAO_URL], ['blog', CONFIG.BLOG_URL], ['app-ios', CONFIG.APP_IOS_URL], ['app-android', CONFIG.APP_ANDROID_URL], ['email', CONFIG.CONTACT_EMAIL ? 'mailto:' + CONFIG.CONTACT_EMAIL : '']].forEach(function (pair) {
+  [['kakao', CONFIG.KAKAO_URL], ['youtube', CONFIG.YOUTUBE_URL], ['instagram', CONFIG.INSTAGRAM_URL], ['blog', CONFIG.BLOG_URL], ['app-ios', CONFIG.APP_IOS_URL], ['app-android', CONFIG.APP_ANDROID_URL], ['email', CONFIG.CONTACT_EMAIL ? 'mailto:' + CONFIG.CONTACT_EMAIL : '']].forEach(function (pair) {
     $$('[data-link="' + pair[0] + '"]').forEach(function (el) {
       if (pair[1]) { el.href = pair[1]; if (pair[0] !== 'email') { el.target = '_blank'; el.rel = 'noopener'; } }
       else if (el.hasAttribute('data-hide-empty')) { (el.closest('[data-hide-wrap]') || el).hidden = true; }
@@ -207,6 +209,32 @@
     if (opened) requestAnimationFrame(function () { node.scrollIntoView(); });
   };
   window.addEventListener('hashchange', reveal); reveal();
+
+  // ----- 보도: 앨범/목록 전환 · 종류 필터 · 유튜브 제자리 재생 -----
+  $$('.view-toggle button').forEach(function (btn) {
+    var list = $(btn.getAttribute('data-target')); if (!list) return;
+    var apply = function () {
+      $$('button', btn.parentNode).forEach(function (b) { b.classList.toggle('on', b === btn); b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      list.classList.remove('album', 'list'); list.classList.add(btn.getAttribute('data-view'));
+    };
+    if (btn.classList.contains('on')) apply();
+    btn.addEventListener('click', apply);
+  });
+  $$('.fd-tabs button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = btn.getAttribute('data-filter');
+      $$('button', btn.parentNode).forEach(function (b) { b.classList.toggle('on', b === btn); });
+      $$('#feedList .fd-card').forEach(function (c) { c.hidden = f !== 'all' && c.getAttribute('data-type') !== f; });
+    });
+  });
+  $$('.vd-play').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + btn.getAttribute('data-yt') + '?autoplay=1&rel=0';
+      f.title = btn.getAttribute('aria-label') || 'YouTube'; f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
+      f.className = 'vd-frame'; btn.replaceWith(f);
+    });
+  });
 
   // ----- 더보기 토글: [data-more="#목록"] 버튼이 목록의 .hidden-item 을 펼친다 -----
   $$('[data-more]').forEach(function (btn) {

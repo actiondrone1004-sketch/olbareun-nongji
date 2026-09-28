@@ -11,7 +11,10 @@ from html.parser import HTMLParser
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)          # 프로젝트 루트 (산출물 html이 놓이는 곳)
 ART = os.path.join(HERE, "dist-artifact")   # Claude Artifact 배포용 복사본 (index.html은 fragment)
-PAGE_KEYS = ["services", "about"]
+PAGE_KEYS = ["services", "about", "press"]
+sys.path.insert(0, HERE)
+import media
+MEDIA = media.render()
 
 def read(p):
     with open(p, encoding="utf-8") as f: return f.read()
@@ -81,6 +84,7 @@ def build_page(fname):
     header = header.replace(' >', '>')
     footer = footer_t
     body = body.replace("{{APPLY}}", apply_t)
+    for k, v in MEDIA.items(): body = body.replace(k, v); footer = footer.replace(k, v)
     if 'id="apply"' not in body:   # 이 페이지에 신청폼이 없으면 농지진단 페이지의 폼으로 보낸다
         header = header.replace('href="#apply"', 'href="index.html#apply"')
         footer = footer.replace('href="#apply"', 'href="index.html#apply"')

@@ -1,0 +1,49 @@
+{
+  "_help": "보도 탭(press.html)과 홈 '보도·영상' 영역의 데이터. 항목을 추가·수정한 뒤 python _build/build.py 실행. 날짜는 YYYY-MM-DD, 최신순 정렬은 빌드가 한다.",
+
+  "channels": {
+    "_help": "자동 수집: 빌드할 때 유튜브 채널 RSS(youtube_channel_id)와 블로그 RSS(blog_rss)를 읽어 feed에 합친다. 인스타그램은 공개 API가 없어 feed에 링크를 직접 넣는다. 네이버 블로그 RSS 예) https://rss.blog.naver.com/블로그아이디.xml",
+    "youtube_channel_id": "UCVs19gtXW8jh4VA0HZUoigQ",
+    "blog_rss": ""
+  },
+
+  "feed": {
+    "_help": "올바른농지가 올린 숏폼·블로그 글. type: instagram | youtube | blog. thumb은 선택(없으면 기본 카드). 유튜브는 url만 넣어도 썸네일 자동. 예) {\"type\": \"instagram\", \"url\": \"https://www.instagram.com/reel/XXXX/\", \"title\": \"상속 농지, 가장 먼저 확인할 것\", \"date\": \"2026-10-01\"}",
+    "items": []
+  },
+
+  "videos": {
+    "_help": "농지 전수조사 관련 방송 뉴스 영상 (유튜브 영상 ID). 정치 논평 채널은 넣지 않는다 — 방송사 보도 위주.",
+    "items": [
+      {"id": "Jdms7R9HTpk", "title": "\"내 땅 빼앗고 처벌한다?\" 전국 농지 전수조사 공포에 농림축산식품부 장관 등판", "source": "목포MBC뉴스", "date": "2026-09-27"},
+      {"id": "di9BLQwxXbg", "title": "관행 따르던 농민들 '패닉' / \"농지 투기 아니라면 처분 유예 추진\"", "source": "KBS News", "date": "2026-09-24"},
+      {"id": "ZUAIYvZyI0Q", "title": "\"내 땅 뺏기는 거 아냐?\" 송미령 장관이 밝힌 '진짜 투기 3가지 유형'", "source": "전주MBC News", "date": "2026-09-24"},
+      {"id": "W6_feVpYe4U", "title": "이 대통령 \"농지전수조사 꼭 필요…방해 많아도 할 일 해야\"", "source": "SBS 뉴스", "date": "2026-09-24"},
+      {"id": "EEfrUkKbdCk", "title": "농지전수조사 '정면돌파' 선언…\"모든 정부가 회피했지만\" [이슈ZIP]", "source": "연합뉴스TV", "date": "2026-09-24"},
+      {"id": "FmmMSbZiV6U", "title": "농지 전수조사 시작하자 거래 급감…농촌 현장 '반발'", "source": "TBC뉴스", "date": "2026-09-23"},
+      {"id": "pbYLuaydCHQ", "title": "정부 농지 전수조사…농촌 현장에서는 '거래절벽' 불만", "source": "안동MBC NEWS", "date": "2026-09-23"},
+      {"id": "cCSURMbeqhA", "title": "'전수조사' 칼 뺐지만‥\"늙어 농사 못 짓는데\"", "source": "MBCNEWS", "date": "2026-09-22"}
+    ]
+  },
+
+  "news": {
+    "_help": "기사. img는 assets/img/news/ 아래 파일(없으면 언론사명 카드).",
+    "items": [
+      {"url": "https://www.newsedu.co.kr/news/articleView.html?idxno=101662", "img": "news-01.jpg", "source": "뉴스에듀신문", "date": "2026-09-14", "title": "농지 전수조사 '4명 중 1명 농지법 위반 추정'"},
+      {"url": "https://www.farminsight.net/news/articleView.html?idxno=16705", "img": "news-02.jpg", "source": "팜인사이트", "date": "2026-07-31", "title": "농지 전수조사 결과 27% \"위반 의심\"…8월부터 심층조사 돌입"},
+      {"url": "https://www.mt.co.kr/economy/2026/07/30/2026073015433178460", "img": "news-03.jpg", "source": "머니투데이", "date": "2026-07-30", "title": "농지 전수조사 27%서 위법 의심…내달부터 심층조사 착수"},
+      {"url": "https://www.newspim.com/news/view/20260730001023", "img": "news-04.jpg", "source": "뉴스핌", "date": "2026-07-30", "title": "농지 전수조사 대상 27% '위반 의심'…내달부터 심층조사 착수"},
+      {"url": "https://www.korea.kr/briefing/policyBriefingView.do?newsId=156772806", "img": "", "source": "대한민국 정책브리핑", "date": "2026-07-30", "title": "농지 전수조사 진행상황 및 향후 계획 발표 (농식품부 브리핑)"},
+      {"url": "https://www.nongmin.com/article/20260722500547", "img": "news-06.jpg", "source": "농민신문", "date": "2026-07-22", "title": "농지 절반 이상 '8월 심층조사' 대상…처분명령 논밭 쏟아지면 거래 위축 가속"},
+      {"url": "https://www.senews.kr/38743", "img": "news-07.jpg", "source": "사회적경제뉴스", "date": "2026-06-17", "title": "의정부시 '2026년 농지 전수조사 관련자 회의' 개최"},
+      {"url": "https://www.lawtimes.co.kr/news/articleView.html?idxno=221787", "img": "", "source": "법률신문", "date": "2026-06-09", "title": "농지법 개정 및 농지 전수조사 실시에 따른 대응방안"},
+      {"url": "https://www.hankyung.com/article/202605224292O", "img": "news-09.jpg", "source": "한국경제", "date": "2026-05-22", "title": "사상 첫 전국 농지 전수조사…이제 농지는 '보유'보다 '관리'가 중요해졌다"},
+      {"url": "https://www.nongmin.com/article/20260521500232", "img": "news-10.jpg", "source": "농민신문", "date": "2026-05-21", "title": "헌정 사상 최초 농지 전수조사 착수"},
+      {"url": "https://www.fnnews.com/news/202605171102411343", "img": "news-11.jpg", "source": "파이낸셜뉴스", "date": "2026-05-17", "title": "첫 전국 농지 전수조사, 내일부터 착수…위성·AI·드론 활용"},
+      {"url": "https://v.daum.net/v/20260517110137143", "img": "news-12.jpg", "source": "아시아경제", "date": "2026-05-17", "title": "농지 전수조사 본격시작…'AI·위성·드론' 총동원"},
+      {"url": "https://www.nongupin.co.kr/news/articleView.html?idxno=206983", "img": "", "source": "농업인신문", "date": "2026-05-15", "title": "'농지 전수조사' 본격화…투기 차단·실경작 중심 '농지 개혁'"},
+      {"url": "https://www.korea.kr/news/policyNewsView.do?newsId=148964082", "img": "news-14.jpg", "source": "대한민국 정책브리핑", "date": "2026-05-08", "title": "농지 투기·규제 회피 막는다…처분명령 강화 '농지법' 개정안 통과"},
+      {"url": "https://news.nate.com/view/20260401n41737", "img": "news-15.jpg", "source": "네이트뉴스", "date": "2026-04-01", "title": "\"투기 걸리면 즉각 처분\"…사상 첫 농지 전수조사"}
+    ]
+  }
+}
