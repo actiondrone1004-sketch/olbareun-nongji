@@ -1,6 +1,7 @@
 rules_version = '2';
 // 올바른농지 — Firestore 보안 규칙
 // leads/{id} : 무료진단 신청 1건. 누구나 '생성'만 가능(폼), 읽기·수정·삭제는 관리자만.
+// stats/{YYYY-MM-DD} : 일별 방문·조회·클릭 카운터(site.js). 누구나 각 칸을 1씩만 올릴 수 있고, 읽기는 관리자만.
 // 관리자 = 아래 ADMINS 에 적힌 이메일로 로그인한 사용자(이메일/비밀번호 방식). 추가하려면 이메일을 넣고
 //   firebase deploy --only firestore:rules --config tools/firebase/firebase.json --project olbareun-nongji
 service cloud.firestore {
@@ -30,6 +31,25 @@ service cloud.firestore {
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'memo'])
         && request.resource.data.status in ['신규', '연락중', '완료', '보류']
         && request.resource.data.memo is string && request.resource.data.memo.size() <= 500;
+    }
+
+    // 방문 통계: 허용된 칸만, 한 번에 칸마다 0 또는 +1 (increment 트랜스폼 전용)
+    function statKeys() {
+      return ['v', 'pv', 'pv_home', 'pv_services', 'pv_about', 'pv_press', 'pv_other',
+              'c_kakao', 'c_phone', 'c_youtube', 'c_instagram', 'c_blog'];
+    }
+    function bumpOk(k) {
+      let before = resource == null ? 0 : resource.data.get(k, 0);
+      let after = request.resource.data.get(k, 0);
+      return after is int && after >= before && after <= before + 1;
+    }
+    match /stats/{day} {
+      allow read: if isAdmin();
+      allow create, update: if day.matches('^20[0-9]{2}-[01][0-9]-[0-3][0-9]$')
+        && request.resource.data.keys().hasOnly(statKeys())
+        && bumpOk('v') && bumpOk('pv') && bumpOk('pv_home') && bumpOk('pv_services') && bumpOk('pv_about')
+        && bumpOk('pv_press') && bumpOk('pv_other') && bumpOk('c_kakao') && bumpOk('c_phone')
+        && bumpOk('c_youtube') && bumpOk('c_instagram') && bumpOk('c_blog');
     }
 
     match /{document=**} { allow read, write: if false; }

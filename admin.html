@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>신청 관리 — 올바른농지</title>
+<title>관리자 — 올바른농지</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="올바른농지 무료진단 신청 목록 관리 화면 (관리자 전용)">
+<meta name="description" content="올바른농지 관리자 화면 (문의·방문 통계, 관리자 전용)">
 <meta name="keywords" content="cur: admin">
 <meta property="og:type" content="website">
-<meta property="og:title" content="신청 관리 — 올바른농지">
-<meta property="og:description" content="올바른농지 무료진단 신청 목록 관리 화면 (관리자 전용)">
+<meta property="og:title" content="관리자 — 올바른농지">
+<meta property="og:description" content="올바른농지 관리자 화면 (문의·방문 통계, 관리자 전용)">
 <meta property="og:image" content="assets/img/hero.jpg">
 <!-- 도메인 확정 후 채울 것: <link rel="canonical" href="https://도메인/admin.html"> / og:image 절대 URL / naver-site-verification -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -53,12 +53,41 @@
   .msg { font-size: 13.5px; color: var(--ink-2); margin: 10px 0; min-height: 1.4em; }
   .msg.err { color: var(--red); }
   .tscroll { overflow-x: auto; }
+  .adm-tabs, .seg { display: inline-flex; border: 1px solid var(--line-2); background: #fff; }
+  .adm-tabs button, .seg button { border: 0; background: transparent; padding: 9px 18px; font: inherit; font-size: 15px; font-weight: 700; color: var(--ink-2); cursor: pointer; }
+  .adm-tabs button + button, .seg button + button { border-left: 1px solid var(--line-2); }
+  .adm-tabs button.on, .seg button.on { background: var(--green); color: #fff; }
+  .hint { font-size: 13.5px; color: var(--ink-3); }
+  .kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 14px; }
+  .kpi { background: #fff; border: 1px solid var(--line); padding: 14px 16px; }
+  .kpi small { display: block; font-size: 13px; color: var(--ink-3); }
+  .kpi b { display: block; font-size: 26px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.3; }
+  .kpi span { font-size: 12.5px; color: var(--ink-3); }
+  .chart-card { background: #fff; border: 1px solid var(--line); padding: 16px 18px 12px; margin-bottom: 14px; }
+  .chart-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 14px; margin-bottom: 10px; }
+  .legend { font-size: 12.5px; color: var(--ink-2); display: flex; gap: 6px; align-items: center; }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-left: 8px; }
+  .lg-v, .bar.v { background: var(--green); }
+  .lg-pv, .bar.pv { background: #a9bf9c; }
+  .lg-lead, .bar.lead { background: #c0643f; }
+  .chart { display: flex; align-items: flex-end; gap: 4px; height: 190px; overflow-x: auto; padding-bottom: 22px; }
+  .chart .col { flex: 1 0 18px; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; position: relative; }
+  .chart .bars { display: flex; align-items: flex-end; gap: 1px; height: 100%; width: 100%; justify-content: center; }
+  .chart .bar { width: 30%; min-height: 1px; }
+  .chart .lbl { position: absolute; bottom: -20px; font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+  .stat-table td, .stat-table th { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .stat-table td:first-child, .stat-table th:first-child { text-align: left; }
+  .stat-table tr.total td { font-weight: 800; background: var(--g-50); }
+  .stat-table td.z { color: var(--line-2); }
+  .note { font-size: 12.5px; color: var(--ink-3); margin-top: 10px; }
+  @media (max-width: 900px) { .kpis { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 520px) { .kpis { grid-template-columns: repeat(2, 1fr); } .kpi b { font-size: 22px; } }
   @media (max-width: 720px) { .lead-table th:nth-child(5), .lead-table td:nth-child(5) { display: none; } }
 </style>
 <div class="adm">
   <div class="adm-head">
-    <a class="brand" href="index.html"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:36px;height:36px"><path d="M8 40c2-14 10-24 26-28-2 14-10 24-26 28z" fill="#22954f"/><path d="M8 40c6-10 12-16 22-22" stroke="#e4f3ea" stroke-width="2.4" stroke-linecap="round"/><path d="M34 12c8-2 10 6 6 10-2-4-4-6-6-10z" fill="#155a34"/></svg><span><span class="name">올바른농지</span><br><span class="tag">신청 관리</span></span></a>
-    <h1>무료진단 신청 목록</h1>
+    <a class="brand" href="index.html"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:36px;height:36px"><path d="M8 40c2-14 10-24 26-28-2 14-10 24-26 28z" fill="#22954f"/><path d="M8 40c6-10 12-16 22-22" stroke="#e4f3ea" stroke-width="2.4" stroke-linecap="round"/><path d="M34 12c8-2 10 6 6 10-2-4-4-6-6-10z" fill="#155a34"/></svg><span><span class="name">올바른농지</span><br><span class="tag">관리자</span></span></a>
+    <nav class="adm-tabs" id="tabs" hidden><button type="button" class="on" data-tab="stats">통계</button><button type="button" data-tab="leads">문의 목록</button></nav>
     <button class="btn btn-white" id="reload" type="button">새로고침</button>
     <button class="btn btn-white" id="logout" type="button" hidden>로그아웃</button>
   </div>
@@ -70,13 +99,32 @@
 
   <div id="login" class="setup" hidden>
     <h2>관리자 로그인</h2>
-    <p>Firebase 인증에 등록된 관리자 이메일과 비밀번호를 입력하세요.</p>
-    <div class="adm-tools"><input type="email" id="emailInput" placeholder="이메일" autocomplete="username"><input type="password" id="pwInput" placeholder="비밀번호" autocomplete="current-password"><button class="btn btn-green" id="loginBtn" type="button">로그인</button></div>
+    <p>관리자 비밀번호를 입력하세요.</p>
+    <div class="adm-tools"><input type="password" id="pwInput" placeholder="비밀번호" autocomplete="current-password"><button class="btn btn-green" id="loginBtn" type="button">로그인</button></div>
     <p class="msg err" id="loginMsg"></p>
-    <button class="link" id="resetBtn" type="button">비밀번호를 잊었거나 처음 설정하려면 → 재설정 메일 보내기</button>
+    <button class="link" id="resetBtn" type="button">비밀번호를 잊었거나 처음 설정하려면 → 관리자 메일로 재설정 링크 보내기</button>
   </div>
 
   <div id="app" hidden>
+   <div id="statsPanel">
+    <div class="adm-tools">
+      <div class="seg" id="period"><button type="button" class="on" data-p="day">일별</button><button type="button" data-p="month">월별</button><button type="button" data-p="year">연별</button></div>
+      <span class="hint" id="rangeLabel"></span>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="chart-card">
+      <div class="chart-head"><b>방문자 · 조회수 · 문의</b><span class="legend"><i class="lg-v"></i>방문자 <i class="lg-pv"></i>조회수 <i class="lg-lead"></i>문의</span></div>
+      <div class="chart" id="chart"></div>
+    </div>
+    <div class="tscroll">
+      <table class="lead-table stat-table">
+        <thead><tr><th>기간</th><th>방문자</th><th>조회수</th><th>홈</th><th>농지전수조사</th><th>회사 소개</th><th>보도</th><th>기타</th><th>문의</th><th>카카오톡</th><th>전화</th><th>유튜브</th><th>인스타</th></tr></thead>
+        <tbody id="statRows"></tbody>
+      </table>
+    </div>
+    <p class="note">방문자 = 그날 처음 들어온 브라우저 수(월·연은 일별 합계). 조회수 = 페이지를 연 횟수. 클릭 = 카카오톡 채널·전화·유튜브·인스타그램 링크를 누른 횟수. 로컬 미리보기와 관리자 페이지 접속은 세지 않습니다.</p>
+   </div>
+   <div id="leadsPanel" hidden>
     <div class="stats">
       <div class="stat">전체<b id="cntAll">0</b></div>
       <div class="stat new">신규<b id="cntNew">0</b></div>
@@ -96,6 +144,7 @@
         <tbody id="rows"></tbody>
       </table>
     </div>
+   </div>
   </div>
 </div>
 <script>
@@ -105,12 +154,15 @@
   var RT_KEY = 'ob_fb_refresh', cfg = {}, rows = [], idToken = '', tokenExp = 0, userEmail = '';
   var API = 'https://identitytoolkit.googleapis.com/v1/', DOCS = '';
   var STATUSES = ['신규', '연락중', '완료', '보류'];
+  var ADMIN_EMAIL = 'actiondrone1004@gmail.com';   // 비밀번호만 입력 — 이 계정으로 로그인한다 (tools/firebase/firestore.rules isAdmin과 같아야 함)
+  var statDocs = {}, period = 'day';
 
   function status(t, err) { var m = $('#msg'); m.textContent = t || ''; m.className = 'msg' + (err ? ' err' : ''); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function show(id) { ['setup', 'login', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#logout').hidden = id !== 'app'; }
+  function show(id) { ['setup', 'login', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#logout').hidden = id !== 'app'; $('#tabs').hidden = id !== 'app'; $('#reload').hidden = id !== 'app'; if (id === 'login') setTimeout(function () { $('#pwInput').focus(); }, 0); }
   function authErr(code) {
-    if (/INVALID_LOGIN_CREDENTIALS|EMAIL_NOT_FOUND|INVALID_PASSWORD|INVALID_EMAIL/.test(code)) return '이메일 또는 비밀번호가 맞지 않습니다.';
+    if (/INVALID_LOGIN_CREDENTIALS|INVALID_PASSWORD/.test(code)) return '비밀번호가 맞지 않습니다.';
+    if (/EMAIL_NOT_FOUND|INVALID_EMAIL/.test(code)) return '관리자 계정이 아직 없습니다. 아래 링크로 비밀번호를 먼저 정해 주세요.';
     if (/TOO_MANY_ATTEMPTS/.test(code)) return '시도가 너무 많습니다. 잠시 후 다시 해 주세요.';
     if (/USER_DISABLED/.test(code)) return '비활성화된 계정입니다.';
     return '로그인하지 못했습니다. (' + code + ')';
@@ -162,7 +214,7 @@
           var d = x.document, f = d.fields || {};
           return { id: d.name.split('/').pop(), name: val(f.name), phone: val(f.phone), page: val(f.page), status: val(f.status) || '신규', memo: val(f.memo), createdAt: val(f.createdAt) || d.createTime, extra: val(f.extra) };
         });
-        show('app'); $('#who').textContent = userEmail; render(); status(rows.length ? '' : '아직 접수된 신청이 없습니다.');
+        show('app'); $('#who').textContent = userEmail; render(); status(rows.length ? '' : '아직 접수된 신청이 없습니다.'); loadStats();
       })
       .catch(function (e) {
         if (/no-session|expired/.test(e.message)) { show('login'); return; }
@@ -213,17 +265,81 @@
     }
   });
 
+
+  // ----- 통계: stats/{YYYY-MM-DD} 문서(site.js가 1씩 올림) + leads 접수일(한국 날짜) -----
+  var FIELDS = ['v', 'pv', 'pv_home', 'pv_services', 'pv_about', 'pv_press', 'pv_other', 'lead', 'c_kakao', 'c_phone', 'c_youtube', 'c_instagram'];
+  function kst(iso) { var t = new Date(iso).getTime(); return isNaN(t) ? '' : new Date(t + 9 * 3600e3).toISOString().slice(0, 10); }
+  function today() { return new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10); }
+  function loadStats(pageToken) {
+    if (!pageToken) statDocs = {};
+    return fsFetch(DOCS + '/stats?pageSize=300' + (pageToken ? '&pageToken=' + encodeURIComponent(pageToken) : ''))
+      .then(function (j) {
+        (j.documents || []).forEach(function (d) {
+          var o = {}, f = d.fields || {}; Object.keys(f).forEach(function (k) { o[k] = Number(val(f[k])) || 0; });
+          statDocs[d.name.split('/').pop()] = o;
+        });
+        if (j.nextPageToken) return loadStats(j.nextPageToken);
+        renderStats();
+      })
+      .catch(function (e) { renderStats(); status('방문 통계를 불러오지 못했습니다. (' + e.message + ')', true); });
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function buckets() {
+    var out = [], t = today(), y = +t.slice(0, 4), m = +t.slice(5, 7), i;
+    if (period === 'day') {
+      for (i = 29; i >= 0; i--) { var d = new Date(Date.parse(t) - i * 864e5).toISOString().slice(0, 10); out.push({ key: d, label: d.slice(5).replace('-', '.') }); }
+    } else if (period === 'month') {
+      for (i = 11; i >= 0; i--) { var mm = m - i, yy = y; while (mm < 1) { mm += 12; yy--; } out.push({ key: yy + '-' + pad(mm), label: (yy % 100) + '.' + pad(mm) }); }
+    } else {
+      var first = y;
+      Object.keys(statDocs).concat(rows.map(function (r) { return kst(r.createdAt); })).forEach(function (k) { var n = +k.slice(0, 4); if (n) first = Math.min(first, n); });
+      for (i = first; i <= y; i++) out.push({ key: String(i), label: i + '년' });
+    }
+    return out;
+  }
+  function renderStats() {
+    var bs = buckets(), len = bs[0].key.length, map = {};
+    bs.forEach(function (b) { map[b.key] = {}; FIELDS.forEach(function (f) { map[b.key][f] = 0; }); });
+    Object.keys(statDocs).forEach(function (day) { var b = map[day.slice(0, len)]; if (b) FIELDS.forEach(function (f) { b[f] += statDocs[day][f] || 0; }); });
+    rows.forEach(function (r) { var b = map[kst(r.createdAt).slice(0, len)]; if (b) b.lead++; });
+    var tot = {}; FIELDS.forEach(function (f) { tot[f] = 0; bs.forEach(function (b) { tot[f] += map[b.key][f]; }); });
+    var cur = map[bs[bs.length - 1].key], curName = period === 'day' ? '오늘' : period === 'month' ? '이번 달' : '올해';
+    $('#rangeLabel').textContent = bs[0].label + ' ~ ' + bs[bs.length - 1].label + (period === 'day' ? ' · 최근 30일' : period === 'month' ? ' · 최근 12개월' : '');
+    var kpi = function (label, a, b) { return '<div class="kpi"><small>' + label + '</small><b>' + a.toLocaleString() + '</b><span>' + curName + ' ' + b.toLocaleString() + '</span></div>'; };
+    $('#kpis').innerHTML = kpi('방문자', tot.v, cur.v) + kpi('조회수', tot.pv, cur.pv) + kpi('문의', tot.lead, cur.lead) +
+      kpi('카카오톡 클릭', tot.c_kakao, cur.c_kakao) + kpi('전화 클릭', tot.c_phone, cur.c_phone) + kpi('유튜브·인스타 클릭', tot.c_youtube + tot.c_instagram, cur.c_youtube + cur.c_instagram);
+    var max = 1; bs.forEach(function (b) { max = Math.max(max, map[b.key].pv, map[b.key].v, map[b.key].lead); });
+    var step = Math.ceil(bs.length / 10);
+    $('#chart').innerHTML = bs.map(function (b, i) {
+      var r = map[b.key], h = function (n) { return (n / max * 100).toFixed(1) + '%'; };
+      return '<div class="col" title="' + b.label + ' · 방문자 ' + r.v + ' · 조회수 ' + r.pv + ' · 문의 ' + r.lead + '"><div class="bars"><span class="bar v" style="height:' + h(r.v) + '"></span><span class="bar pv" style="height:' + h(r.pv) + '"></span><span class="bar lead" style="height:' + h(r.lead) + '"></span></div>' +
+        ((i % step === 0 || i === bs.length - 1) ? '<span class="lbl">' + b.label + '</span>' : '') + '</div>';
+    }).join('');
+    var cell = function (n) { return '<td' + (n ? '' : ' class="z"') + '>' + n.toLocaleString() + '</td>'; };
+    $('#statRows').innerHTML = '<tr class="total"><td>합계</td>' + FIELDS.map(function (c) { return cell(tot[c]); }).join('') + '</tr>' +
+      bs.slice().reverse().map(function (b) { return '<tr><td>' + b.label + '</td>' + FIELDS.map(function (c) { return cell(map[b.key][c]); }).join('') + '</tr>'; }).join('');
+  }
+  $('#period').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    period = b.getAttribute('data-p'); Array.prototype.forEach.call(this.children, function (x) { x.classList.toggle('on', x === b); }); renderStats();
+  });
+  $('#tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var t = b.getAttribute('data-tab'); Array.prototype.forEach.call(this.children, function (x) { x.classList.toggle('on', x === b); });
+    $('#statsPanel').hidden = t !== 'stats'; $('#leadsPanel').hidden = t !== 'leads';
+  });
+
   $('#q').addEventListener('input', render); $('#filter').addEventListener('change', render);
   $('#reload').addEventListener('click', load);
   $('#logout').addEventListener('click', logout);
   $('#loginBtn').addEventListener('click', function () {
-    var em = $('#emailInput').value.trim(), pw = $('#pwInput').value; if (!em || !pw) return;
+    var em = ADMIN_EMAIL, pw = $('#pwInput').value; if (!pw) return;
     $('#loginMsg').textContent = ''; $('#loginBtn').disabled = true;
     login(em, pw).then(load).catch(function (e) { $('#loginMsg').textContent = authErr(e.message); }).finally(function () { $('#loginBtn').disabled = false; });
   });
   $('#pwInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#loginBtn').click(); });
   $('#resetBtn').addEventListener('click', function () {
-    var em = $('#emailInput').value.trim(); if (!em) { $('#loginMsg').textContent = '이메일을 먼저 입력하세요.'; return; }
+    var em = ADMIN_EMAIL;
     fetch(API + 'accounts:sendOobCode?key=' + encodeURIComponent(cfg.apiKey), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ requestType: 'PASSWORD_RESET', email: em }) })
       .then(function (r) { return r.json(); })
       .then(function (j) { $('#loginMsg').textContent = j.error ? '메일을 보내지 못했습니다. (' + j.error.message + ')' : em + ' 로 재설정 메일을 보냈습니다. 메일의 링크에서 비밀번호를 정한 뒤 로그인하세요.'; });
@@ -240,6 +356,6 @@
 })();
 </script>
 
-<script src="assets/site.js?v=68c16aa9"></script>
+<script src="assets/site.js?v=5c6baa78"></script>
 </body>
 </html>

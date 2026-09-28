@@ -10,7 +10,7 @@ services.html              '농지전수조사' 탭 강조형(2026-09-28): 짙�
 about.html                 회사 소개 v4: page-hero(설립 동기 한 문장 — 대표 확인 필요) → 대표(#ceo: 사진·이력 3줄·지키는 3가지) → 하는 일/하지 않는 일(#scope) → 강의·저서·방송(#career) → 회사 개요(#map) → 폼. JSON-LD 유지. 함께하는 곳·판단 기준은 v4에서 삭제
 press.html                 '보도' 탭(2026-09-28): 채널 버튼 → 방송 뉴스(유튜브, 제자리 재생) → 기사 → 올바른농지 숏폼·블로그. 각 목록 앨범/목록 전환. 내용은 전부 _build/data/media.json에서 생성(아래 '보도·SNS 데이터')
 terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] 채워야 함)
-admin.html                 신청 관리 화면 (메뉴에 없음, noindex, 헤더·푸터 없는 bare 페이지). Firebase 이메일/비밀번호 로그인 → Firestore leads 목록·상태·메모·삭제 (SDK 없이 REST)
+admin.html                 관리자 화면 (푸터 맨 아래 '관리자' 링크, noindex, bare 페이지). 비밀번호만 입력(계정은 ADMIN_EMAIL 고정) → [통계] 일·월·연별 방문자·조회수·페이지별·문의·카카오/전화/유튜브/인스타 클릭 + [문의 목록] leads 상태·메모·삭제 (SDK 없이 REST)
 tools/firebase/            ★ 신청 저장소(현재 사용). firestore.rules(권한: 누구나 생성, 관리자 이메일만 읽기·수정) · firebase.json · README.md(설정·관리자 추가·규칙 배포 명령)
 tools/apps-script/         (대안, 미사용) Code.gs 구글 시트 저장 + 목록 API + 메일 알림 · README.md
 assets/site.css            공통 CSS — 미색 디자인(배경 #f7f6f0 · 주조 #294c39 · 1160px · 면·선 중심, 제목 weight 500). 앞부분은 812bc3e의 평면 CSS, 'v3' 블록(상황 선택·역할표·기록·상담 과정·비용·FAQ·폼 select) → 맨 아래 '가독성 보정' 블록(본문 17px·잉크 진하게·제목 700·작은 글씨 13px 이상 — 사용자 요청, 글씨체 바꿀 때 이 블록 유지). 반응형 950/700/480
@@ -64,6 +64,11 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - ceo: 회사 소개 #media(대표 방송·강의 영상·기사·링크). 설명란/본문에 이주왕 이름이 확인된 자료만. 교보문고 '이주왕' 저자 페이지는 약력(충남대 행정·랜드타운 공법)이 달라 동명이인 가능 → 넣지 않음. 에듀윌은 '서울사이버대 외래강사', SBS 자막은 '겸임교수'로 표기가 다름
 - 빌드 print에 '—' 같은 문자 쓰지 말 것(Windows 콘솔 cp949에서 빌드가 죽음)
 
+## 방문 통계 (2026-09-28~)
+site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 increment로 1씩 올린다: v(그날 첫 방문, localStorage ob_seen_day) · pv · pv_home/services/about/press/other · c_kakao/phone/youtube/instagram/blog. localhost·file·admin·webdriver는 제외.
+규칙(firestore.rules stats)은 허용 칸만, 칸마다 +1까지, 읽기는 관리자만 — 칸을 추가하면 statKeys()와 admin FIELDS 둘 다 고치고 규칙 배포. 문의 수는 leads의 createdAt으로 센다.
+사업자: 농업회사법인 주식회사 비전글로벌(브랜드 올바른농지) · 140-81-01121 · 경기도 안양시 동안구 관악대로 486, 3층(관양동, 덕진빌딩). 등록증 PDF는 gitignore(*.pdf)
+
 ## 신청 접수 흐름 (Firebase, 2026-09-17~)
 폼(site.js form.apply-form) → Firestore REST `documents:commit`으로 `leads/{id}` 생성 (CONFIG.FIREBASE, createdAt은 서버시간). 관리자는 admin.html에서 이메일/비밀번호 로그인(Identity Toolkit REST) 후 runQuery로 목록 조회, PATCH로 상태·메모, DELETE로 삭제.
 - 프로젝트 `olbareun-nongji`(actiondrone1004@gmail.com 소유) · Firestore 서울 · 관리자 이메일은 `tools/firebase/firestore.rules` isAdmin() 목록 → 바꾸면 `firebase deploy --only firestore:rules --config tools/firebase/firebase.json --project olbareun-nongji`
@@ -71,6 +76,6 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 새 신청 이메일 알림 없음(Functions는 유료 플랜). 대안: FIREBASE.projectId를 비우고 FORM_ENDPOINT에 Formspree/Apps Script 주소 → JSON POST(Apps Script는 text/plain). 둘 다 없으면 mailto 폴백
 
 ## 미기입 플레이스홀더
-`[상담전화]` `[상담 가능 시간]` `[주소]` `[사업자번호]` `[가격]` `[서비스 지역]` `[이메일]`,
+`[상담전화]` `[상담 가능 시간]` `[가격]` `[서비스 지역]` `[이메일]`,
 terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]`, 블로그 주소(CONFIG.BLOG_URL + media.json channels.blog_rss),
 `tel:00000000000` (CONFIG.PHONE 채우면 JS가 교체), 블로그 글 링크(CONFIG.BLOG_URL).

@@ -261,4 +261,39 @@
     };
     boxes.forEach(function (b) { b.addEventListener('change', render); });
   }
+
+  // ----- 방문 통계: Firestore stats/{YYYY-MM-DD}(한국 날짜) 칸을 1씩 올린다. 관리자 화면(admin.html)에서 일·월·연별로 본다 -----
+  // v=그날 첫 방문(브라우저 기준 순방문), pv=조회수, pv_<페이지>, c_<채널>=클릭. 로컬 미리보기·관리자 페이지·자동화 브라우저는 세지 않는다
+  (function () {
+    var fb = CONFIG.FIREBASE || {};
+    if (!fb.projectId || /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) || location.protocol === 'file:' || navigator.webdriver) return;
+    var file = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '');
+    if (file === 'admin') return;
+    var day = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+    var docPath = 'projects/' + fb.projectId + '/databases/(default)/documents';
+    var bump = function (keys) {
+      try {
+        fetch('https://firestore.googleapis.com/v1/' + docPath + ':commit?key=' + encodeURIComponent(fb.apiKey), {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+          body: JSON.stringify({ writes: [{ update: { name: docPath + '/stats/' + day, fields: {} }, updateMask: { fieldPaths: [] },
+            updateTransforms: keys.map(function (k) { return { fieldPath: k, increment: { integerValue: '1' } }; }) }] })
+        }).catch(function () {});
+      } catch (e) {}
+    };
+    var page = { index: 'home', '': 'home', services: 'services', about: 'about', press: 'press' }[file] || 'other';
+    var keys = ['pv', 'pv_' + page], seen = '';
+    try { seen = localStorage.getItem('ob_seen_day'); localStorage.setItem('ob_seen_day', day); } catch (e) {}
+    if (seen !== day) keys.push('v');
+    bump(keys);
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+      var h = a.getAttribute('href') || '', k = '';
+      if (/^tel:/.test(h)) k = 'c_phone';
+      else if (/pf\.kakao\.com/.test(a.href)) k = 'c_kakao';
+      else if (a.getAttribute('data-link') === 'youtube') k = 'c_youtube';
+      else if (/instagram\.com/.test(a.href)) k = 'c_instagram';
+      else if (a.getAttribute('data-link') === 'blog') k = 'c_blog';
+      if (k) bump([k]);
+    }, true);
+  })();
 })();
