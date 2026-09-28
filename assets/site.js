@@ -211,6 +211,11 @@
   window.addEventListener('hashchange', reveal); reveal();
 
   // ----- 보도: 앨범/목록 전환 · 종류 필터 · 유튜브 제자리 재생 -----
+  // 모바일(700px 이하)에서는 처음에 목록형으로 보여 준다 (전환 버튼이 없는 홈 목록 포함)
+  if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches) {
+    $$('.view-toggle').forEach(function (g) { $$('button', g).forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-view') === 'list'); }); });
+    $$('.vd-list.album, .nw-list.album, .fd-list.album').forEach(function (l) { l.classList.remove('album'); l.classList.add('list'); });
+  }
   $$('.view-toggle button').forEach(function (btn) {
     var list = $(btn.getAttribute('data-target')); if (!list) return;
     var apply = function () {

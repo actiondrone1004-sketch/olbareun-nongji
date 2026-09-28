@@ -6,7 +6,7 @@
 ## 구조
 ```
 index.html                 홈 v5 (2026-09-28, 인포그래픽·모션): hx 위성 스캔 지도 hero(SVG 필지 격자·스캔선·현장 확인 표시 — mk 스크립트로 생성한 정적 SVG) → #why 숫자 카드 4(카운트업·막대·4곳 중 1곳·매년 누적) → #flow 절차 5단계 선 그리기+유예 분기 → #stories 아이콘 인용 3 → #how 세 걸음 원형 아이콘 → #promise → #ceo → #apply → 숏폼·방송 뉴스. 모션은 [data-reveal]→.in(site.js IntersectionObserver), html.js일 때만 숨김, prefers-reduced-motion이면 정지
-services.html              '농지전수조사' 탭 강조형(2026-09-28): 짙은 초록 hero(정부 조사 뉴스 4건) → 큰 숫자 5(#facts: 10,490,000·550,000 필지·27%·1년·25% — 숫자는 줄임 없이 전체 자릿수로) → 확인할 땅(#check) → 절차 5단계·유예·기한(#process) → 25% 계산(#penalty, 원 단위 전체) → 마무리 CTA(#manage) → 폼. CSS는 site.css 맨 아래 'sv-' 블록
+services.html              '농지전수조사' 탭 v5 인포그래픽(2026-09-28): 뉴스 hero → #schedule 조사 일정 타임라인(개월 비례·'지금' 표시) → #facts 면적 비교(10,490,000 대 550,000)·100칸 중 27칸·12개월 → #check 아이콘 6칸 → #process 5단계 선+조문·유예/기한 상자 → #penalty 25% 막대·매년 누적 → 마무리 CTA → 폼. 생성 스크립트 없이 _build/pages/services.html 직접 편집(100칸·12칸은 반복 태그). CSS는 site.css 'sv-' 블록과 '농지전수조사 v5' 블록
 about.html                 회사 소개 v4: page-hero(설립 동기 한 문장 — 대표 확인 필요) → 대표(#ceo: 사진·이력 3줄·지키는 3가지) → 하는 일/하지 않는 일(#scope) → 강의·저서·방송(#career) → 회사 개요(#map) → 폼. JSON-LD 유지. 함께하는 곳·판단 기준은 v4에서 삭제
 press.html                 '보도' 탭(2026-09-28): 채널 버튼 → 방송 뉴스(유튜브, 제자리 재생) → 기사 → 올바른농지 숏폼·블로그. 각 목록 앨범/목록 전환. 내용은 전부 _build/data/media.json에서 생성(아래 '보도·SNS 데이터')
 terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] 채워야 함)

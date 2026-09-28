@@ -16,7 +16,7 @@
 <!-- 네이버 서치어드바이저 등록 후: <meta name="naver-site-verification" content="..."> -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/site.css?v=f16548dd">
+<link rel="stylesheet" href="assets/site.css?v=ee6531bb">
 </head>
 <body>
 <a class="skip" href="#main">본문 바로가기</a>
@@ -82,96 +82,126 @@
   </div>
 </section>
 
-<!-- 2 숫자 -->
-<section id="facts" class="sv-nums" aria-label="2026 농지 전수조사 주요 숫자">
+<!-- 2 조사 일정 타임라인 -->
+<section id="schedule" class="tl">
   <div class="container">
-    <h2 class="sv-h2">숫자로 보면<br>더 분명합니다.</h2>
-    <ol class="sv-num-list">
-      <li>
-        <div class="num"><strong>10,490,000</strong><span>필지</span></div>
-        <div class="txt"><h3>2026년 조사 대상</h3><p>1996년 이후 취득한 농지 <b>전부</b>. 매매·상속·증여·경매를 가리지 않습니다. 그 이전 취득 농지는 2027년에 조사합니다.</p></div>
-      </li>
-      <li>
-        <div class="num"><strong>550,000</strong><span>필지</span></div>
-        <div class="txt"><h3>현장 심층조사 · 8~12월</h3><p>조사원이 <b>직접 땅을 찾아가</b> 실제 이용상태를 확인합니다. 수도권·토지거래허가구역·경매 취득 농지가 우선입니다.</p></div>
-      </li>
-      <li class="warn">
-        <div class="num"><strong>27</strong><span>%</span></div>
-        <div class="txt"><h3>기본조사에서 ‘위반 의심’</h3><p>조사 대상 농지 가운데 약 <b>4곳 중 1곳</b>이 위반 의심으로 분류돼 심층조사로 넘어갔습니다. <small>(2026.7.30 농식품부 발표 보도)</small></p></div>
-      </li>
-      <li class="warn">
-        <div class="num"><strong>1</strong><span>년</span></div>
-        <div class="txt"><h3>처분의무 기간</h3><p>처분사유가 확인되면 <b>1년 안에</b> 처분해야 합니다. 이 기간에 실제 영농 전환 등 유예 요건을 검토할 수 있습니다.</p></div>
-      </li>
-      <li class="warn">
-        <div class="num"><strong>25</strong><span>%</span></div>
-        <div class="txt"><h3>이행강제금 · 농지가액 기준</h3><p>처분명령까지 이행하지 않으면 농지가액의 25%. 요건이 계속되면 <b>매년 반복</b>될 수 있습니다.</p></div>
-      </li>
-    </ol>
+    <h2 class="sv-h2" data-reveal>2년에 걸쳐,<br><em class="sv-em">전국의 모든 농지</em>를 봅니다.</h2>
+    <div class="tl-track" data-reveal>
+      <div class="tl-bar"><span class="seg s1" style="--w:15%"></span><span class="seg s2" style="--w:25%"></span><span class="seg s3" style="--w:60%"></span><span class="tl-now" style="--x:24.5%"><b>지금</b></span></div>
+      <ol class="tl-steps">
+        <li style="--x:0%"><em>2026. 5~7월</em><b>기본조사</b><small>위성·AI·드론 분석</small></li>
+        <li style="--x:15%"><em>2026. 8~12월</em><b>심층조사</b><small>조사원 현장 확인</small></li>
+        <li style="--x:40%"><em>2027년</em><b>1996년 이전 취득 농지</b><small>나머지 농지 조사</small></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 3 숫자 인포그래픽 -->
+<section id="facts" class="sv-nums ig" aria-label="2026 농지 전수조사 주요 숫자">
+  <div class="container">
+    <h2 class="sv-h2" data-reveal>숫자로 보면<br>더 분명합니다.</h2>
+
+    <div class="ig-row" data-reveal>
+      <div class="ig-viz">
+        <div class="sq-compare" aria-hidden="true"><span class="big"><span class="small"></span></span></div>
+      </div>
+      <div class="ig-txt">
+        <div class="num"><strong data-count="10490000">10,490,000</strong><span>필지</span></div>
+        <h3>2026년 조사 대상 — 1996년 이후 취득 농지 <b>전부</b></h3>
+        <div class="num sub"><strong data-count="550000">550,000</strong><span>필지</span></div>
+        <h3>그중 조사원이 <b>직접 찾아가는</b> 심층조사 (약 5%)</h3>
+        <p>매매·상속·증여·경매를 가리지 않습니다. 수도권·토지거래허가구역·경매 취득 농지가 심층조사 우선입니다.</p>
+      </div>
+    </div>
+
+    <div class="ig-row rev" data-reveal>
+      <div class="ig-viz">
+        <div class="waffle" aria-hidden="true"><i class="hit" style="--k:0"></i><i class="hit" style="--k:1"></i><i class="hit" style="--k:2"></i><i class="hit" style="--k:3"></i><i class="hit" style="--k:4"></i><i class="hit" style="--k:5"></i><i class="hit" style="--k:6"></i><i class="hit" style="--k:7"></i><i class="hit" style="--k:8"></i><i class="hit" style="--k:9"></i><i class="hit" style="--k:10"></i><i class="hit" style="--k:11"></i><i class="hit" style="--k:12"></i><i class="hit" style="--k:13"></i><i class="hit" style="--k:14"></i><i class="hit" style="--k:15"></i><i class="hit" style="--k:16"></i><i class="hit" style="--k:17"></i><i class="hit" style="--k:18"></i><i class="hit" style="--k:19"></i><i class="hit" style="--k:20"></i><i class="hit" style="--k:21"></i><i class="hit" style="--k:22"></i><i class="hit" style="--k:23"></i><i class="hit" style="--k:24"></i><i class="hit" style="--k:25"></i><i class="hit" style="--k:26"></i><i style="--k:27"></i><i style="--k:28"></i><i style="--k:29"></i><i style="--k:30"></i><i style="--k:31"></i><i style="--k:32"></i><i style="--k:33"></i><i style="--k:34"></i><i style="--k:35"></i><i style="--k:36"></i><i style="--k:37"></i><i style="--k:38"></i><i style="--k:39"></i><i style="--k:40"></i><i style="--k:41"></i><i style="--k:42"></i><i style="--k:43"></i><i style="--k:44"></i><i style="--k:45"></i><i style="--k:46"></i><i style="--k:47"></i><i style="--k:48"></i><i style="--k:49"></i><i style="--k:50"></i><i style="--k:51"></i><i style="--k:52"></i><i style="--k:53"></i><i style="--k:54"></i><i style="--k:55"></i><i style="--k:56"></i><i style="--k:57"></i><i style="--k:58"></i><i style="--k:59"></i><i style="--k:60"></i><i style="--k:61"></i><i style="--k:62"></i><i style="--k:63"></i><i style="--k:64"></i><i style="--k:65"></i><i style="--k:66"></i><i style="--k:67"></i><i style="--k:68"></i><i style="--k:69"></i><i style="--k:70"></i><i style="--k:71"></i><i style="--k:72"></i><i style="--k:73"></i><i style="--k:74"></i><i style="--k:75"></i><i style="--k:76"></i><i style="--k:77"></i><i style="--k:78"></i><i style="--k:79"></i><i style="--k:80"></i><i style="--k:81"></i><i style="--k:82"></i><i style="--k:83"></i><i style="--k:84"></i><i style="--k:85"></i><i style="--k:86"></i><i style="--k:87"></i><i style="--k:88"></i><i style="--k:89"></i><i style="--k:90"></i><i style="--k:91"></i><i style="--k:92"></i><i style="--k:93"></i><i style="--k:94"></i><i style="--k:95"></i><i style="--k:96"></i><i style="--k:97"></i><i style="--k:98"></i><i style="--k:99"></i></div>
+        <p class="viz-cap">■ 100칸 중 27칸</p>
+      </div>
+      <div class="ig-txt">
+        <div class="num warn"><strong data-count="27">27</strong><span>%</span></div>
+        <h3>기본조사에서 <b>‘위반 의심’</b>으로 분류</h3>
+        <p>조사 대상 농지 가운데 약 4곳 중 1곳이 심층조사로 넘어갔습니다. <small>(2026.7.30 농식품부 발표 보도)</small></p>
+      </div>
+    </div>
+
+    <div class="ig-row" data-reveal>
+      <div class="ig-viz">
+        <div class="months" aria-hidden="true"><i style="--k:0">1</i><i style="--k:1">2</i><i style="--k:2">3</i><i style="--k:3">4</i><i style="--k:4">5</i><i style="--k:5">6</i><i style="--k:6">7</i><i style="--k:7">8</i><i style="--k:8">9</i><i style="--k:9">10</i><i style="--k:10">11</i><i style="--k:11">12</i></div>
+        <p class="viz-cap">처분사유 확인 후 12개월</p>
+      </div>
+      <div class="ig-txt">
+        <div class="num warn"><strong data-count="1">1</strong><span>년</span></div>
+        <h3>처분의무 기간 — <b>이 안에 움직이면</b> 선택지가 있습니다</h3>
+        <p>실제 영농 전환, 매도위탁 등 유예 요건을 이 기간에 검토할 수 있습니다.</p>
+      </div>
+    </div>
     <p class="src">출처: 농림축산식품부 「농지 전수조사 시행지침」·「추진계획」(2026), 농식품부 브리핑(2026.7.30), 농지법 제10조·제63조</p>
   </div>
 </section>
 
-<!-- 3 확인할 땅 -->
+<!-- 4 확인할 땅: 아이콘 그리드 -->
 <section id="check" class="bg-g">
-  <div class="container targets-wrap with-photo">
-    <div class="targets">
-      <h2>이런 땅이라면,<br><em class="sv-em">지금</em> 확인해 보세요.</h2>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.6-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6-6.8 6.8z"/></svg>상속받고 그대로 둔 농지</li>
-        <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.6-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6-6.8 6.8z"/></svg>몇 해째 쉬고 있는 농지</li>
-        <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.6-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6-6.8 6.8z"/></svg>멀리 살아 직접 못 가는 농지</li>
-        <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.6-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6-6.8 6.8z"/></svg>다른 사람에게 맡겨 둔 농지</li>
-        <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.6-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6-6.8 6.8z"/></svg>경매·허가구역에서 취득한 농지</li>
-        <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.6-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6-6.8 6.8z"/></svg>조사 안내나 통지를 받은 농지</li>
-      </ul>
-      <a class="btn btn-green btn-lg" href="#apply">하나라도 해당되면 무료 상담</a>
-    </div>
-    <div class="tphoto">
-      <img src="assets/img/field.jpg" alt="관리되지 않은 농지" loading="lazy">
-      <div class="hand">사진: 관리되지 않은 농지 예시</div>
-    </div>
+  <div class="container">
+    <h2 class="sv-h2" data-reveal>이런 땅이라면,<br><em class="sv-em">지금</em> 확인해 보세요.</h2>
+    <ul class="ck-grid">
+      <li data-reveal><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22 24 7l18 15"/><path d="M11 19v21h26V19"/><path d="M20 40V29h8v11"/></svg></span><b>상속받고 그대로 둔 농지</b></li>
+      <li data-reveal><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 6h22M13 42h22M15 6c0 10 9 12 9 18s-9 8-9 18M33 6c0 10-9 12-9 18s9 8 9 18"/></svg></span><b>몇 해째 쉬고 있는 농지</b></li>
+      <li data-reveal><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 43s13-12 13-23a13 13 0 0 0-26 0c0 11 13 23 13 23z"/><circle cx="24" cy="20" r="5"/></svg></span><b>멀리 살아 못 가는 농지</b></li>
+      <li data-reveal><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="17" cy="15" r="6"/><circle cx="33" cy="17" r="5"/><path d="M5 40c0-7 5-12 12-12s12 5 12 12M29 40c0-5 3-9 8-9s7 4 7 9"/></svg></span><b>다른 사람에게 맡겨 둔 농지</b></li>
+      <li data-reveal><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 10 12 12M14 16l12 12M17 13l6-6 12 12-6 6z"/><path d="m23 25-13 13"/><path d="M8 42h18"/></svg></span><b>경매·허가구역에서 취득한 농지</b></li>
+      <li data-reveal><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="11" width="36" height="26" rx="3"/><path d="m6 14 18 13 18-13"/></svg></span><b>조사 안내·통지를 받은 농지</b></li>
+    </ul>
+    <p class="ck-cta" data-reveal><a class="btn btn-green btn-lg" href="#apply">하나라도 해당되면 무료 상담</a></p>
   </div>
 </section>
 
-<!-- 4 절차 -->
-<section id="process">
+<!-- 5 절차 흐름 -->
+<section id="process" class="fx">
   <div class="container">
-    <h2 class="sv-h2">통지를 받아도,<br><em class="sv-em">곧바로</em> 부과되지는 않습니다.</h2>
-    <p class="sv-sub">법이 정한 다섯 단계가 있습니다. 지금 어디에 있는지 아는 것이 먼저입니다.</p>
-    <ol class="sv-steps">
-      <li><span class="n">1</span><div><h3>실태조사</h3><p>지자체가 실제 이용상태를 조사합니다.</p><span class="law">전수조사 시행지침</span></div></li>
-      <li><span class="n">2</span><div><h3>처분의무 통지</h3><p>처분사유가 확인되면 <b>1년 안에</b> 처분할 의무가 생깁니다.</p><span class="law">농지법 제10조</span></div></li>
-      <li><span class="n">3</span><div><h3>처분명령</h3><p>기간 안에 처분하지 않으면 <b>6개월 안에</b> 처분하라는 명령이 내려집니다.</p><span class="law">농지법 제11조</span></div></li>
-      <li class="warn"><span class="n">4</span><div><h3>미이행</h3><p>정당한 사유 없이 명령을 이행하지 않은 경우입니다.</p><span class="law">농지법 제63조</span></div></li>
-      <li class="warn"><span class="n">5</span><div><h3>이행강제금</h3><p>농지가액의 <b>25%</b>. 요건이 계속되면 매년 반복될 수 있습니다.</p><span class="law">농지법 제63조</span></div></li>
+    <h2 data-reveal>통지를 받아도,<br><em>곧바로 부과되지는 않습니다.</em></h2>
+    <ol class="fx-line" data-reveal>
+      <li style="--i:0"><span class="n">1</span><b>실태조사</b><small>이용상태 확인</small><span class="law">시행지침</span></li>
+      <li style="--i:1"><span class="n">2</span><b>처분의무</b><small>1년 안에 처분</small><span class="law">제10조</span></li>
+      <li style="--i:2"><span class="n">3</span><b>처분명령</b><small>6개월 안에 처분</small><span class="law">제11조</span></li>
+      <li style="--i:3" class="warn"><span class="n">4</span><b>미이행</b><small>정당한 사유 없이</small><span class="law">제63조</span></li>
+      <li style="--i:4" class="warn"><span class="n">5</span><b>이행강제금</b><small>가액의 25%, 매년</small><span class="law">제63조</span></li>
     </ol>
     <div class="sv-two">
-      <div class="sv-box ok"><h3>기회도 있습니다 — 처분명령 유예 <span class="law">농지법 제12조</span></h3><p>직접 농업경영에 이용하거나 한국농어촌공사 등과 매도위탁계약을 맺는 등 요건을 갖추면 처분명령을 <b>3년간 유예</b>할 수 있습니다. 2026년부터는 유예 요건을 매년 확인합니다.</p></div>
-      <div class="sv-box no"><h3>기한은 흐릅니다</h3><p>이미 부과된 이행강제금은 이후에 명령을 이행해도 징수됩니다. 부과에 대한 이의제기는 고지받은 날부터 <b>30일 이내</b>입니다. 통지를 받으셨다면 기한부터 확인하세요.</p></div>
+      <div class="sv-box ok" data-reveal><span class="bx-ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 42V22"/><path d="M24 26c0-8 6-13 14-13 0 8-6 13-14 13zM24 22c0-6-5-10-11-10 0 6 5 10 11 10z"/><path d="M12 42h24"/></svg></span><div><h3>기회 — 처분명령 유예 <span class="law">농지법 제12조</span></h3><p>직접 농업경영에 이용하거나 한국농어촌공사 등과 매도위탁계약을 맺는 등 요건을 갖추면 <b>3년간 유예</b>할 수 있습니다. 2026년부터 유예 요건을 매년 확인합니다.</p></div></div>
+      <div class="sv-box no" data-reveal><span class="bx-ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 14v10l7 4"/></svg></span><div><h3>기한 — 이의제기 30일</h3><p>이미 부과된 이행강제금은 이후에 명령을 이행해도 징수됩니다. 부과 고지를 받은 날부터 <b>30일 이내</b> 이의제기 규정이 있습니다.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- 5 25%는 얼마 -->
+<!-- 6 25% 계산 인포그래픽 -->
 <section id="penalty" class="sv-pen">
   <div class="container">
-    <h2 class="sv-h2">25%는 얼마일까요.</h2>
-    <p class="sv-sub">농지가액 × 25% · 1회 부과 기준 단순 계산</p>
-    <div class="sv-pen-grid">
-      <div><span class="k">농지가액 1억원</span><strong>25,000,000<small>원</small></strong></div>
-      <div><span class="k">농지가액 2억원</span><strong>50,000,000<small>원</small></strong></div>
-      <div><span class="k">농지가액 3억원</span><strong>75,000,000<small>원</small></strong></div>
+    <h2 class="sv-h2" data-reveal>25%는 얼마일까요.</h2>
+    <p class="sv-sub" data-reveal>처분명령을 이행하지 않은 경우, 농지가액 × 25% (1회 부과 기준 단순 계산)</p>
+    <div class="pen-bars" data-reveal>
+      <div class="pb" style="--v:33.3%"><span class="k">농지가액 1억원</span><span class="track"><span class="all"><span class="cut"></span></span></span><strong>25,000,000<small>원</small></strong></div>
+      <div class="pb" style="--v:66.6%"><span class="k">농지가액 2억원</span><span class="track"><span class="all"><span class="cut"></span></span></span><strong>50,000,000<small>원</small></strong></div>
+      <div class="pb" style="--v:100%"><span class="k">농지가액 3억원</span><span class="track"><span class="all"><span class="cut"></span></span></span><strong>75,000,000<small>원</small></strong></div>
     </div>
-    <p class="sv-note">요건이 계속되면 <b>매년</b> 다시 부과될 수 있습니다.</p>
+    <div class="pen-years" data-reveal>
+      <p class="py-t">요건이 계속되면 <b>매년</b> 다시 부과될 수 있습니다 <small>(농지가액 1억원 예시 · 누적)</small></p>
+      <div class="py">
+        <div style="--h:33.3%"><span class="col"></span><b>2,500만</b><small>1년차</small></div>
+        <div style="--h:66.6%"><span class="col"></span><b>5,000만</b><small>2년차</small></div>
+        <div style="--h:100%"><span class="col"></span><b>7,500만</b><small>3년차</small></div>
+      </div>
+    </div>
     <p class="sv-copy">※ 단순 계산 예시입니다. 실제 부과 여부와 금액은 개별 농지의 상황과 행정절차에 따라 다릅니다. 올바른농지는 처분명령·이행강제금의 취소나 면제를 보장하지 않습니다.</p>
   </div>
 </section>
 
-<!-- 6 마무리 -->
+<!-- 7 마무리 -->
 <section id="manage" class="bg-g">
   <div class="container">
-    <div class="ch-end">
+    <div class="ch-end" data-reveal>
       <h2>그래서 가장 좋은 대비는<br>땅을 <em class="sv-em">다시 농지로</em> 쓰는 것입니다.</h2>
       <p class="lead">살피고, 설계하고, 함께 짓고 기록하는 일. 올바른농지가 곁에서 돕습니다.</p>
       <div class="btn-row">
@@ -265,6 +295,6 @@
   </div>
 </div>
 
-<script src="assets/site.js?v=751c4c88"></script>
+<script src="assets/site.js?v=f7af65a1"></script>
 </body>
 </html>

@@ -1150,3 +1150,132 @@ html.js .wx-steps.in .ic { transform: none; opacity: 1; }
   .scan-map .scan { display: none; }
   .scan-map .flag, .scan-map .chip { opacity: 1; animation: none !important; }
 }
+
+/* =========================================================
+   농지전수조사 v5 인포그래픽 (2026-09-28) — 일정 타임라인 · 면적 비교 · 100칸 · 12개월 · 아이콘 그리드 · 25% 막대
+   ========================================================= */
+/* 일정 타임라인 */
+.tl { background: #fff; }
+.tl-track { position: relative; padding: 50px 0 10px; }
+.tl-bar { position: relative; display: flex; height: 16px; border-radius: 8px; overflow: visible; }
+.tl-bar .seg { display: block; width: var(--w); height: 100%; transform-origin: left; }
+.tl-bar .s1 { background: var(--g-600); border-radius: 8px 0 0 8px; }
+.tl-bar .s2 { background: #c0643f; }
+.tl-bar .s3 { background: var(--g-100); border-radius: 0 8px 8px 0; }
+html.js .tl-bar .seg { transform: scaleX(0); transition: transform .7s ease; }
+html.js .in .tl-bar .s2 { transition-delay: .6s; } html.js .in .tl-bar .s3 { transition-delay: 1.2s; }
+html.js .in .tl-bar .seg { transform: none; }
+.tl-now { position: absolute; left: var(--x); top: -42px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; }
+.tl-now b { background: #c0643f; color: #fff; font-size: 13.5px; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.tl-now::after { content: ""; width: 3px; height: 34px; background: #c0643f; margin-top: 2px; }
+html.js .tl-now { opacity: 0; transition: opacity .4s ease 1.6s; }
+html.js .in .tl-now { opacity: 1; animation: nowBob 1.8s ease-in-out 2s infinite; }
+@keyframes nowBob { 50% { transform: translate(-50%, -4px); } }
+.tl-steps { list-style: none; margin: 0; padding: 0; position: relative; height: 104px; }
+.tl-steps li { position: absolute; left: var(--x); top: 16px; padding-left: 14px; border-left: 2px solid var(--line-2); }
+.tl-steps em { display: block; font-style: normal; font-size: 14px; font-weight: 700; color: var(--g-600); }
+.tl-steps b { display: block; font-size: 19px; color: var(--ink); }
+.tl-steps small { display: block; font-size: 14px; color: var(--ink-3); }
+
+/* 숫자 인포그래픽 행 */
+.ig .ig-row { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; padding: 44px 0; border-top: 1px solid var(--line); }
+.ig .ig-row.rev .ig-viz { order: 2; }
+.ig-viz { display: flex; flex-direction: column; align-items: center; }
+.viz-cap { font-size: 13.5px; color: var(--ink-3); margin-top: 10px; }
+.ig-txt .num { display: flex; align-items: baseline; gap: 10px; color: var(--green); white-space: nowrap; }
+.ig-txt .num strong { font-size: clamp(48px, 6.4vw, 88px); line-height: 1; font-weight: 800; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+.ig-txt .num span { font-size: clamp(20px, 2.2vw, 30px); font-weight: 700; }
+.ig-txt .num.sub strong { font-size: clamp(38px, 4.6vw, 64px); }
+.ig-txt .num.sub { margin-top: 22px; color: var(--g-600); }
+.ig-txt .num.warn { color: #b4532f; }
+.ig-txt h3 { font-size: 20px; margin-top: 8px; color: var(--ink); }
+.ig-txt h3 b { background: linear-gradient(transparent 62%, var(--yellow) 62%); }
+.ig-txt p { font-size: 16.5px; margin-top: 12px; }
+.ig-txt p small { font-size: 13.5px; color: var(--ink-3); }
+/* 면적 비교: 큰 사각형 = 10,490,000, 작은 사각형 = 550,000 (면적 비 약 5.2%) */
+.sq-compare { width: min(100%, 340px); }
+.sq-compare .big { position: relative; display: block; aspect-ratio: 1; background: var(--g-100); border: 2px solid var(--g-600); border-radius: 6px; }
+.sq-compare .small { position: absolute; right: 8%; bottom: 8%; width: 22.8%; aspect-ratio: 1; background: var(--green); border-radius: 3px; }
+.sq-compare .big::after { content: "10,490,000"; position: absolute; left: 14px; top: 10px; font-size: 14px; font-weight: 700; color: var(--g-600); }
+.sq-compare .small::after { content: "550,000"; position: absolute; right: 0; bottom: calc(100% + 6px); font-size: 13px; font-weight: 800; color: var(--green); white-space: nowrap; }
+html.js .sq-compare .small { transform: scale(0); transform-origin: bottom right; transition: transform .7s cubic-bezier(.3,1.4,.5,1) .6s; }
+html.js .in .sq-compare .small { transform: none; }
+/* 100칸 */
+.waffle { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; width: min(100%, 320px); }
+.waffle i { aspect-ratio: 1; background: var(--g-100); border-radius: 3px; }
+.waffle i.hit { background: #c0643f; }
+html.js .waffle i.hit { background: var(--g-100); transition: background .3s ease calc(var(--k) * 45ms + .3s); }
+html.js .in .waffle i.hit { background: #c0643f; }
+/* 12개월 */
+.months { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; width: min(100%, 340px); }
+.months i { display: grid; place-items: center; aspect-ratio: 1.3; font-style: normal; font-size: 14px; font-weight: 700; background: var(--g-100); color: var(--g-600); border-radius: 4px; }
+html.js .months i { transition: background .3s ease calc(var(--k) * 110ms + .3s), color .3s ease calc(var(--k) * 110ms + .3s); }
+.months i { background: var(--green); color: #fff; }
+html.js .months i { background: var(--g-100); color: var(--g-600); }
+html.js .in .months i { background: var(--green); color: #fff; }
+html.js .in .months i:nth-child(n+10) { background: #c0643f; }
+
+/* 확인할 땅: 아이콘 그리드 */
+.ck-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ck-grid li { display: flex; align-items: center; gap: 18px; background: #fff; border: 1px solid var(--line); padding: 22px 22px; transition: transform .25s, box-shadow .25s; }
+.ck-grid li:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(31,58,43,.1); }
+.ck-grid .ic { flex: 0 0 64px; width: 64px; height: 64px; border-radius: 50%; background: var(--g-50); color: var(--green); display: grid; place-items: center; }
+.ck-grid .ic svg { width: 34px; height: 34px; }
+.ck-grid b { font-size: 18px; color: var(--ink); line-height: 1.4; }
+.ck-grid li:nth-child(2) { transition-delay: .06s; } .ck-grid li:nth-child(3) { transition-delay: .12s; } .ck-grid li:nth-child(4) { transition-delay: .18s; } .ck-grid li:nth-child(5) { transition-delay: .24s; } .ck-grid li:nth-child(6) { transition-delay: .3s; }
+.ck-cta { margin-top: 28px; text-align: center; }
+
+/* 절차: 조문 표시 + 상자 아이콘 */
+.fx-line .law { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 700; color: var(--g-600); background: #fff; border: 1px solid var(--line); padding: 1px 8px; border-radius: 999px; }
+.fx .sv-two { margin-top: 36px; }
+.sv-box { display: flex; gap: 18px; align-items: flex-start; }
+.bx-ic { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--green); }
+.sv-box.no .bx-ic { color: #b4532f; }
+.bx-ic svg { width: 30px; height: 30px; }
+
+/* 25% 막대 */
+.pen-bars { display: grid; gap: 18px; }
+.pb { display: grid; grid-template-columns: 150px 1fr 230px; gap: 18px; align-items: center; }
+.pb .k { font-size: 16px; color: #d4decd; font-weight: 600; }
+.pb .track { display: block; height: 34px; }
+.pb .all { position: relative; display: block; height: 100%; width: var(--v); background: rgba(255,255,255,.14); border-radius: 4px; overflow: hidden; }
+.pb .cut { position: absolute; left: 0; top: 0; bottom: 0; width: 25%; background: #ff9f7a; }
+html.js .pb .all { width: 0; transition: width 1s cubic-bezier(.2,.7,.2,1) .2s; }
+html.js .in .pb .all { width: var(--v); }
+.pb strong { font-size: clamp(26px, 2.8vw, 38px); font-weight: 800; color: #ffd9c9; font-variant-numeric: tabular-nums; letter-spacing: -.02em; text-align: right; white-space: nowrap; }
+.pb strong small { font-size: .5em; color: #fff; margin-left: 3px; }
+.pen-years { margin-top: 44px; border-top: 1px solid rgba(255,255,255,.2); padding-top: 28px; }
+.py-t { font-size: 19px; color: #fff; }
+.py-t b { color: #d9ef8f; }
+.py-t small { font-size: 13.5px; color: #9fb09a; }
+.py { display: flex; gap: 26px; align-items: flex-end; height: 200px; margin-top: 20px; max-width: 520px; }
+.py > div { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
+.py .col { display: block; width: 100%; height: var(--h); background: linear-gradient(180deg, #ff9f7a, #c0643f); border-radius: 6px 6px 0 0; transform-origin: bottom; }
+html.js .py .col { transform: scaleY(0); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+html.js .in .py > div:nth-child(2) .col { transition-delay: .3s; } html.js .in .py > div:nth-child(3) .col { transition-delay: .6s; }
+html.js .in .py .col { transform: none; }
+.py b { font-size: 18px; color: #ffd9c9; order: -1; }
+.py small { font-size: 13.5px; color: #b9c8b3; }
+
+@media (max-width: 950px) {
+  .ig .ig-row { grid-template-columns: 1fr; gap: 28px; }
+  .ig .ig-row.rev .ig-viz { order: 0; }
+  .ck-grid { grid-template-columns: 1fr 1fr; }
+  .pb { grid-template-columns: 1fr auto; row-gap: 6px; }
+  .pb .track { grid-column: 1 / -1; grid-row: 2; }
+  .tl-steps { height: auto; display: grid; gap: 14px; margin-top: 18px; }
+  .tl-steps li { position: static; }
+}
+@media (max-width: 560px) {
+  .ck-grid { grid-template-columns: 1fr; }
+  .ck-grid li { padding: 16px; }
+  .ig-txt .num strong { font-size: clamp(40px, 12vw, 60px); }
+  .py { height: 160px; gap: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .tl-bar .seg, html.js .sq-compare .small, html.js .py .col { transform: none !important; }
+  html.js .tl-now { opacity: 1 !important; animation: none !important; }
+  html.js .waffle i.hit { background: #c0643f !important; }
+  html.js .months i { background: var(--green) !important; color: #fff !important; }
+  html.js .pb .all { width: var(--v) !important; }
+}
