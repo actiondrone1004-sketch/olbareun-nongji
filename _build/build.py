@@ -77,7 +77,7 @@ def bust(html):
 def build_page(fname):
     meta, body = parse_page(read(os.path.join(HERE, "pages", fname)))
     cur = meta.get("cur", "")
-    head = head_t.replace("{{TITLE}}", meta["title"]).replace("{{DESC}}", meta["desc"]).replace("{{KEYWORDS}}", meta.get("keywords", "")).replace("{{FILE}}", fname)
+    head = head_t.replace("{{TITLE}}", meta["title"]).replace("{{DESC}}", meta["desc"]).replace("{{KEYWORDS}}", meta.get("keywords", "")).replace("{{FILE}}", fname).replace("{{CANON}}", "" if fname == "index.html" else fname)
     header = header_t
     for k in PAGE_KEYS:
         header = header.replace("{{CUR_%s}}" % k, 'aria-current="page"' if cur == k else "")
