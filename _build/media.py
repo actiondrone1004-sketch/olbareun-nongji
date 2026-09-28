@@ -90,7 +90,9 @@ def video_card(v):
         esc(v["id"]), esc(v["title"]), esc(v["id"]), esc(v["id"]), esc(v["source"]), dot(v["date"]), esc(v["title"]))
 
 def news_card(n):
-    ph = ('<img src="assets/img/news/%s" alt="" loading="lazy" width="480" height="300">' % esc(n["img"])) if n.get("img") else '<span class="ph-empty">%s</span>' % esc(n["source"])
+    src = n.get("img", "")
+    if src and not src.startswith("http"): src = "assets/img/news/" + src
+    ph = ('<img src="%s" alt="" loading="lazy" width="480" height="300">' % esc(src)) if n.get("img") else '<span class="ph-empty">%s</span>' % esc(n["source"])
     return ('<a class="nw-card" href="%s" target="_blank" rel="noopener"><span class="ph">%s</span>'
             '<span class="body"><span class="src">%s · %s</span><b>%s</b></span></a>') % (
         esc(n["url"]), ph, esc(n["source"]), dot(n["date"]), esc(n["title"]))
@@ -105,6 +107,18 @@ def sns_buttons():
             '<a class="sns sns-kk" data-link="kakao" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7l-1 3.6c-.1.3.3.6.6.4l4.2-2.8c.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>카카오톡 채널</a>'
             '<a class="sns sns-bl" data-link="blog" data-hide-empty href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16v12H8l-4 4z"/></svg>블로그</a>')
 
+def ceo_blocks():
+    with open(DATA, encoding="utf-8") as f: c = json.load(f).get("ceo", {})
+    by_date = lambda l: sorted(l, key=lambda i: (bool(i.get("pin")), i["date"]), reverse=True)
+    links = "".join('<li><a href="%s" target="_blank" rel="noopener">%s<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a></li>' % (esc(l["url"]), esc(l["label"])) for l in c.get("links", []))
+    return {
+        "{{MEDIA_CEO_TV}}": '<div class="vd-list album" id="ceoTv">%s</div>' % "".join(video_card(v) for v in by_date(c.get("tv", []))),
+        "{{MEDIA_CEO_TV_COUNT}}": str(len(c.get("tv", []))),
+        "{{MEDIA_CEO_LECTURES}}": '<div class="vd-list album" id="ceoLec">%s</div>' % "".join(video_card(v) for v in by_date(c.get("lectures", []))),
+        "{{MEDIA_CEO_ARTICLES}}": '<div class="nw-list list" id="ceoNews">%s</div>' % "".join(news_card(n) for n in by_date(c.get("articles", []))),
+        "{{MEDIA_CEO_LINKS}}": '<ul class="link-list">%s</ul>' % links,
+    }
+
 def render():
     feed, videos, news = load()
     tabs = ""
@@ -116,6 +130,7 @@ def render():
         tabs = '<div class="pr-tools">' + tabs + '</div>'
     feed_html = ('<div class="fd-list album" id="feedList">%s</div>' % "".join(feed_card(i) for i in feed)) if feed else EMPTY_FEED % sns_buttons()
     return {
+        **ceo_blocks(),
         "{{MEDIA_SNS}}": sns_buttons(),
         "{{MEDIA_FEED_TABS}}": tabs,
         "{{MEDIA_FEED}}": feed_html,

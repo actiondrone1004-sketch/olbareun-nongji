@@ -28,7 +28,7 @@ cur: about
         <ul class="cred-list">
           <li><b>현재</b><span>올바른농지 대표이사 · 이주왕kok경매학원 대표 · 서울사이버대학교 부동산학과 겸임교수</span></li>
           <li><b>저서</b><span>『명품 토지 중개 실무』(공저, 매일경제신문사) · 『'왕교수'가 알려주는 부자되는 100억 경매』(오스틴북스)</span></li>
-          <li><b>방송</b><span>SBS Biz 「머니쇼」 출연 — 토지·빌딩 시장 해설</span></li>
+          <li><b>방송</b><span>SBS Biz 「머니쇼 하우머니」 출연 — 농지·토지 경매, 토지 보상 해설 <a href="#media">영상 보기</a></span></li>
         </ul>
         <div class="ceo-promise">
           <b>상담에서 지키는 세 가지</b>
@@ -115,23 +115,43 @@ cur: about
         </div>
       </div>
     </div>
-    <h3 style="margin-top:44px;font-size:19px">방송 출연</h3>
-    <div class="news-grid press-grid">
-      <div class="news-card static">
-        <span class="ph"><img src="assets/img/about/tv-sbsbiz-moneyshow-2.webp" alt="SBS Biz 머니쇼 출연 화면 — 이주왕 서울사이버대 부동산학과 겸임교수" loading="lazy" width="640" height="480"></span>
-        <span class="body"><span class="src">SBS Biz 「머니쇼」</span><b>'반도체 효과' 용인시 토지 경매시장서 몸값↑</b></span>
+    <p class="fine-print" style="margin-top:14px">출강 로고는 제휴가 아닌 강의 이력입니다.</p>
+  </div>
+</section>
+
+<!-- 4-1 대표 관련 자료 (방송·기사·강의 영상·링크) -->
+<section id="media" class="bg-g">
+  <div class="container">
+    <div class="sec-head">
+      <h2>방송과 강의로<br>직접 확인해 보세요.</h2>
+      <p class="sec-sub">SBS Biz 「머니쇼 하우머니」 출연 {{MEDIA_CEO_TV_COUNT}}편과 기사, 강의 영상을 모았습니다. 썸네일을 누르면 이 자리에서 재생됩니다.</p>
+    </div>
+    <div class="pr-head">
+      <h3 class="pr-h3">방송 출연 · SBS Biz 하우머니</h3>
+      <div class="view-toggle" role="group" aria-label="보기 방식"><button type="button" class="on" data-view="album" data-target="#ceoTv">앨범</button><button type="button" data-view="list" data-target="#ceoTv">목록</button></div>
+    </div>
+    {{MEDIA_CEO_TV}}
+    <div class="pr-head" style="margin-top:48px">
+      <h3 class="pr-h3">강의 영상</h3>
+      <div class="view-toggle" role="group" aria-label="보기 방식"><button type="button" class="on" data-view="album" data-target="#ceoLec">앨범</button><button type="button" data-view="list" data-target="#ceoLec">목록</button></div>
+    </div>
+    {{MEDIA_CEO_LECTURES}}
+    <div class="ceo-refs">
+      <div>
+        <h3 class="pr-h3">기사</h3>
+        {{MEDIA_CEO_ARTICLES}}
       </div>
-      <div class="news-card static">
-        <span class="ph"><img src="assets/img/about/tv-sbsbiz-moneyshow-1.webp" alt="SBS Biz 머니쇼 하우머니 출연 화면 — 서울 빌딩 규모별 거래 추이 해설" loading="lazy" width="960" height="540"></span>
-        <span class="body"><span class="src">SBS Biz 「머니쇼」 하우머니</span><b>빌딩도 '똘똘한 한 채' — 입지와 필지로 판단해야</b></span>
+      <div>
+        <h3 class="pr-h3">더 찾아보기</h3>
+        {{MEDIA_CEO_LINKS}}
       </div>
     </div>
-    <p class="fine-print" style="margin-top:14px">출강 로고는 제휴가 아닌 강의 이력입니다. 방송 화면의 저작권은 해당 방송사에 있습니다.</p>
+    <p class="fine-print" style="margin-top:18px">영상·기사의 저작권은 각 방송사·언론사·채널에 있으며, 원문 링크 안내 목적으로만 표시합니다. 방송 자막의 직함(서울사이버대학교 부동산학과 겸임교수)은 방송 당시 기준입니다.</p>
   </div>
 </section>
 
 <!-- 5 회사 개요 -->
-<section id="map" class="bg-g">
+<section id="map">
   <div class="container">
     <div class="sec-head">
       <h2>회사 개요</h2>
@@ -172,7 +192,11 @@ cur: about
         { "@type": "CollegeOrUniversity", "name": "서울사이버대학교 부동산학과" },
         { "@type": "EducationalOrganization", "name": "이주왕kok경매학원" }
       ],
-      "image": "assets/img/about/prof-juwang.png"
+      "image": "assets/img/about/prof-juwang.png",
+      "sameAs": [
+        "https://www.youtube.com/channel/UCLqY2jwKRZl0JyXNbc6n9kQ",
+        "https://uland.eduwill.net/prof/NL23/NL"
+      ]
     }
   ]
 }

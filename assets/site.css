@@ -990,3 +990,14 @@ h1, h2, h3 { letter-spacing: -.025em; }
   .sns { font-size: 14px; padding: 8px 13px; }
   .pr-head { align-items: flex-start; }
 }
+
+/* 회사 소개 — 대표 관련 자료 (2026-09-28) */
+.pr-h3 { font-size: 20px; margin: 0; }
+.ceo-refs { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; margin-top: 52px; }
+.ceo-refs .pr-h3 { margin-bottom: 14px; }
+.link-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.link-list a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 2px; border-bottom: 1px solid var(--line); font-size: 16px; font-weight: 600; color: var(--ink); }
+.link-list a:hover { color: var(--g-700); }
+.link-list svg { width: 18px; height: 18px; color: var(--g-600); }
+.cred-list a { color: var(--g-700); text-decoration: underline; margin-left: 4px; }
+@media (max-width: 950px) { .ceo-refs { grid-template-columns: 1fr; gap: 32px; } }

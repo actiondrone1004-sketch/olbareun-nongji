@@ -61,6 +61,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - videos: 방송사 보도 영상(유튜브 ID). 정치 논평 채널은 넣지 않는다. news: 기사(썸네일은 assets/img/news/)
 - feed: 올바른농지 숏폼·블로그. 인스타그램은 공개 API가 없어 릴스 URL을 직접 추가(type instagram, thumb 선택). 유튜브 채널(UCVs19gtXW8jh4VA0HZUoigQ)은 빌드 때 RSS로 자동 수집, 블로그는 channels.blog_rss에 RSS 주소를 넣으면 자동 수집. 수집 결과는 data/feed-cache.json(네트워크 실패 시 사용). 채널에 영상이 없으면 RSS가 404 → '수집 실패, 캐시 0건'은 정상
 - 채널 주소는 site.js CONFIG(KAKAO_URL·YOUTUBE_URL·INSTAGRAM_URL·BLOG_URL) — data-link="youtube|instagram|kakao|blog"
+- ceo: 회사 소개 #media(대표 방송·강의 영상·기사·링크). 설명란/본문에 이주왕 이름이 확인된 자료만. 교보문고 '이주왕' 저자 페이지는 약력(충남대 행정·랜드타운 공법)이 달라 동명이인 가능 → 넣지 않음. 에듀윌은 '서울사이버대 외래강사', SBS 자막은 '겸임교수'로 표기가 다름
 - 빌드 print에 '—' 같은 문자 쓰지 말 것(Windows 콘솔 cp949에서 빌드가 죽음)
 
 ## 신청 접수 흐름 (Firebase, 2026-09-17~)
