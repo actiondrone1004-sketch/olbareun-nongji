@@ -138,5 +138,19 @@ for fname, freq, pri in SITEMAP:
 with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(rows) + "\n</urlset>\n")
 
+# rss.xml: 네이버 서치어드바이저 'RSS 제출'용. 약관·개인정보 제외, 페이지 제목·설명·수정일
+from email.utils import format_datetime
+from xml.sax.saxutils import escape
+items = []
+for fname, _, _ in SITEMAP[:4]:
+    src = os.path.join(HERE, "pages", fname)
+    m, _ = parse_page(read(src))
+    loc = "https://www.allfarm.kr/" + ("" if fname == "index.html" else fname)
+    when = format_datetime(datetime.datetime.fromtimestamp(os.path.getmtime(src)).astimezone())
+    items.append("<item><title>%s</title><link>%s</link><guid>%s</guid><description>%s</description><pubDate>%s</pubDate></item>" % (escape(m["title"]), loc, loc, escape(m["desc"]), when))
+with open(os.path.join(OUT, "rss.xml"), "w", encoding="utf-8", newline="\n") as f:
+    f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>올바른농지</title><link>https://www.allfarm.kr/</link>'
+            '<description>농지 전수조사 대응 · 상속 농지 관리</description><language>ko</language>\n' + "\n".join(items) + "\n</channel></rss>\n")
+
 print("built", len(pages), "pages ->", OUT, "| artifact copy ->", ART)
 sys.exit(0 if ok else 1)
