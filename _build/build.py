@@ -20,7 +20,7 @@ def read(p):
     with open(p, encoding="utf-8") as f: return f.read()
 
 # 검색엔진 소유 확인 코드 (네이버 서치어드바이저 / 구글 서치 콘솔 'HTML 태그' 방식의 content 값). 비워두면 태그를 넣지 않는다
-SITE_VERIFY = {"naver-site-verification": "9de716f4ccf1746f71be174c7797d62f3e912273", "google-site-verification": ""}
+SITE_VERIFY = {"naver-site-verification": "9de716f4ccf1746f71be174c7797d62f3e912273", "google-site-verification": "WJbigHsbPqCgjsQgdU7bgGHpTk7TSP9LR3-O31KIgbA"}
 VERIFY_TAGS = "\n".join('<meta name="%s" content="%s">' % (k, v) for k, v in SITE_VERIFY.items() if v)
 
 head_t = read(os.path.join(HERE, "partials", "head.html"))
