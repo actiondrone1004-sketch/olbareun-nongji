@@ -17,7 +17,7 @@
     KAKAO_URL: "https://pf.kakao.com/_YzQrX",   // 카카오톡 채널. 비워두면 카카오톡 링크 숨김
     YOUTUBE_URL: "https://www.youtube.com/channel/UCVs19gtXW8jh4VA0HZUoigQ",
     INSTAGRAM_URL: "https://www.instagram.com/right_farming2004/",
-    BLOG_URL: "",         // 예) "https://blog.naver.com/xxxxx"  비워두면 블로그 링크 숨김
+    BLOG_URL: "https://blog.naver.com/visionglobal2004",         // 예) "https://blog.naver.com/xxxxx"  비워두면 블로그 링크 숨김
     APP_IOS_URL: "",      // App Store 링크. 비워두면 버튼 숨김
     APP_ANDROID_URL: "",  // Google Play 링크. 비워두면 버튼 숨김
     SHEET_URL: ""         // (Apps Script 방식일 때) 신청목록 구글 시트 주소. Firebase 방식에서는 미사용
