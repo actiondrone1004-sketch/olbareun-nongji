@@ -1532,3 +1532,7 @@ html.js .fx-line li.zone { opacity: 1; transform: none; }
   .fx-line li.zone.no { grid-column: 1; grid-row: 4 / 6; margin: 10px -12px -14px; }
   .fx-line .zl { left: auto; right: 14px; transform: none; font-size: 14px; }
 }
+
+/* 푸터 관리자 로그인 버튼 (2026-09-30) */
+footer .admin-link { display: inline-flex; align-items: center; gap: 6px; margin-left: 12px; padding: 5px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: 13px; font-weight: 700; color: inherit; opacity: .8; text-decoration: none; vertical-align: middle; }
+footer .admin-link:hover { opacity: 1; }

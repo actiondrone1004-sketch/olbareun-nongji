@@ -23,7 +23,7 @@
 <link rel="alternate" type="application/rss+xml" title="올바른농지" href="https://www.allfarm.kr/rss.xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/site.css?v=c27742aa">
+<link rel="stylesheet" href="assets/site.css?v=278b1f6a">
 </head>
 <body>
 <style>
@@ -168,7 +168,7 @@
 
   function status(t, err) { var m = $('#msg'); m.textContent = t || ''; m.className = 'msg' + (err ? ' err' : ''); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function show(id) { ['setup', 'login', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#logout').hidden = id !== 'app'; $('#tabs').hidden = id !== 'app'; $('#reload').hidden = id !== 'app'; if (id === 'login') setTimeout(function () { $('#pwInput').focus(); }, 0); }
+  function show(id) { ['setup', 'login', 'app'].forEach(function (x) { $('#' + x).hidden = x !== id; }); $('#logout').hidden = id !== 'app'; if (id === 'login') setTimeout(function () { $('#pwInput').focus(); }, 0); $('#tabs').hidden = id !== 'app'; $('#reload').hidden = id !== 'app'; if (id === 'login') setTimeout(function () { $('#pwInput').focus(); }, 0); }
   function authErr(code) {
     if (/INVALID_LOGIN_CREDENTIALS|INVALID_PASSWORD/.test(code)) return '비밀번호가 맞지 않습니다.';
     if (/EMAIL_NOT_FOUND|INVALID_EMAIL/.test(code)) return '관리자 계정이 아직 없습니다. 아래 링크로 비밀번호를 먼저 정해 주세요.';
