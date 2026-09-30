@@ -20,7 +20,7 @@ def read(p):
     with open(p, encoding="utf-8") as f: return f.read()
 
 # 검색엔진 소유 확인 코드 (네이버 서치어드바이저 / 구글 서치 콘솔 'HTML 태그' 방식의 content 값). 비워두면 태그를 넣지 않는다
-SITE_VERIFY = {"naver-site-verification": "", "google-site-verification": ""}
+SITE_VERIFY = {"naver-site-verification": "9de716f4ccf1746f71be174c7797d62f3e912273", "google-site-verification": ""}
 VERIFY_TAGS = "\n".join('<meta name="%s" content="%s">' % (k, v) for k, v in SITE_VERIFY.items() if v)
 
 head_t = read(os.path.join(HERE, "partials", "head.html"))
@@ -78,6 +78,8 @@ CSS_V, JS_V = asset_ver("site.css"), asset_ver("site.js")
 def bust(html):
     return html.replace('href="assets/site.css"', 'href="assets/site.css?v=%s"' % CSS_V).replace('src="assets/site.js"', 'src="assets/site.js?v=%s"' % JS_V)
 
+CRUMB_NAMES = {"services.html": "농지전수조사", "about.html": "회사 소개", "press.html": "보도"}   # GNB 메뉴 이름과 같게
+
 def build_page(fname):
     meta, body = parse_page(read(os.path.join(HERE, "pages", fname)))
     cur = meta.get("cur", "")
@@ -94,6 +96,10 @@ def build_page(fname):
         header = header.replace('href="#apply"', 'href="index.html#apply"')
         footer = footer.replace('href="#apply"', 'href="index.html#apply"')
         body = body.replace('href="#apply"', 'href="index.html#apply"')
+    if fname in CRUMB_NAMES:   # 메뉴 페이지: 검색결과의 '홈 > 메뉴' 경로·하위 링크 표시에 쓰이는 BreadcrumbList
+        body += ('\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
+                 '{"@type":"ListItem","position":1,"name":"홈","item":"https://www.allfarm.kr/"},'
+                 '{"@type":"ListItem","position":2,"name":"%s","item":"https://www.allfarm.kr/%s"}]}</script>\n') % (CRUMB_NAMES[fname], fname)
     if meta.get("noindex") == "true":
         head = head.replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex, nofollow">')
     if meta.get("bare") == "true":   # 헤더·푸터 없는 독립 페이지 (admin.html)
