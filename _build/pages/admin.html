@@ -141,6 +141,7 @@ noindex: true
   // Firebase SDK 없이 REST만 사용: 로그인(Identity Toolkit) → ID 토큰으로 Firestore leads 조회·수정·삭제. 권한은 tools/firebase/firestore.rules
   var $ = function (s) { return document.querySelector(s); };
   var RT_KEY = 'ob_fb_refresh', cfg = {}, rows = [], idToken = '', tokenExp = 0, userEmail = '';
+  try { localStorage.removeItem('ob_fb_refresh'); } catch (e) {}   // 예전 버전이 localStorage에 남긴 로그인 유지 토큰 제거 — 이제 sessionStorage(브라우저 닫으면 로그아웃)
   var API = 'https://identitytoolkit.googleapis.com/v1/', DOCS = '';
   var STATUSES = ['신규', '연락중', '완료', '보류'];
   var ADMIN_EMAIL = 'actiondrone1004@gmail.com';   // 비밀번호만 입력 — 이 계정으로 로그인한다 (tools/firebase/firestore.rules isAdmin과 같아야 함)
@@ -161,10 +162,10 @@ noindex: true
   // ----- 인증 (이메일/비밀번호). 새로고침 토큰은 이 브라우저에만 저장 -----
   function saveSession(j) {
     idToken = j.idToken || j.id_token; tokenExp = Date.now() + (Number(j.expiresIn || j.expires_in) - 60) * 1000; userEmail = j.email || emailFromToken(idToken);
-    try { localStorage.setItem(RT_KEY, j.refreshToken || j.refresh_token); } catch (e) {}
+    try { sessionStorage.setItem(RT_KEY, j.refreshToken || j.refresh_token); } catch (e) {}
   }
   function refresh() {
-    var rt = null; try { rt = localStorage.getItem(RT_KEY); } catch (e) {}
+    var rt = null; try { rt = sessionStorage.getItem(RT_KEY); } catch (e) {}
     if (!rt) return Promise.reject(new Error('no-session'));
     return fetch('https://securetoken.googleapis.com/v1/token?key=' + encodeURIComponent(cfg.apiKey), { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(rt) })
       .then(function (r) { return r.json(); })
@@ -176,7 +177,7 @@ noindex: true
       .then(function (r) { return r.json(); })
       .then(function (j) { if (j.error) throw new Error(j.error.message); saveSession(j); });
   }
-  function logout() { idToken = ''; tokenExp = 0; userEmail = ''; try { localStorage.removeItem(RT_KEY); } catch (e) {} rows = []; show('login'); }
+  function logout() { idToken = ''; tokenExp = 0; userEmail = ''; try { sessionStorage.removeItem(RT_KEY); localStorage.removeItem(RT_KEY); } catch (e) {} rows = []; show('login'); }
 
   // ----- Firestore REST -----
   function fsFetch(path, opt) {
