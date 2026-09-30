@@ -19,6 +19,10 @@ MEDIA = media.render()
 def read(p):
     with open(p, encoding="utf-8") as f: return f.read()
 
+# 검색엔진 소유 확인 코드 (네이버 서치어드바이저 / 구글 서치 콘솔 'HTML 태그' 방식의 content 값). 비워두면 태그를 넣지 않는다
+SITE_VERIFY = {"naver-site-verification": "", "google-site-verification": ""}
+VERIFY_TAGS = "\n".join('<meta name="%s" content="%s">' % (k, v) for k, v in SITE_VERIFY.items() if v)
+
 head_t = read(os.path.join(HERE, "partials", "head.html"))
 header_t = read(os.path.join(HERE, "partials", "header.html"))
 footer_t = read(os.path.join(HERE, "partials", "footer.html"))
@@ -78,6 +82,7 @@ def build_page(fname):
     meta, body = parse_page(read(os.path.join(HERE, "pages", fname)))
     cur = meta.get("cur", "")
     head = head_t.replace("{{TITLE}}", meta["title"]).replace("{{DESC}}", meta["desc"]).replace("{{KEYWORDS}}", meta.get("keywords", "")).replace("{{FILE}}", fname).replace("{{CANON}}", "" if fname == "index.html" else fname)
+    head = head.replace("{{VERIFY}}\n", VERIFY_TAGS + "\n" if VERIFY_TAGS and fname == "index.html" else "")
     header = header_t
     for k in PAGE_KEYS:
         header = header.replace("{{CUR_%s}}" % k, 'aria-current="page"' if cur == k else "")
@@ -90,7 +95,7 @@ def build_page(fname):
         footer = footer.replace('href="#apply"', 'href="index.html#apply"')
         body = body.replace('href="#apply"', 'href="index.html#apply"')
     if meta.get("noindex") == "true":
-        head = head.replace('<meta name="description"', '<meta name="robots" content="noindex, nofollow">\n<meta name="description"')
+        head = head.replace('<meta name="robots" content="index, follow, max-image-preview:large">', '<meta name="robots" content="noindex, nofollow">')
     if meta.get("bare") == "true":   # 헤더·푸터 없는 독립 페이지 (admin.html)
         return bust(head + body + '\n<script src="assets/site.js"></script>\n</body>\n</html>\n')
     full = head + header + "\n" + body + "\n" + footer + "</body>\n</html>\n"
@@ -115,5 +120,17 @@ for fname in pages:
 # assets → artifact dir
 if os.path.isdir(os.path.join(ART, "assets")): shutil.rmtree(os.path.join(ART, "assets"))
 shutil.copytree(os.path.join(OUT, "assets"), os.path.join(ART, "assets"))
+# sitemap.xml: 페이지 소스 수정일을 lastmod로 (네이버·구글 수집 주기에 반영)
+import datetime
+SITEMAP = [("index.html", "weekly", "1.0"), ("services.html", "monthly", "0.8"), ("press.html", "weekly", "0.7"),
+           ("about.html", "monthly", "0.6"), ("terms.html", "yearly", "0.2"), ("privacy.html", "yearly", "0.2")]
+rows = []
+for fname, freq, pri in SITEMAP:
+    mt = datetime.date.fromtimestamp(os.path.getmtime(os.path.join(HERE, "pages", fname))).isoformat()
+    loc = "https://www.allfarm.kr/" + ("" if fname == "index.html" else fname)
+    rows.append("  <url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%s</priority></url>" % (loc, mt, freq, pri))
+with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
+    f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(rows) + "\n</urlset>\n")
+
 print("built", len(pages), "pages ->", OUT, "| artifact copy ->", ART)
 sys.exit(0 if ok else 1)

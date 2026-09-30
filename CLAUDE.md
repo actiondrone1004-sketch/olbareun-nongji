@@ -46,6 +46,8 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 배포 순서: `python _build/build.py` → `git add -A && git commit -m "..." && git push` → 1~2분 뒤 반영 (Pages 상태: `gh api repos/actiondrone1004-sketch/olbareun-nongji/pages --jq .status`)
 - .gitignore로 제외: `_archive/` `_design/` `_build/dist-artifact/` `images/`(사이트 미참조 원본) `KakaoTalk_*.jpg` `*.docx` — 개인 사진·원본 자료는 공개 저장소에 올리지 말 것
 - robots.txt는 admin.html을 크롤링 제외
+- 검색 노출(2026-09-30): 네이버 서치어드바이저·구글 서치 콘솔 소유 확인 코드는 build.py `SITE_VERIFY`에 넣으면 index.html head에만 meta로 들어감(빈 값이면 생략). sitemap.xml은 빌드가 pages/ 수정일로 lastmod와 함께 생성. 홈 하단 JSON-LD(WebSite·Organization sameAs = 유튜브·인스타·카카오)
+- 이 PC에서 `python`이 "Could not find platform independent libraries"로 죽으면 PowerShell에서 `$env:PYTHONHOME="C:\Users\kswmi\AppData\Local\Programs\Python\Python312"` 후 실행
 
 ## 배포 (Artifact — 미리보기용)
 - URL: https://claude.ai/code/artifact/6e45d7c9-dd48-48bb-b901-7fdc5db59a61 (단축: https://claude.ai/artifact/EcnSzT1JAdcyqnch3nHQK2)

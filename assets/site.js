@@ -7,7 +7,7 @@
   // ===== 설정 (여기만 채우면 모든 페이지에 반영됩니다) =====
   var CONFIG = {
     PHONE: "",            // 예) "1800-1234"  비워두면 [상담전화] 표시
-    HOURS: "",            // 예) "평일 09:00 ~ 18:00"  비워두면 [상담 가능 시간] 표시
+    HOURS: "평일 09:00 ~ 18:00",         // 예) "평일 09:00 ~ 18:00"  비워두면 [상담 가능 시간] 표시
     FIREBASE: {           // 신청 저장소 (Firestore). tools/firebase/README.md 참고. projectId가 있으면 FORM_ENDPOINT보다 우선
       apiKey: "AIzaSyC5uoEt30sdC5dwyHSY9kPxmzg1loEsjoE",   // 웹 API 키 — 공개용 식별자이며 접근 권한은 firestore.rules가 통제
       projectId: "olbareun-nongji"
