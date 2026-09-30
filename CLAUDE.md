@@ -85,5 +85,5 @@ site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 incre
 
 ## 미기입 플레이스홀더
 `[상담전화]` `[상담 가능 시간]` `[가격]` `[서비스 지역]` `[이메일]`,
-terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]`, 블로그 주소(CONFIG.BLOG_URL + media.json channels.blog_rss),
-`tel:00000000000` (CONFIG.PHONE 채우면 JS가 교체), 블로그 글 링크(CONFIG.BLOG_URL).
+terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]` (네이버 블로그는 2026-09-30 연결: blog.naver.com/visionglobal2004, RSS 자동 수집),
+`tel:00000000000` (CONFIG.PHONE 채우면 JS가 교체).
