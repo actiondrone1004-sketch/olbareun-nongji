@@ -17,7 +17,7 @@ cur: press
 
 <nav class="subnav" aria-label="페이지 목차">
   <div class="container">
-    <a href="#videos">방송 뉴스</a><a href="#news">기사</a><a href="#sns">올바른농지 숏폼 · 블로그</a>
+    <a href="#videos">방송 뉴스</a><a href="#sns">올바른농지 숏폼 · 블로그</a><a href="#news">기사</a>
   </div>
 </nav>
 
@@ -32,7 +32,17 @@ cur: press
   </div>
 </section>
 
-<section id="news" class="bg-g">
+<section id="sns" class="bg-g">
+  <div class="container">
+    <div class="pr-head">
+      <h2>올바른농지 숏폼 · 블로그</h2>
+      {{MEDIA_FEED_TABS}}
+    </div>
+    {{MEDIA_FEED}}
+  </div>
+</section>
+
+<section id="news">
   <div class="container">
     <div class="pr-head">
       <h2>기사</h2>
@@ -40,16 +50,6 @@ cur: press
     </div>
     {{MEDIA_NEWS}}
     <p class="fine-print pr-note">기사 제목·이미지의 저작권은 각 언론사에 있으며, 원문 링크 안내 목적으로만 표시합니다.</p>
-  </div>
-</section>
-
-<section id="sns">
-  <div class="container">
-    <div class="pr-head">
-      <h2>올바른농지 숏폼 · 블로그</h2>
-      {{MEDIA_FEED_TABS}}
-    </div>
-    {{MEDIA_FEED}}
   </div>
 </section>
 
