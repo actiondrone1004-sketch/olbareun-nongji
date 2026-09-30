@@ -1452,3 +1452,60 @@ body { background: #fff; }
 }
 /* 블로그 카드: 썸네일(1200x630)이 잘리지 않게 가로형 */
 .fd-list.album .fd-blog .ph { aspect-ratio: 1200 / 630; }
+
+/* ===== 블로그 인포그래픽 (figure.pf) — HTML/CSS로 그려 글자 그대로 검색·스크린리더에 읽힘 ===== */
+.post-doc .pf { margin: 28px 0; padding: 24px; background: var(--g-50); border: 1px solid var(--line); }
+.post-doc .pf-t { font-size: 17px !important; font-weight: 700; color: var(--ink) !important; margin: 0 0 18px !important; }
+.post-doc .pf figcaption { font-size: 13px; color: var(--ink-3); margin-top: 16px; line-height: 1.6; }
+.post-doc .pf ul, .post-doc .pf ol { list-style: none; padding: 0; margin: 0; }
+.post-doc .pf li { margin: 0; font-size: 15px; line-height: 1.5; }
+.pf small { display: block; font-size: 13px; color: var(--ink-3); margin-top: 2px; }
+/* 단계 흐름 */
+.pf-flow { display: grid; grid-template-columns: repeat(var(--n, 5), 1fr); }
+.pf-flow li { position: relative; padding: 0 6px; text-align: center; }
+.pf-flow li::before { content: ""; position: absolute; top: 19px; left: -50%; width: 100%; height: 3px; background: var(--green); }
+.pf-flow li:first-child::before { display: none; }
+.pf-flow li.warn::before { background: #c0643f; }
+.pf-flow .n { position: relative; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; margin: 0 auto 10px; border-radius: 50%; background: #fff; border: 3px solid var(--green); font-weight: 700; color: var(--green); }
+.pf-flow li.warn .n { border-color: #c0643f; color: #c0643f; }
+.pf-flow li.ok .n { background: var(--green); color: #fff; }
+.pf-flow b { display: block; font-size: 15px; color: var(--ink); }
+/* 막대 */
+.pf-bars li { display: grid; grid-template-columns: 150px 1fr 70px; align-items: center; gap: 12px; padding: 7px 0; }
+.pf-bars .k { font-size: 14.5px; color: var(--ink); }
+.pf-bars .track { height: 16px; background: #fff; border: 1px solid var(--line); }
+.pf-bars .fill { display: block; height: 100%; width: var(--v); background: var(--green); }
+.pf-bars li.warn .fill { background: #c0643f; }
+.pf-bars li.gold .fill { background: var(--gold, #c8a24a); }
+.pf-bars .v { font-weight: 700; text-align: right; color: var(--ink); }
+/* 숫자 카드 */
+.pf-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.pf-stats li { background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--green); padding: 16px; }
+.pf-stats li.warn { border-top-color: #c0643f; }
+.pf-stats strong { display: block; font-size: 28px; line-height: 1.2; color: var(--green); }
+.pf-stats li.warn strong { color: #c0643f; }
+.pf-stats span { display: block; font-size: 14.5px; color: var(--ink); margin-top: 6px; }
+/* 칩 목록 (번호 붙은 칸) */
+.pf-chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+.pf-chips li { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 1px solid var(--line); padding: 12px 14px; }
+.pf-chips .n { flex: 0 0 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: var(--green); color: #fff; font-size: 12.5px; font-weight: 700; }
+.pf-chips li.warn .n { background: #c0643f; }
+/* 두 칸 비교 */
+.pf-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pf-vs > div { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--green); padding: 16px 18px; }
+.pf-vs > div.no { border-top-color: #c0643f; }
+.pf-vs h3 { font-size: 16px; margin: 0 0 10px; }
+.pf-vs li { padding: 5px 0 5px 18px; position: relative; }
+.pf-vs li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+.pf-vs .no li::before { content: "✕"; color: #c0643f; }
+@media (max-width: 700px) {
+  .post-doc .pf { padding: 18px 14px; }
+  .pf-flow { grid-template-columns: 1fr; gap: 0; }
+  .pf-flow li { display: grid; grid-template-columns: 40px 1fr; column-gap: 14px; text-align: left; padding: 0 0 16px; }
+  .pf-flow li::before, .pf-flow li:first-child::before { display: block; top: 20px; left: 19px; width: 3px; height: 100%; }
+  .pf-flow li:last-child::before { display: none; }
+  .pf-flow .n { margin: 0; grid-row: span 2; }
+  .pf-bars li { grid-template-columns: 1fr 60px; }
+  .pf-bars .k { grid-column: 1 / -1; }
+  .pf-vs { grid-template-columns: 1fr; }
+}
