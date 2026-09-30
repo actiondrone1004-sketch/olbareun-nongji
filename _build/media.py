@@ -41,7 +41,7 @@ def fetch_blog(url):
         out.append({"type": "blog", "url": it.findtext("link", ""), "title": it.findtext("title", ""), "date": d, "thumb": m.group(1) if m else ""})
     return out[:30]
 
-def load():
+def load(extra=()):
     with open(DATA, encoding="utf-8") as f: data = json.load(f)
     ch = data.get("channels", {})
     cache = {}
@@ -54,7 +54,7 @@ def load():
         except Exception as e:
             print("  media: %s 수집 실패(%s), 캐시 %d건 사용" % (key, e.__class__.__name__, len(cache.get(key, []))))
     with open(CACHE, "w", encoding="utf-8") as f: json.dump(cache, f, ensure_ascii=False, indent=1)
-    feed = list(data["feed"]["items"])
+    feed = list(data["feed"]["items"]) + list(extra)
     seen = {i["url"] for i in feed}
     for k in ("youtube", "blog"):
         feed += [i for i in cache.get(k, []) if i["url"] not in seen]
@@ -76,10 +76,11 @@ def feed_card(i):
         vid = i.get("id") or yt_id(i["url"])
         if vid: thumb = "https://i.ytimg.com/vi/%s/hqdefault.jpg" % vid
     ph = ('<img src="%s" alt="" loading="lazy">' % esc(thumb)) if thumb else '<span class="ph-empty">%s</span>' % TYPE_NAME.get(t, "")
-    return ('<a class="fd-card fd-%s" data-type="%s" href="%s" target="_blank" rel="noopener">'
+    ext = ' target="_blank" rel="noopener"' if i["url"].startswith("http") else ""   # 사이트 안 블로그 글은 같은 창
+    return ('<a class="fd-card fd-%s" data-type="%s" href="%s"%s>'
             '<span class="ph">%s<span class="badge">%s</span></span>'
             '<span class="body"><span class="src">%s · %s</span><b>%s</b></span></a>') % (
-        t, t, esc(i["url"]), ph, TYPE_NAME.get(t, ""), TYPE_NAME.get(t, ""), dot(i.get("date")), esc(i.get("title")))
+        t, t, esc(i["url"]), ext, ph, TYPE_NAME.get(t, ""), TYPE_NAME.get(t, ""), dot(i.get("date")), esc(i.get("title")))
 
 def video_card(v):
     return ('<div class="vd-card">'
@@ -119,8 +120,9 @@ def ceo_blocks():
         "{{MEDIA_CEO_LINKS}}": '<ul class="link-list">%s</ul>' % links,
     }
 
-def render():
-    feed, videos, news = load()
+def render(extra=()):
+    """extra: 사이트 안 블로그 글(build.py가 _build/posts/에서 읽어 넘김) — feed에 합쳐 보도 탭·홈에 나온다"""
+    feed, videos, news = load(extra)
     tabs = ""
     if feed:
         types = [t for t in ("instagram", "youtube", "blog") if any(i.get("type") == t for i in feed)]
