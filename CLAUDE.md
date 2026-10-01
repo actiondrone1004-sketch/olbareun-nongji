@@ -83,7 +83,15 @@ site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 incre
 - 규칙 테스트를 curl로 할 때 한글 본문은 반드시 UTF-8 파일(`--data-binary @file`)로 보낼 것 — Git Bash 인라인 문자열은 CP949로 나가 규칙(status=='신규')에 걸린다
 - 새 신청 이메일 알림 없음(Functions는 유료 플랜). 대안: FIREBASE.projectId를 비우고 FORM_ENDPOINT에 Formspree/Apps Script 주소 → JSON POST(Apps Script는 text/plain). 둘 다 없으면 mailto 폴백
 
+## 네이버 블로그 원고 (2026-10-01~, `_naver/`, gitignore — 현장 사진 포함)
+- blog.naver.com/visionglobal2004 예약 발행용 원고 패키지. `python _naver/make.py [01 05 ...]` → `_naver/out/index.html`(예약표) · `out/NN.html`(복사용 페이지: 본문 복사·제목·태그·이미지 목록) · `out/img/NN/`
+- 원고 `_naver/posts/NN.txt`(front matter title·date·tags + 본문 줄 문법: `#`/`##`/`###` 제목, `>` 인용, `~` 작은 글씨, `---` 구분선, `**굵게**` `==형광==` `^^주황^^` `@@올리브@@` `++크게++`, `[card:이름|캡션]` `[photo:경로|캡션]` `[yt:ID|제목|출처]` `[link:URL|제목|출처]` `[end]`=연락처 맺음 블록, `[src]` 아래 `제목 | URL`)
+- 인포그래픽은 `_naver/cards.py`(cover·stats·flow·bars·check·vs·tl·grid·tiles·table·qa·pics·ceo·cta) → HTML을 Edge headless로 1080px PNG 촬영(내용 해시 캐시 build/cache.json)
+- 일정: 10/2~10/6 하루 4편(10·13·17·20시) 20편. 1~10편 작성 완료, 11~20편 계획은 make.py PLAN. 글자 수 공백 제외 1,500자 이상(빌드가 출력)
+- 현장 사진(video/ 원본, 2025-06-25 촬영) 인물은 이주왕 대표 — 얼굴 공개 허용(2026-10-01). 번호판만 흐림(make.py BLUR)
+- 네이버 에디터 붙여넣기 시 글자 서식 유지 여부는 사용자 시험 대기(2026-10-01)
+
 ## 미기입 플레이스홀더
-`[상담전화]` `[상담 가능 시간]` `[가격]` `[서비스 지역]` `[이메일]`,
+`[상담 가능 시간]` `[가격]` `[서비스 지역]` `[이메일]` (상담전화 010-2529-2998은 2026-10-01 입력: site.js CONFIG.PHONE + 파셜·페이지 정적 표기 + JSON-LD telephone),
 terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]` (네이버 블로그는 2026-09-30 연결: blog.naver.com/visionglobal2004, RSS 자동 수집),
-`tel:00000000000` (CONFIG.PHONE 채우면 JS가 교체).
+카카오톡 채널 http://pf.kakao.com/_YzQrX.
