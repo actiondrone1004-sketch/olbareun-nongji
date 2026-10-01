@@ -67,7 +67,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 빌드 print에 '—' 같은 문자 쓰지 말 것(Windows 콘솔 cp949에서 빌드가 죽음)
 
 ## 블로그 (2026-09-30~, 사이트 안 글)
-- 글 소스: `_build/posts/blog-*.html` (front matter: title=검색 제목 · h1=본문 제목 · desc · keywords · date · thumb). 빌드가 루트 `blog-*.html`로 만들고 글 틀(경로·날짜·안내문·상담 CTA·다른 글·폼·BlogPosting JSON-LD)을 씌움. 보도 탭 '숏폼·블로그'·홈 하단·sitemap·rss에 자동 추가
+- 글 소스: `_build/posts/blog-*.html` (front matter: title=검색 제목 · h1=본문 제목 · desc · keywords · date · thumb). desc(페이지·OG 설명)는 80자 이내(공백 포함, 여유 두고 78자 이하) — 네이버 서치어드바이저 권고(2026-10-01 전 페이지 맞춤), pages/ 도 동일. 빌드가 루트 `blog-*.html`로 만들고 글 틀(경로·날짜·안내문·상담 CTA·다른 글·폼·BlogPosting JSON-LD)을 씌움. 보도 탭 '숏폼·블로그'·홈 하단·sitemap·rss에 자동 추가
 - 썸네일(=og:image 1200x630): `python _build/post_thumbs.py` → assets/img/blog/ (없는 파일만 생성, 맑은 고딕)
 - 글 원칙: 공개 보도·법령만 근거로, 끝에 '참고한 자료'(ul.post-src) 링크 필수. 카피 규칙 동일(절차+유예 함께, 결과 보장·'피하는 법' 금지). 정부 '추진' 사항은 확정 전이라고 명시
 - 글 9편(2026-09-30): 전수조사 대상·일정 / 처분의무·처분명령·유예 / 이행강제금 25% / 상속 농지 / 심층조사 10대 위험군 / 임대차 특별정비기간 / 무단 휴경 기준 / 불법 전용 양성화 / 거래 절벽. 인포그래픽은 HTML·CSS figure.pf(pf-flow 단계·pf-bars 막대·pf-stats 숫자·pf-chips 번호칸·pf-vs 두칸 비교, site.css 블로그 인포그래픽 블록) — 이미지 아닌 글자라 검색에 읽힘. 조사 지침 원문 PDF(mafra 597611) 근거 사용. 대표 검토 전이라 저자는 '올바른농지'(조직)로 표기
