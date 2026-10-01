@@ -84,14 +84,15 @@ site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 incre
 - 새 신청 이메일 알림 없음(Functions는 유료 플랜). 대안: FIREBASE.projectId를 비우고 FORM_ENDPOINT에 Formspree/Apps Script 주소 → JSON POST(Apps Script는 text/plain). 둘 다 없으면 mailto 폴백
 
 ## 네이버 블로그 원고 (2026-10-01~, `_naver/`, gitignore — 현장 사진 포함)
-- blog.naver.com/visionglobal2004 예약 발행용 원고 패키지. `python _naver/make.py [01 05 ...]` → `_naver/out/index.html`(예약표) · `out/NN.html`(복사용 페이지: 본문 복사·제목·태그·이미지 목록) · `out/img/NN/`
+- blog.naver.com/allfarm_ (블로그 주소 변경: 옛 visionglobal2004와 같은 블로그, 로그인 아이디는 visionglobal2004) 발행용 원고 패키지. `python _naver/make.py [01 05 ...]` → `_naver/out/index.html`(예약표) · `out/NN.html`(복사용 페이지: 본문 복사·제목·태그·이미지 목록) · `out/img/NN/`
 - 원고 `_naver/posts/NN.txt`(front matter title·date·tags + 본문 줄 문법: `#`/`##`/`###` 제목, `>` 인용, `~` 작은 글씨, `---` 구분선, `**굵게**` `==형광==` `^^주황^^` `@@올리브@@` `++크게++`, `[card:이름|캡션]` `[photo:경로|캡션]` `[yt:ID|제목|출처]` `[link:URL|제목|출처]` `[end]`=연락처 맺음 블록, `[src]` 아래 `제목 | URL`)
 - 인포그래픽은 `_naver/cards.py`(cover·stats·flow·bars·check·vs·tl·grid·tiles·table·qa·pics·ceo·cta) → HTML을 Edge headless로 1080px PNG 촬영(내용 해시 캐시 build/cache.json)
 - 일정: 10/2~10/6 하루 4편(10·13·17·20시) 20편. 1~10편 작성 완료, 11~20편 계획은 make.py PLAN. 글자 수 공백 제외 1,500자 이상(빌드가 출력)
 - 현장 사진(video/ 원본, 2025-06-25 촬영) 인물은 이주왕 대표 — 얼굴 공개 허용(2026-10-01). 번호판만 흐림(make.py BLUR)
-- 네이버 에디터 붙여넣기 시 글자 서식 유지 여부는 사용자 시험 대기(2026-10-01)
+- 네이버 글쓰기 API는 2020-05 종료. 손으로 올릴 때: 한 번에 붙여넣으면 사진(data URI)은 안 따라옴(사용자 확인 2026-10-01) → 복사용 페이지의 '조각 복사'(글 HTML·사진 PNG 클립보드·영상/기사 주소를 순서대로, 스페이스바로 다음 조각)로 Ctrl+V 반복
+- 자동 발행(2026-10-01~): `_naver/upload/`(Playwright, 김해프로그램/tools/naver-blog 기반). `node login.js`(로그인 창 — '로그인 상태 유지' 자동 체크, allfarm_ 계정이 아니면 로그아웃) → `python _naver/upload/to_json.py`(out/NN.html → posts/NN.json) → `node post.js posts/NN.json`(인자 없으면 시험 작성만, 발행 차단) → `node run.js 시작 끝 간격분`(바로 발행, published.log에 있는 편은 건너뜀, 발행 버튼 뒤 오류는 재시도 안 함). 영상·기사는 링크 문단으로 들어감. 1~10편 발행 완료(2026-10-01 20:01~22:24, 10분 간격)
 
 ## 미기입 플레이스홀더
 `[상담 가능 시간]` `[가격]` `[서비스 지역]` `[이메일]` (상담전화 010-2529-2998은 2026-10-01 입력: site.js CONFIG.PHONE + 파셜·페이지 정적 표기 + JSON-LD telephone),
-terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]` (네이버 블로그는 2026-09-30 연결: blog.naver.com/visionglobal2004, RSS 자동 수집),
+terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]` (네이버 블로그는 2026-09-30 연결, 2026-10-01 주소 변경: blog.naver.com/allfarm_ — 옛 visionglobal2004 RSS는 비어 있음, RSS 자동 수집),
 카카오톡 채널 http://pf.kakao.com/_YzQrX.

@@ -3,7 +3,7 @@
   "channels": {
     "_help": "자동 수집: 빌드할 때 유튜브 채널 RSS(youtube_channel_id)와 블로그 RSS(blog_rss)를 읽어 feed에 합친다. 인스타그램은 공개 API가 없어 feed에 링크를 직접 넣는다. 네이버 블로그 RSS 예) https://rss.blog.naver.com/블로그아이디.xml",
     "youtube_channel_id": "UCVs19gtXW8jh4VA0HZUoigQ",
-    "blog_rss": "https://rss.blog.naver.com/visionglobal2004.xml"
+    "blog_rss": "https://rss.blog.naver.com/allfarm_.xml"
   },
   "feed": {
     "_help": "올바른농지가 올린 숏폼·블로그 글. type: instagram | youtube | blog. thumb은 선택(없으면 기본 카드). 유튜브는 url만 넣어도 썸네일 자동. 예) {\"type\": \"instagram\", \"url\": \"https://www.instagram.com/reel/XXXX/\", \"title\": \"상속 농지, 가장 먼저 확인할 것\", \"date\": \"2026-10-01\"}",

@@ -75,7 +75,8 @@ def feed_card(i):
     if t == "youtube" and not thumb:
         vid = i.get("id") or yt_id(i["url"])
         if vid: thumb = "https://i.ytimg.com/vi/%s/hqdefault.jpg" % vid
-    ph = ('<img src="%s" alt="" loading="lazy">' % esc(thumb)) if thumb else '<span class="ph-empty">%s</span>' % TYPE_NAME.get(t, "")
+    # 네이버 블로그 썸네일(pstatic)은 다른 사이트 리퍼러면 403 → 리퍼러 없이 요청
+    ph = ('<img src="%s" alt="" loading="lazy" referrerpolicy="no-referrer">' % esc(thumb)) if thumb else '<span class="ph-empty">%s</span>' % TYPE_NAME.get(t, "")
     ext = ' target="_blank" rel="noopener"' if i["url"].startswith("http") else ""   # 사이트 안 블로그 글은 같은 창
     return ('<a class="fd-card fd-%s" data-type="%s" href="%s"%s>'
             '<span class="ph">%s<span class="badge">%s</span></span>'
