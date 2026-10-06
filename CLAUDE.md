@@ -34,6 +34,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 섹션 위 소제목 라벨(.sec-tag / .eyebrow — Trust·Press·서비스소개 같은 작은 글씨)은 사용자 요청으로 전부 제거함(2026-09-17). 새 섹션에도 넣지 말 것
 - v4 원칙(2026-09-28 사용자 요청): 홈페이지는 짧은 카피와 이야기 흐름으로 단순하게, 자세한 문의는 카카오톡 채널(CONFIG.KAKAO_URL)에서 진행. 설명을 늘리지 말 것. 아래 v3 원칙 중 금지 사항은 그대로 유효
 - v3 원칙(사용자 2차 기획, 2026-09-18): 고객이 '내 상황 찾기 → 받을 도움 이해 → 상담 결정' 순으로 읽게 한다. 상황 선택은 안내용 분류일 뿐 진단·결과 단정 금지. 제공하지 않는 결과물·응답 시간 약속 금지(결과 전달 방식·계획서 형식·가격 예시는 운영 기준 확정 후 — index의 `[가격 기준 확정 후 대표 예시 표기]`·`[서비스 지역]` 참고). 관리기록은 '예시' 표기 유지, 실제 수행 자료(담당자·현장·익명화 기록)는 확보 후 별도 사례 영역에. (숫자 카운팅 금지는 2026-09-28 사용자 요청으로 홈 인포그래픽에 한해 해제 — 스크롤 등장·카운트업·선 그리기 정도까지, 깜빡임·자동 슬라이드는 쓰지 않음.) 폼의 '상담 상황' select 값은 Firestore extra['상담 상황']로 저장되어 admin 이름 아래 표시
+- **키워드 규칙(2026-10-04 사용자 지시, 예외 없음): 모든 키워드에 '올바른농지'를 넣는다** — 사이트 pages/·posts/ front matter `keywords:`(맨 앞), 네이버 블로그 원고 `tags:`(맨 앞), 인스타 해시태그(#올바른농지). 새 글·페이지를 만들 때마다 확인
 - 카피 규칙: "바로 25%" "100% 해결" "안 걸리게" 금지. 절차(조사→처분의무→처분명령→미이행→이행강제금)와 유예(§12)를 함께 쓴다. 결과 보장 문구 금지.
 - 후기/실적은 실제 자료가 생기기 전까지 넣지 않는다.
 - 대표: 이주왕 교수 (올바른농지 대표이사 · 이주왕kok경매학원 대표 · 서울사이버대학교 부동산학과 겸임교수 — 직함은 SBS Biz 방송 자막 기준). 회사소개의 설립 동기 문장("…돕기 위해 올바른농지를 설립했습니다")은 초안이라 대표 확인 필요(인용문은 v3에서 삭제). 출강 로고는 '제휴'가 아닌 '출강 이력'으로만 표기하고 연도·내용은 미확인.
@@ -46,7 +47,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 배포 순서: `python _build/build.py` → `git add -A && git commit -m "..." && git push` → 1~2분 뒤 반영 (Pages 상태: `gh api repos/actiondrone1004-sketch/olbareun-nongji/pages --jq .status`)
 - .gitignore로 제외: `_archive/` `_design/` `_build/dist-artifact/` `images/`(사이트 미참조 원본) `KakaoTalk_*.jpg` `*.docx` — 개인 사진·원본 자료는 공개 저장소에 올리지 말 것
 - robots.txt는 admin.html을 크롤링 제외
-- 검색 노출(2026-09-30): 네이버 서치어드바이저·구글 서치 콘솔 소유 확인 코드는 build.py `SITE_VERIFY`에 넣으면 index.html head에만 meta로 들어감(빈 값이면 생략). sitemap.xml·rss.xml(메뉴 4페이지, 네이버 RSS 제출용)은 빌드가 pages/ 수정일로 생성. 네이버·구글 소유 확인 코드 입력·배포 완료(2026-09-30, 구글은 URL 접두어 속성). sitemap·rss 제출 완료(사용자 확인 2026-09-30) — 글 추가·수정 시 재제출 불필요, 빌드·배포만. 홈 하단 JSON-LD(WebSite·Organization sameAs = 유튜브·인스타·카카오)
+- 검색 노출(2026-09-30): 네이버 서치어드바이저·구글 서치 콘솔 소유 확인 코드는 build.py `SITE_VERIFY`에 넣으면 index.html head에만 meta로 들어감(빈 값이면 생략). sitemap.xml·rss.xml(메뉴 4페이지, 네이버 RSS 제출용)은 빌드가 pages/ 수정일로 생성. 네이버·구글 소유 확인 코드 입력·배포 완료(2026-09-30, 구글은 URL 접두어 속성). sitemap·rss 제출 완료(사용자 확인 2026-09-30) — 글 추가·수정 시 재제출 불필요, 빌드·배포만. 홈 하단 JSON-LD(WebSite·Organization sameAs = 유튜브·인스타·카카오·블로그 https://blog.naver.com/allfarm_ — 서치어드바이저 연관 채널로 읽힘. 옛 주소 visionglobal2004는 2026-10-06 현재 '삭제되었거나 변경' 오류 페이지라 어디에도 쓰지 말 것). 블로그 글 링크는 media.py가 RSS 꼬리(?fromRss=…)를 떼고 blog.naver.com/allfarm_/글번호로 넣음
 - 이 PC에서 `python`이 "Could not find platform independent libraries"로 죽으면 PowerShell에서 `$env:PYTHONHOME="C:\Users\kswmi\AppData\Local\Programs\Python\Python312"` 후 실행
 
 ## 배포 (Artifact — 미리보기용)
@@ -86,11 +87,18 @@ site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 incre
 ## 네이버 블로그 원고 (2026-10-01~, `_naver/`, gitignore — 현장 사진 포함)
 - blog.naver.com/allfarm_ (블로그 주소 변경: 옛 visionglobal2004와 같은 블로그, 로그인 아이디는 visionglobal2004) 발행용 원고 패키지. `python _naver/make.py [01 05 ...]` → `_naver/out/index.html`(예약표) · `out/NN.html`(복사용 페이지: 본문 복사·제목·태그·이미지 목록) · `out/img/NN/`
 - 원고 `_naver/posts/NN.txt`(front matter title·date·tags + 본문 줄 문법: `#`/`##`/`###` 제목, `>` 인용, `~` 작은 글씨, `---` 구분선, `**굵게**` `==형광==` `^^주황^^` `@@올리브@@` `++크게++`, `[card:이름|캡션]` `[photo:경로|캡션]` `[yt:ID|제목|출처]` `[link:URL|제목|출처]` `[end]`=연락처 맺음 블록, `[src]` 아래 `제목 | URL`)
-- 인포그래픽은 `_naver/cards.py`(cover·stats·flow·bars·check·vs·tl·grid·tiles·table·qa·pics·ceo·cta) → HTML을 Edge headless로 1080px PNG 촬영(내용 해시 캐시 build/cache.json)
-- 일정: 10/2~10/6 하루 4편(10·13·17·20시) 20편. 1~10편 작성 완료, 11~20편 계획은 make.py PLAN. 글자 수 공백 제외 1,500자 이상(빌드가 출력)
+- 인포그래픽은 `_naver/cards.py`(cover·stats·flow·bars·check·vs·tl·grid·tiles·table·qa·pics·ceo·cta) → HTML을 Chrome(없으면 Edge) headless로 1080px PNG 촬영(내용 해시 캐시 build/cache.json)
+  - 2026-10-03: Edge 업데이트가 반쯤 걸린 상태(Application에 버전 폴더 2개)면 msedge.exe가 0.1초 만에 끝나 --dump-dom·--screenshot 출력이 사라짐 → make.py는 Chrome 우선. `_insta/make.py`·`_insta/logo`는 아직 Edge
+- 일정: 1~10편 10/1 발행. 11~20편(관외 소유·불법 전용 양성화·농지대장 점검·거래 절벽·현장 기록·오해 5가지·회사 소개·대표 이야기·상담 진행·체크리스트 총정리)은 2026-10-03 작성, 10/4 09:00~18:00 매시 정각 네이버 예약(`upload/reserve_11_20.sh`). 21~30편(농지은행 위탁·주말체험영농·공유 지분·경매 농지·농업경영체·농막/쉼터·처분의무 통지서·영농 기록·고령 농업인/농지연금·2027년 조사)은 2026-10-04 작성, 10/5 09:00~18:00 예약(`reserve_21_30.sh`). 글자 수 공백 제외 1,500자 이상(빌드가 출력)
 - 현장 사진(video/ 원본, 2025-06-25 촬영) 인물은 이주왕 대표 — 얼굴 공개 허용(2026-10-01). 번호판만 흐림(make.py BLUR)
 - 네이버 글쓰기 API는 2020-05 종료. 손으로 올릴 때: 한 번에 붙여넣으면 사진(data URI)은 안 따라옴(사용자 확인 2026-10-01) → 복사용 페이지의 '조각 복사'(글 HTML·사진 PNG 클립보드·영상/기사 주소를 순서대로, 스페이스바로 다음 조각)로 Ctrl+V 반복
 - 자동 발행(2026-10-01~): `_naver/upload/`(Playwright, 김해프로그램/tools/naver-blog 기반). `node login.js`(로그인 창 — '로그인 상태 유지' 자동 체크, allfarm_ 계정이 아니면 로그아웃) → `python _naver/upload/to_json.py`(out/NN.html → posts/NN.json) → `node post.js posts/NN.json`(인자 없으면 시험 작성만, 발행 차단) → `node run.js 시작 끝 간격분`(바로 발행, published.log에 있는 편은 건너뜀, 발행 버튼 뒤 오류는 재시도 안 함). 영상·기사는 링크 문단으로 들어감. 1~10편 발행 완료(2026-10-01 20:01~22:24, 10분 간격)
+
+## 인스타그램 카드 (2026-10-02~, `_insta/`, gitignore — 현장 사진 포함)
+- 어벗츠 인스타 카드(김해프로그램/인스타)와 같은 틀을 올바른농지 색(색 조합 C)으로 옮긴 것. 12편 × 3장(1080×1350): 1장 표지(사진+짙은 올리브 그라데이션) → 2장 내용(미색 판 위 인포그래픽) → 3장 마무리(올리브 투톤+allfarm.kr)
+- `python _insta/make.py [01 05 ...] [--no-png]` → `img/`(원본에서 자르기·번호판 흐림) · `인스타_카드_12편.html`(미리보기·캡션 복사) · `인스타_홍보_프롬프트_12편.md`(ChatGPT용) · `png/NN_이름_K.png`(Edge headless, `?card=NN-K`)
+- 단일 소스는 make.py POSTS(문구·시각 요소·사진·캡션), 디자인은 template.html. 숫자·조문은 블로그 원고에 출처 있는 것만, 캡션 끝 '📎 자료'. 03편은 11/15 마감(임대차 특별정비기간)
+- 프로필 로고(2026-10-02 확정 B안): `_insta/logo/올바른농지_인스타프로필.png`(1080², 짙은 올리브 #2E3A24 + 금색 잎 + 흰 '올바른농지'). 홈페이지 헤더 잎 심볼을 색만 바꾼 것. 후보 A~D 비교·재촬영은 `logo.html`(`?v=B`로 열면 1080 한 장)
 
 ## 미기입 플레이스홀더
 `[상담 가능 시간]` `[가격]` `[서비스 지역]` `[이메일]` (상담전화 010-2529-2998은 2026-10-01 입력: site.js CONFIG.PHONE + 파셜·페이지 정적 표기 + JSON-LD telephone),

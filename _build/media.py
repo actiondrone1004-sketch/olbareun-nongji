@@ -38,7 +38,8 @@ def fetch_blog(url):
         except Exception: d = ""
         desc = it.findtext("description", "") or ""
         m = re.search(r'<img[^>]+src="([^"]+)"', desc)
-        out.append({"type": "blog", "url": it.findtext("link", ""), "title": it.findtext("title", ""), "date": d, "thumb": m.group(1) if m else ""})
+        link = it.findtext("link", "").split("?")[0]  # ?fromRss=true&trackingCode=rss 떼고 blog.naver.com/아이디/글번호만
+        out.append({"type": "blog", "url": link, "title": it.findtext("title", ""), "date": d, "thumb": m.group(1) if m else ""})
     return out[:30]
 
 def load(extra=()):
