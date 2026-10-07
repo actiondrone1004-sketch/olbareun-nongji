@@ -10,12 +10,12 @@ services.html              '농지전수조사' 탭 v5 인포그래픽(2026-09-2
 about.html                 회사 소개 v5 인포그래픽(2026-09-28): ab-hero(사진+숫자 15곳·10편·2권 카운트업) → #ceo 걸어온 길 타임라인(2011 법인·2013·2018·2020~23·2024·2026 — 출처 확인된 것만) → #scope 경계선(하는/하지 않는 일 아이콘)+약속 3 → #career 로고·강의 사진·저서 → #media 대표 방송·강의 영상·기사·링크 → #map 회사 개요 아이콘 카드(네이버 지도 링크) → 폼. JSON-LD 유지
 press.html                 '보도' 탭(2026-09-28): 채널 버튼 → 방송 뉴스(유튜브, 제자리 재생) → 올바른농지 숏폼·블로그 → 기사(2026-09-30 순서 변경, 섞지 않음). 각 목록 앨범/목록 전환. 내용은 전부 _build/data/media.json에서 생성(아래 '보도·SNS 데이터')
 terms.html privacy.html    약관 · 개인정보처리방침 (템플릿, [ ] 채워야 함)
-admin.html                 관리자 화면 (푸터 맨 아래 '관리자' 링크, noindex, bare 페이지). 비밀번호만 입력(계정은 ADMIN_EMAIL 고정) → [통계] 일·월·연별 방문자·조회수·페이지별·문의·카카오/전화/유튜브/인스타 클릭 + [문의 목록] leads 상태·메모·삭제 (SDK 없이 REST)
+admin.html                 관리자 화면 (푸터 맨 아래 '관리자' 링크, noindex, bare 페이지). 비밀번호만 입력(계정은 ADMIN_EMAIL 고정) → [통계] 일·월·연별 방문자·조회수·페이지별·문의·전화/유튜브/인스타 클릭 + [문의 목록] leads 상태·메모·삭제 (SDK 없이 REST)
 tools/firebase/            ★ 신청 저장소(현재 사용). firestore.rules(권한: 누구나 생성, 관리자 이메일만 읽기·수정) · firebase.json · README.md(설정·관리자 추가·규칙 배포 명령)
 tools/apps-script/         (대안, 미사용) Code.gs 구글 시트 저장 + 목록 API + 메일 알림 · README.md
 assets/site.css            공통 CSS — 색 조합 C(2026-09-28): 흰 배경 · 올리브 #4b5d3a(짙은 면 #2e3a24) · 벼이삭 금색 #c8a24a · 먹색 글자 #1c1c1a · 경고 주황 #c0643f 하나만. 라임 형광·원형 그라데이션 금지, 짙은 면은 페이지당 최소로. 맨 아래 '색 조합 C' 블록이 :root 토큰을 최종 결정 · 1160px. 앞부분은 812bc3e의 평면 CSS, 'v3' 블록(상황 선택·역할표·기록·상담 과정·비용·FAQ·폼 select) → 맨 아래 '가독성 보정' 블록(본문 17px·잉크 진하게·제목 700·작은 글씨 13px 이상 — 사용자 요청, 글씨체 바꿀 때 이 블록 유지). 반응형 950/700/480
 olbareun-redesign/         1차 재구성안(다른 도구 산출물, gitignore). 이력: 09-17 적용→반려→되돌림, 09-18 사용자가 2차 기획(상황 중심)을 주며 미색 디자인 선택 → 현재 v3. 초록 카드형 디자인은 git 764dafd 에 남아 있음
-assets/site.js             공통 JS — 맨 위 CONFIG 블록(PHONE/HOURS/FIREBASE{apiKey,projectId}/FORM_ENDPOINT/CONTACT_EMAIL/KAKAO_URL/BLOG_URL — APP_*·SHEET_URL은 현재 미사용)
+assets/site.js             공통 JS — 맨 위 CONFIG 블록(PHONE/HOURS/FIREBASE{apiKey,projectId}/FORM_ENDPOINT/CONTACT_EMAIL/YOUTUBE_URL/INSTAGRAM_URL/BLOG_URL — APP_*·SHEET_URL은 현재 미사용)
 assets/img/                hero.jpg field.jpg · news/news-NN.jpg (기사 썸네일 480x300)
   about/                   회사소개용: prof-juwang.png(원본 그대로, 검정 배경 — 카드 배경도 #000) · lecture-1/2.webp · book-*.webp(저서 표지 2) · tv-sbsbiz-moneyshow-1/2.webp · logos/*.webp(출강 로고 15, 흰배경 평탄화·트림)
 images/                    ★ 원본 자료(배포 안 함). 사용자가 넣어준 사진·로고 원본. cafe/ banner/ quick/ 는 콕집어경매(경매학원) 프로젝트 자산이라 여기선 안 씀. books/저서2(저자 다름)·저서4(내지)·career/방송3(교수 미출연)은 미사용
@@ -32,7 +32,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - **루트 html을 직접 고치지 말 것.** `_build/pages/*.html`(페이지 내용) 또는 `_build/partials/*.html`(GNB·푸터·폼)을 고치고 `python _build/build.py` 실행.
 - index·services·about에는 `id="apply"` 폼(이름·연락처만)이 있어 `href="#apply"`가 공통 CTA. 폼이 없는 페이지(terms·privacy·admin)는 빌드가 `index.html#apply`로 바꿈.
 - 섹션 위 소제목 라벨(.sec-tag / .eyebrow — Trust·Press·서비스소개 같은 작은 글씨)은 사용자 요청으로 전부 제거함(2026-09-17). 새 섹션에도 넣지 말 것
-- v4 원칙(2026-09-28 사용자 요청): 홈페이지는 짧은 카피와 이야기 흐름으로 단순하게, 자세한 문의는 카카오톡 채널(CONFIG.KAKAO_URL)에서 진행. 설명을 늘리지 말 것. 아래 v3 원칙 중 금지 사항은 그대로 유효
+- v4 원칙(2026-09-28 사용자 요청): 홈페이지는 짧은 카피와 이야기 흐름으로 단순하게, 자세한 문의는 전화·상담 폼으로 진행(카카오톡 채널 링크·버튼·클릭 통계·sameAs는 2026-10-07 사용자 요청으로 사이트에서 전부 제거 — 다시 넣지 말 것. 약관·개인정보처리방침의 '카카오톡 채널' 문구는 아직 남아 있음). 설명을 늘리지 말 것. 아래 v3 원칙 중 금지 사항은 그대로 유효
 - v3 원칙(사용자 2차 기획, 2026-09-18): 고객이 '내 상황 찾기 → 받을 도움 이해 → 상담 결정' 순으로 읽게 한다. 상황 선택은 안내용 분류일 뿐 진단·결과 단정 금지. 제공하지 않는 결과물·응답 시간 약속 금지(결과 전달 방식·계획서 형식·가격 예시는 운영 기준 확정 후 — index의 `[가격 기준 확정 후 대표 예시 표기]`·`[서비스 지역]` 참고). 관리기록은 '예시' 표기 유지, 실제 수행 자료(담당자·현장·익명화 기록)는 확보 후 별도 사례 영역에. (숫자 카운팅 금지는 2026-09-28 사용자 요청으로 홈 인포그래픽에 한해 해제 — 스크롤 등장·카운트업·선 그리기 정도까지, 깜빡임·자동 슬라이드는 쓰지 않음.) 폼의 '상담 상황' select 값은 Firestore extra['상담 상황']로 저장되어 admin 이름 아래 표시
 - **키워드 규칙(2026-10-04 사용자 지시, 예외 없음): 모든 키워드에 '올바른농지'를 넣는다** — 사이트 pages/·posts/ front matter `keywords:`(맨 앞), 네이버 블로그 원고 `tags:`(맨 앞), 인스타 해시태그(#올바른농지). 새 글·페이지를 만들 때마다 확인
 - 카피 규칙: "바로 25%" "100% 해결" "안 걸리게" 금지. 절차(조사→처분의무→처분명령→미이행→이행강제금)와 유예(§12)를 함께 쓴다. 결과 보장 문구 금지.
@@ -47,7 +47,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 배포 순서: `python _build/build.py` → `git add -A && git commit -m "..." && git push` → 1~2분 뒤 반영 (Pages 상태: `gh api repos/actiondrone1004-sketch/olbareun-nongji/pages --jq .status`)
 - .gitignore로 제외: `_archive/` `_design/` `_build/dist-artifact/` `images/`(사이트 미참조 원본) `KakaoTalk_*.jpg` `*.docx` — 개인 사진·원본 자료는 공개 저장소에 올리지 말 것
 - robots.txt는 admin.html을 크롤링 제외
-- 검색 노출(2026-09-30): 네이버 서치어드바이저·구글 서치 콘솔 소유 확인 코드는 build.py `SITE_VERIFY`에 넣으면 index.html head에만 meta로 들어감(빈 값이면 생략). sitemap.xml·rss.xml(메뉴 4페이지, 네이버 RSS 제출용)은 빌드가 pages/ 수정일로 생성. 네이버·구글 소유 확인 코드 입력·배포 완료(2026-09-30, 구글은 URL 접두어 속성). sitemap·rss 제출 완료(사용자 확인 2026-09-30) — 글 추가·수정 시 재제출 불필요, 빌드·배포만. 홈 하단 JSON-LD(WebSite·Organization sameAs = 유튜브·인스타·카카오·블로그 https://blog.naver.com/allfarm_ — 서치어드바이저 연관 채널로 읽힘. 옛 주소 visionglobal2004는 2026-10-06 현재 '삭제되었거나 변경' 오류 페이지라 어디에도 쓰지 말 것). 블로그 글 링크는 media.py가 RSS 꼬리(?fromRss=…)를 떼고 blog.naver.com/allfarm_/글번호로 넣음
+- 검색 노출(2026-09-30): 네이버 서치어드바이저·구글 서치 콘솔 소유 확인 코드는 build.py `SITE_VERIFY`에 넣으면 index.html head에만 meta로 들어감(빈 값이면 생략). sitemap.xml·rss.xml(메뉴 4페이지, 네이버 RSS 제출용)은 빌드가 pages/ 수정일로 생성. 네이버·구글 소유 확인 코드 입력·배포 완료(2026-09-30, 구글은 URL 접두어 속성). sitemap·rss 제출 완료(사용자 확인 2026-09-30) — 글 추가·수정 시 재제출 불필요, 빌드·배포만. 홈 하단 JSON-LD(WebSite·Organization sameAs = 유튜브·인스타·블로그 https://blog.naver.com/allfarm_ — 서치어드바이저 연관 채널로 읽힘. 서치어드바이저 사이트 등록은 호스트 단위만 되므로(경로형 blog.naver.com/아이디 불가, 소유 확인도 불가) www.allfarm.kr만 등록하고 블로그는 연관 채널로만 연결 — 공식 guide/seo-basic-intro·structured-data-channel 확인 2026-10-06. 옛 주소 visionglobal2004는 2026-10-06 현재 '삭제되었거나 변경' 오류 페이지라 어디에도 쓰지 말 것). 블로그 글 링크는 media.py가 RSS 꼬리(?fromRss=…)를 떼고 blog.naver.com/allfarm_/글번호로 넣음
 - 이 PC에서 `python`이 "Could not find platform independent libraries"로 죽으면 PowerShell에서 `$env:PYTHONHOME="C:\Users\kswmi\AppData\Local\Programs\Python\Python312"` 후 실행
 
 ## 배포 (Artifact — 미리보기용)
@@ -63,7 +63,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - `_build/data/media.json` → `_build/media.py`가 `{{MEDIA_*}}` 자리(press.html·index 하단·푸터 채널 버튼)에 HTML 생성. 수정 후 `python _build/build.py`
 - videos: 방송사 보도 영상(유튜브 ID). 정치 논평 채널은 넣지 않는다. news: 기사(썸네일은 assets/img/news/)
 - feed: 올바른농지 숏폼·블로그. 인스타그램은 공개 API가 없어 릴스 URL을 직접 추가(type instagram, thumb 선택). 유튜브 채널(UCVs19gtXW8jh4VA0HZUoigQ)은 빌드 때 RSS로 자동 수집, 블로그는 channels.blog_rss에 RSS 주소를 넣으면 자동 수집. 수집 결과는 data/feed-cache.json(네트워크 실패 시 사용). 채널에 영상이 없으면 RSS가 404 → '수집 실패, 캐시 0건'은 정상
-- 채널 주소는 site.js CONFIG(KAKAO_URL·YOUTUBE_URL·INSTAGRAM_URL·BLOG_URL) — data-link="youtube|instagram|kakao|blog"
+- 채널 주소는 site.js CONFIG(YOUTUBE_URL·INSTAGRAM_URL·BLOG_URL) — data-link="youtube|instagram|blog"
 - ceo: 회사 소개 #media(대표 방송·강의 영상·기사·링크). 설명란/본문에 이주왕 이름이 확인된 자료만. 교보문고 '이주왕' 저자 페이지는 약력(충남대 행정·랜드타운 공법)이 달라 동명이인 가능 → 넣지 않음. 에듀윌은 '서울사이버대 외래강사', SBS 자막은 '겸임교수'로 표기가 다름
 - 빌드 print에 '—' 같은 문자 쓰지 말 것(Windows 콘솔 cp949에서 빌드가 죽음)
 
@@ -74,7 +74,7 @@ _archive/                  이전 단일 페이지 버전 (base64 이미지 인�
 - 글 9편(2026-09-30): 전수조사 대상·일정 / 처분의무·처분명령·유예 / 이행강제금 25% / 상속 농지 / 심층조사 10대 위험군 / 임대차 특별정비기간 / 무단 휴경 기준 / 불법 전용 양성화 / 거래 절벽. 인포그래픽은 HTML·CSS figure.pf(pf-flow 단계·pf-bars 막대·pf-stats 숫자·pf-chips 번호칸·pf-vs 두칸 비교, site.css 블로그 인포그래픽 블록) — 이미지 아닌 글자라 검색에 읽힘. 조사 지침 원문 PDF(mafra 597611) 근거 사용. 대표 검토 전이라 저자는 '올바른농지'(조직)로 표기
 
 ## 방문 통계 (2026-09-28~)
-site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 increment로 1씩 올린다: v(그날 첫 방문, localStorage ob_seen_day) · pv · pv_home/services/about/press/other · c_kakao/phone/youtube/instagram/blog. localhost·file·admin·webdriver는 제외.
+site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 increment로 1씩 올린다: v(그날 첫 방문, localStorage ob_seen_day) · pv · pv_home/services/about/press/other · c_phone/youtube/instagram/blog (c_kakao는 2026-10-07 수집 중단, 규칙에는 남아 있음). localhost·file·admin·webdriver는 제외.
 규칙(firestore.rules stats)은 허용 칸만, 칸마다 +1까지, 읽기는 관리자만 — 칸을 추가하면 statKeys()와 admin FIELDS 둘 다 고치고 규칙 배포. 문의 수는 leads의 createdAt으로 센다.
 사업자: 농업회사법인 주식회사 비전글로벌(브랜드 올바른농지) · 140-81-01121 · 경기도 안양시 동안구 관악대로 486, 3층(관양동, 덕진빌딩). 등록증 PDF는 gitignore(*.pdf)
 
@@ -103,4 +103,4 @@ site.js 맨 아래가 Firestore `stats/{YYYY-MM-DD}`(한국 날짜) 칸을 incre
 ## 미기입 플레이스홀더
 `[상담 가능 시간]` `[가격]` `[서비스 지역]` `[이메일]` (상담전화 010-2529-2998은 2026-10-01 입력: site.js CONFIG.PHONE + 파셜·페이지 정적 표기 + JSON-LD telephone),
 terms/privacy의 `[시행일]` `[환불 기준]` `[폼 서비스명]` (네이버 블로그는 2026-09-30 연결, 2026-10-01 주소 변경: blog.naver.com/allfarm_ — 옛 visionglobal2004 RSS는 비어 있음, RSS 자동 수집),
-카카오톡 채널 http://pf.kakao.com/_YzQrX.
+카카오톡 채널 http://pf.kakao.com/_YzQrX (사이트에서는 2026-10-07 제거).

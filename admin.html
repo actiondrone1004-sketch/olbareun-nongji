@@ -23,7 +23,7 @@
 <link rel="alternate" type="application/rss+xml" title="올바른농지" href="https://www.allfarm.kr/rss.xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/site.css?v=278b1f6a">
+<link rel="stylesheet" href="assets/site.css?v=7040774d">
 </head>
 <body>
 <style>
@@ -127,11 +127,11 @@
     </div>
     <div class="tscroll">
       <table class="lead-table stat-table">
-        <thead><tr><th>기간</th><th>방문자</th><th>조회수</th><th>홈</th><th>농지전수조사</th><th>회사 소개</th><th>보도</th><th>기타</th><th>문의</th><th>카카오톡</th><th>전화</th><th>유튜브</th><th>인스타</th></tr></thead>
+        <thead><tr><th>기간</th><th>방문자</th><th>조회수</th><th>홈</th><th>농지전수조사</th><th>회사 소개</th><th>보도</th><th>기타</th><th>문의</th><th>전화</th><th>유튜브</th><th>인스타</th></tr></thead>
         <tbody id="statRows"></tbody>
       </table>
     </div>
-    <p class="note">방문자 = 그날 처음 들어온 브라우저 수(월·연은 일별 합계). 조회수 = 페이지를 연 횟수. 클릭 = 카카오톡 채널·전화·유튜브·인스타그램 링크를 누른 횟수. 로컬 미리보기와 관리자 페이지 접속은 세지 않습니다.</p>
+    <p class="note">방문자 = 그날 처음 들어온 브라우저 수(월·연은 일별 합계). 조회수 = 페이지를 연 횟수. 클릭 = 전화·유튜브·인스타그램 링크를 누른 횟수. 로컬 미리보기와 관리자 페이지 접속은 세지 않습니다.</p>
    </div>
    <div id="leadsPanel" hidden>
     <div class="stats">
@@ -277,7 +277,7 @@
 
 
   // ----- 통계: stats/{YYYY-MM-DD} 문서(site.js가 1씩 올림) + leads 접수일(한국 날짜) -----
-  var FIELDS = ['v', 'pv', 'pv_home', 'pv_services', 'pv_about', 'pv_press', 'pv_other', 'lead', 'c_kakao', 'c_phone', 'c_youtube', 'c_instagram'];
+  var FIELDS = ['v', 'pv', 'pv_home', 'pv_services', 'pv_about', 'pv_press', 'pv_other', 'lead', 'c_phone', 'c_youtube', 'c_instagram'];
   function kst(iso) { var t = new Date(iso).getTime(); return isNaN(t) ? '' : new Date(t + 9 * 3600e3).toISOString().slice(0, 10); }
   function today() { return new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10); }
   function loadStats(pageToken) {
@@ -317,7 +317,7 @@
     $('#rangeLabel').textContent = bs[0].label + ' ~ ' + bs[bs.length - 1].label + (period === 'day' ? ' · 최근 30일' : period === 'month' ? ' · 최근 12개월' : '');
     var kpi = function (label, a, b) { return '<div class="kpi"><small>' + label + '</small><b>' + a.toLocaleString() + '</b><span>' + curName + ' ' + b.toLocaleString() + '</span></div>'; };
     $('#kpis').innerHTML = kpi('방문자', tot.v, cur.v) + kpi('조회수', tot.pv, cur.pv) + kpi('문의', tot.lead, cur.lead) +
-      kpi('카카오톡 클릭', tot.c_kakao, cur.c_kakao) + kpi('전화 클릭', tot.c_phone, cur.c_phone) + kpi('유튜브·인스타 클릭', tot.c_youtube + tot.c_instagram, cur.c_youtube + cur.c_instagram);
+      kpi('전화 클릭', tot.c_phone, cur.c_phone) + kpi('유튜브·인스타 클릭', tot.c_youtube + tot.c_instagram, cur.c_youtube + cur.c_instagram);
     var max = 1; bs.forEach(function (b) { max = Math.max(max, map[b.key].pv, map[b.key].v, map[b.key].lead); });
     var step = Math.ceil(bs.length / 10);
     $('#chart').innerHTML = bs.map(function (b, i) {
@@ -366,6 +366,6 @@
 })();
 </script>
 
-<script src="assets/site.js?v=5e3f49f7"></script>
+<script src="assets/site.js?v=d628b358"></script>
 </body>
 </html>

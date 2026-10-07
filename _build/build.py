@@ -110,7 +110,7 @@ def post_body(meta, body):
             '    <nav class="crumbs" aria-label="현재 위치"><a href="index.html">홈</a><span><a href="press.html#sns">보도</a></span><span>블로그</span></nav>\n'
             '    <h1>%s</h1>\n    <p class="meta">올바른농지 · <time datetime="%s">%s</time></p>\n%s\n'
             '    <p class="post-note">이 글은 공개된 보도와 법령을 바탕으로 한 일반 안내입니다. 개별 농지의 처분 여부와 절차는 관할 행정청이 판단하며, 올바른농지는 특정 행정 결과를 보장하지 않습니다.</p>\n'
-            '    <div class="post-cta"><b>내 농지는 어떤 상황인지 궁금하다면</b><p>지번과 지금 상황만 알려주시면 대표가 직접 살펴보고 연락드립니다.</p><a class="btn btn-green" href="#apply">무료 상담 신청</a> <a class="btn" data-link="kakao" href="#apply">카카오톡으로 묻기</a></div>\n'
+            '    <div class="post-cta"><b>내 농지는 어떤 상황인지 궁금하다면</b><p>지번과 지금 상황만 알려주시면 대표가 직접 살펴보고 연락드립니다.</p><a class="btn btn-green" href="#apply">무료 상담 신청</a> <a class="btn" href="tel:01025292998" data-phone-link>전화로 묻기</a></div>\n'
             '%s  </div>\n</article>\n{{APPLY}}\n</main>\n<script type="application/ld+json">%s</script>\n') % (
         meta["h1"], d, d.replace("-", "."), body.strip(),
         ('    <div class="post-more"><h2>함께 읽으면 좋은 글</h2><ul>%s</ul></div>\n' % others) if others else "",

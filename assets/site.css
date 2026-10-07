@@ -918,8 +918,6 @@ h1, h2, h3 { letter-spacing: -.025em; }
 .sns svg { width: 20px; height: 20px; }
 .sns-yt svg { color: #e62117; }
 .sns-ig svg { color: #c13584; }
-.sns-kk svg { color: #3c1e1e; }
-.sns-kk { background: #fee500; border-color: #fee500; }
 .sns:hover { border-color: var(--green); color: var(--ink); }
 .foot-sns { margin-top: 18px; }
 .foot-sns .sns { padding: 7px 12px; min-height: 38px; font-size: 13.5px; }
