@@ -44,6 +44,19 @@
   $$('.channels').forEach(function (c) { if ($$('a', c).every(function (a) { return a.hidden; })) c.hidden = true; });
   if (!CONFIG.APP_IOS_URL && !CONFIG.APP_ANDROID_URL) { $$('[data-no-app]').forEach(function (el) { el.hidden = false; }); }
 
+  // ----- 홈 상단 현장 영상: 화면 너비로 파일 고름(700px 이하 세로 영상), 움직임 줄이기 설정이면 영상 없이 같은 장면 사진(.hx-media 배경), 화면 밖이면 멈춤 -----
+  var heroVid = document.querySelector('.hx-vid');
+  if (heroVid && window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroVid.muted = true;
+    heroVid.src = heroVid.getAttribute(window.matchMedia('(max-width: 700px)').matches ? 'data-src-m' : 'data-src');
+    if (!('IntersectionObserver' in window)) { var p0 = heroVid.play(); if (p0 && p0.catch) p0.catch(function () {}); }
+    else {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { var p = heroVid.play(); if (p && p.catch) p.catch(function () {}); } else heroVid.pause(); });
+      }).observe(heroVid);
+    }
+  }
+
   // ----- 헤더: 스크롤 그림자 -----
   var header = $('header.site');
   if (header) {

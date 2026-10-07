@@ -20,4 +20,4 @@ __pycache__/
 _naver/
 _insta/
 # 사용자 원본 사진·영상(개인 자료, 공개 저장소 제외)
-video/
+/video/

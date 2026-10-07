@@ -1021,23 +1021,6 @@ html.js [data-reveal].in { opacity: 1; transform: none; }
 .hx-live { display: inline-flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 700; color: #c8a24a; border: 1px solid rgba(200,162,74,.4); padding: 6px 14px; border-radius: 999px; margin-bottom: 22px; }
 .hx-live .dot { width: 9px; height: 9px; border-radius: 50%; background: #ff8a5b; box-shadow: 0 0 0 0 rgba(255,138,91,.7); animation: livePulse 1.6s infinite; }
 @keyframes livePulse { 70% { box-shadow: 0 0 0 10px rgba(255,138,91,0); } 100% { box-shadow: 0 0 0 0 rgba(255,138,91,0); } }
-.hx-map { position: relative; }
-.scan-map { width: 100%; height: auto; display: block; border-radius: 14px; box-shadow: 0 30px 60px rgba(0,0,0,.35); background: #55663f; }
-.scan-map .pc { rx: 3; transform-box: fill-box; transform-origin: center; }
-html.js .scan-map .pc { opacity: 0; transform: scale(.6); }
-html.js .in .scan-map .pc { opacity: 1; transform: none; transition: opacity .5s ease var(--d), transform .5s ease var(--d); }
-.scan-map .flag { fill: rgba(255,138,91,.18); stroke: #ff8a5b; stroke-width: 2.5; opacity: 0; }
-.in .scan-map .flag { animation: flagIn .5s ease var(--d) forwards, flagPulse 2.4s ease-in-out calc(var(--d) + .5s) infinite; }
-@keyframes flagIn { to { opacity: 1; } }
-@keyframes flagPulse { 50% { fill: rgba(255,138,91,.42); } }
-.scan-map .scan { animation: scanMove 4.2s linear infinite; }
-@keyframes scanMove { from { transform: translateY(0); } to { transform: translateY(560px); } }
-.scan-map .chip { opacity: 0; }
-.in .scan-map .chip { animation: flagIn .5s ease 2.2s forwards; }
-.scan-map .chip rect { fill: #fff; }
-.scan-map .chip text { fill: #2e3a24; font-size: 15px; font-weight: 800; font-family: inherit; }
-.hx-tags { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.hx-tags li { font-size: 13.5px; font-weight: 600; color: #dcd9cf; border: 1px solid rgba(255,255,255,.22); padding: 5px 12px; border-radius: 999px; }
 
 /* 숫자 */
 .nx { background: #fff; }
@@ -1145,11 +1128,9 @@ html.js .wx-steps.in .ic { transform: none; opacity: 1; }
   .fx-branch { flex-direction: column; align-items: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html.js [data-reveal], html.js .scan-map .pc, html.js .fx-line li, html.js .wx-steps .ic, html.js .nx-card .yrs span { opacity: 1 !important; transform: none !important; }
+  html.js [data-reveal], html.js .fx-line li, html.js .wx-steps .ic, html.js .nx-card .yrs span { opacity: 1 !important; transform: none !important; }
   html.js .nx-card .bar span { width: var(--w) !important; }
   html.js .fx-line::before { transform: none !important; }
-  .scan-map .scan { display: none; }
-  .scan-map .flag, .scan-map .chip { opacity: 1; animation: none !important; }
 }
 
 /* =========================================================
@@ -1534,3 +1515,20 @@ html.js .fx-line li.zone { opacity: 1; transform: none; }
 /* 푸터 관리자 로그인 버튼 (2026-09-30) */
 footer .admin-link { display: inline-flex; align-items: center; gap: 6px; margin-left: 12px; padding: 5px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: 13px; font-weight: 700; color: inherit; opacity: .8; text-decoration: none; vertical-align: middle; }
 footer .admin-link:hover { opacity: 1; }
+
+/* ===== 홈 상단 현장 영상 (2026-10-07, 논 모양 SVG 지도 대체 — 사용자: 'AI 같다') =====
+   영상은 assets/video/hero.mp4(1080x720)·hero-m.mp4(540x960), 영상이 뜨기 전·움직임 줄이기 설정일 때는 같은 장면 사진 */
+.hx-video { position: relative; isolation: isolate; display: flex; align-items: center; min-height: min(80vh, 720px); padding: 96px 0; }
+.hx-media { position: absolute; inset: 0; z-index: -1; background: #2e3a24 url(img/hero-field.jpg) 70% 50% / cover no-repeat; }
+.hx-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(36,46,28,.94) 0%, rgba(36,46,28,.82) 34%, rgba(36,46,28,.38) 68%, rgba(36,46,28,.12) 100%); }
+.hx-vid { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
+.hx-video .hx-grid { grid-template-columns: minmax(0, 640px); }
+.hx-video .hx-copy { text-shadow: 0 1px 14px rgba(0,0,0,.35); }
+.hx-cap { position: absolute; right: 18px; bottom: 14px; margin: 0; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.85); text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+@media (max-width: 700px) {
+  .hx-video { align-items: flex-end; min-height: 86svh; padding: 140px 0 64px; }
+  .hx-media { background-image: url(img/hero-field-m.jpg); background-position: 60% 30%; }
+  .hx-media::after { background: linear-gradient(0deg, rgba(36,46,28,.95) 0%, rgba(36,46,28,.82) 42%, rgba(36,46,28,.25) 72%, rgba(36,46,28,.1) 100%); }
+  .hx-vid { object-position: 60% 30%; }
+  .hx-cap { top: 14px; bottom: auto; }
+}
